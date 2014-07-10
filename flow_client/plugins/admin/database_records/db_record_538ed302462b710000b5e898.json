@@ -1,0 +1,12 @@
+{
+    "schema": "angular_constant",
+    "record": {
+        "_id": "538ed302462b710000b5e898",
+        "name": "logoutSuccess",
+        "value": "auth-logout-success",
+        "__v": 0,
+        "group": "AUTH_EVENTS",
+        "_updated_on": "2014-06-04T08:04:18.541Z",
+        "_created_on": "2014-06-04T08:04:18.541Z"
+    }
+}

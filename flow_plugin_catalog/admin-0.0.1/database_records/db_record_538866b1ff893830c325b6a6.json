@@ -1,0 +1,13 @@
+{
+    "schema": "angular_route",
+    "record": {
+        "_id": "538866b1ff893830c325b6a6",
+        "name": "schema_editor/:table",
+        "controller": "schemaEditor as schemaEditor",
+        "templateUrl": "schemaEditor.html",
+        "__v": 0,
+        "display_name": "Schema Editor",
+        "_updated_on": "2014-06-02T09:48:13.974Z",
+        "_created_on": "2014-06-02T09:48:13.974Z"
+    }
+}

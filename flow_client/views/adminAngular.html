@@ -1,0 +1,31 @@
+<div id="adminAngular" class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Manage Angular</h4>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-12">
+					<label>Recalculate Included Angular Modules</label>
+					<p>
+						When adding a new third party package, usually via Bower, it can be necessary to recalculate the Angular modules included in the platform. Currently included modules are listed below, if you believe one is missing you can try recalculation. It will take a page refresh to make the application work with the new module.
+					</p>
+					<button ng-click="adminViews.refreshAngularApplication()" ng-disabled="!adminViews.selectedViewName" class="btn btn-primary">
+						Refresh Angular Modules
+					</button>
+				</div>
+				<br />
+				<br />
+				<div class="col-md-12">
+					<label>Recalculate Angular Application</label>
+					<p>
+						When adding new Routes, Constants or changing the very core of the application, Angular will be out of date. Use this button to recalculate the Angular page, then perform a refresh to get the new application config.
+					</p>
+					<button ng-click="adminViews.refreshServer()" ng-disabled="!adminViews.selectedViewName" class="btn btn-primary">
+						Refresh Angular Application
+					</button>
+				</div>
+			</div>
+		</div
+	</div>
+</div>

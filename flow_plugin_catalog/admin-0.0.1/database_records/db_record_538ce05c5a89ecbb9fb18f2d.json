@@ -1,0 +1,12 @@
+{
+    "schema": "angular_route",
+    "record": {
+        "_id": "538ce05c5a89ecbb9fb18f2d",
+        "name": "admin_data_editor",
+        "controller": "adminDataEditor as adminDataEditor",
+        "templateUrl": "adminDataEditor.html",
+        "__v": 0,
+        "_updated_on": "2014-06-02T20:36:44.320Z",
+        "_created_on": "2014-06-02T20:36:44.320Z"
+    }
+}

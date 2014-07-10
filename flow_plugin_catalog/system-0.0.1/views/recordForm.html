@@ -1,0 +1,34 @@
+<div id="recordForm" class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Manage {{recordForm.recordTable}}: {{recordForm.record.name}}</h4>
+		</div>
+		<div class="panel-body" cg-busy="{promise:recordForm.promise,message:'Loading'}">
+			<form class="form-group" name="recordforminput" novalidate ng-submit="recordForm.saveRecord()">
+				<div class="row">
+					<div class="col-md-12">
+						<button type="submit" ng-disabled="recordforminput.$invalid" class="btn btn-primary">
+							Save
+						</button>
+						<button type="button" ng-disabled="!recordForm.record._id" ng-click="recordForm.deleteRecord();" class="btn btn-primary">
+							Delete
+						</button>
+						<button type="button" ng-click="recordForm.createNewRecord();" class="btn btn-primary">
+							Create New...
+						</button>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-4" ng-repeat="(key, field) in recordForm.structure.fields">
+						<div id="{{key}}"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12" ng-repeat="(field, error) in recordForm.validationErrors">
+						<h5 class="bg-danger">{{field}}: {{error.message}}</h5>						
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

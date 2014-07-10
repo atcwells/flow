@@ -1,0 +1,25 @@
+<div id="adminCache" class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Manage Views</h4>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-12">
+					<accordion close-others="true">
+						<accordion-group heading="{{key}}" ng-repeat="(key, cacheObject) in adminCache.cacheObjects">
+							<dl class="dl-horizontal" ng-repeat="(key, menuItem) in cacheObject">
+								<dt>
+									{{key}}
+								</dt>
+								<dd>
+									{{menuItem}}
+								</dd>
+							</dl>
+						</accordion-group>
+					</accordion>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,12 @@
+{
+    "schema": "link",
+    "record": {
+        "_id": "538ce87b23dbeed3a037e1ac",
+        "name": "Data Administration",
+        "menu_group": "",
+        "__v": 0,
+        "menu_context": "admin",
+        "_updated_on": "2014-06-02T21:11:23.125Z",
+        "_created_on": "2014-06-02T21:11:23.125Z"
+    }
+}

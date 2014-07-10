@@ -1,0 +1,34 @@
+<div id="adminPlugins" class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Manage Plugins</h4>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-12">
+					<label>Installed:</label>
+					<ul class="list-unstyled">
+						<li ng-repeat="(name, plugin) in adminPlugins.installedPlugins">
+							{{name}}: {{plugin.version}}
+							<button ng-click="adminPlugins.uninstallPlugin(name, plugin.version)" ng-disabled="name === 'system'" class="btn btn-primary">
+								Uninstall Plugin
+							</button>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-md-12">
+					<label>Catalog:</label>
+					<ul class="list-unstyled">
+						<li ng-repeat="(name, plugin) in adminPlugins.pluginCatalog">
+							{{name}}: {{plugin.version}}
+							<button ng-click="adminPlugins.installPlugin(name, plugin.version)" ng-disabled="adminPlugins.isInstalled(name, plugin.version);" class="btn btn-primary">
+								Install Plugin
+							</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div
+	</div>
+</div>

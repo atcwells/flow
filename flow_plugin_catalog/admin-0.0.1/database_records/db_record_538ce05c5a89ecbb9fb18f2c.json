@@ -1,0 +1,12 @@
+{
+    "schema": "angular_route",
+    "record": {
+        "_id": "538ce05c5a89ecbb9fb18f2c",
+        "name": "admin_home",
+        "controller": "adminHome as adminHome",
+        "templateUrl": "adminHome.html",
+        "__v": 0,
+        "_updated_on": "2014-06-02T20:36:44.317Z",
+        "_created_on": "2014-06-02T20:36:44.317Z"
+    }
+}

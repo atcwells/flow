@@ -1,0 +1,12 @@
+{
+    "schema": "link",
+    "record": {
+        "_id": "538ce80923dbeed3a037e1a9",
+        "name": "View Administration",
+        "__v": 0,
+        "menu_context": "admin",
+        "menu_group": "",
+        "_updated_on": "2014-06-02T21:09:29.703Z",
+        "_created_on": "2014-06-02T21:09:29.703Z"
+    }
+}

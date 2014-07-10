@@ -1,0 +1,23 @@
+<div id="recordList" class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Manage Links</h4>
+		</div>
+		<div class="panel-body" cg-busy="{promise:recordList.promise,message:'Loading'}">
+			<div class="row">
+				<div class="col-md-12">
+					<button type="button" ng-click="recordList.createNewRecord();" class="btn btn-primary">
+						Create new...
+					</button>
+					<button type="button" ng-click="recordList.deleteSelectedRecords();" ng-disabled="recordList.selectedRows.length == 0" class="btn btn-primary">
+						Delete selected
+					</button>
+				</div>
+			</div>
+			<br />
+			<div class="row">
+				<div class="gridStyle col-md-12" ng-grid="recordList.gridOptions" style="height: 600px"></div>
+			</div>
+		</div>
+	</div>
+</div>

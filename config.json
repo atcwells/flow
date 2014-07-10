@@ -1,0 +1,36 @@
+{
+	"instance_config": {
+		"name": "one",
+		"ip_address": "127.0.0.1",
+		"port": "9001",
+		"title": "one",
+		"database_type": "MongoDB",
+		"client_directory": "./flow_client/",
+		"api_directory": "./flow_api/"
+	},
+	"database_config": {
+		"host": "localhost",
+		"port": "",
+		"name": "test",
+		"username": "",
+		"password": "",
+		"schema_directory": "./flow_server/database_schema/"
+	},
+	"plugin_config": {
+		"catalog": {
+			"path": "./flow_plugin_catalog/"
+		},
+		"installation_path": "./flow_client/plugins/",
+		"installed": {
+			"system": {
+				"version": "0.0.1"
+			},
+			"admin": {
+				"version": "0.0.1"
+			}
+		}
+	},
+	"cache_config": {
+		"strategy": "cache_object_store"
+	}
+}

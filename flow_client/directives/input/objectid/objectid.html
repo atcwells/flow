@@ -1,0 +1,5 @@
+<label for="{{fieldName}}">{{fieldName}}</label>
+<select ui-select2="" ng-disabled="jsonData.read_only == 'true'" style="width: 100%;" ng-model="fieldModel" ng-disabled="jsonData.read_only == 'true'" data-placeholder="Waiting for tables..." ng-required="jsonData.mandatory == 'true'">
+	<option ng-repeat="reference in references" value="{{reference._id}}">{{reference.name}}</option>
+</select>
+<br />

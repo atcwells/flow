@@ -1,0 +1,12 @@
+{
+    "schema": "angular_constant",
+    "record": {
+        "_id": "538866b1ff893830c325b6a5",
+        "name": "guest",
+        "group": "USER_ROLES",
+        "value": "guest",
+        "__v": 0,
+        "_updated_on": "2014-06-04T18:48:34.692Z",
+        "_created_on": "2014-06-04T18:48:34.692Z"
+    }
+}

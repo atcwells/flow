@@ -1,0 +1,23 @@
+<div>
+	<div class="list-group">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4>Administration</h4>
+				<select class="form-control" ng-model="activePlugin">
+					<option ng-repeat="(name, plugin) in installedPlugins" value="{{name}}" ng-selected="{{activePlugin === name}}">{{name}}</option>
+				</select>
+			</div>
+			<div class="panel-body">
+				<accordion close-others="true">
+					<accordion-group heading="{{adminMenuGroup.heading}}" ng-repeat="adminMenuGroup in adminMenuGroups">
+						<ul class="nav nav-pills nav-stacked">
+							<li>
+								<a ng-href="#{{menuItem.href}}" ng-repeat="menuItem in adminMenuGroup.submenuItems">{{menuItem.name}}</a>
+							</li>
+						</ul>
+					</accordion-group>
+				</accordion>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,13 @@
+{
+    "schema": "link",
+    "record": {
+        "_id": "53886c834c3209d7c3401b3c",
+        "name": "Manage Schemas",
+        "href": "/schema_editor",
+        "menu_context": "admin",
+        "menu_group": "Data Administration",
+        "__v": 0,
+        "_updated_on": "2014-06-02T10:01:47.281Z",
+        "_created_on": "2014-06-02T10:01:47.281Z"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "schema": "link",
+    "record": {
+        "_id": "538cdf753688da0f9e4ab3c1",
+        "name": "Cache Inspect",
+        "__v": 0,
+        "menu_context": "admin",
+        "menu_group": "Website Administration",
+        "href": "/cache_admin",
+        "_updated_on": "2014-06-02T20:32:53.822Z",
+        "_created_on": "2014-06-02T20:32:53.822Z"
+    }
+}

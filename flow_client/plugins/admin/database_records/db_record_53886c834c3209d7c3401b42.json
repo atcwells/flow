@@ -1,0 +1,13 @@
+{
+    "schema": "link",
+    "record": {
+        "_id": "53886c834c3209d7c3401b42",
+        "name": "Manage Links",
+        "href": "/record_list/link",
+        "menu_context": "admin",
+        "menu_group": "Website Administration",
+        "__v": 0,
+        "_updated_on": "2014-06-01T15:02:11.867Z",
+        "_created_on": "2014-06-01T15:02:11.867Z"
+    }
+}

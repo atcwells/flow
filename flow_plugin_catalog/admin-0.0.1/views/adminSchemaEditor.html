@@ -1,0 +1,79 @@
+<div id="recordList" class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Manage Schemas</h4>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-12">
+					<label class="col-md-2">Select Table:</label>
+					<select ui-select2="adminSchemaEditor.viewNameOptions" class="col-md-4" style="padding: 0px;" ng-change="adminSchemaEditor.selectTable()" ng-model="adminSchemaEditor.selectedTable.name" data-placeholder="Waiting for tables...">
+						<option ng-repeat="table in adminSchemaEditor.tables" value="{{table}}">{{table}}</option>
+					</select>
+					<div ng-show="adminSchemaEditor.selectedTable.name" class="col-md-6">
+						<button class="btn btn-primary" ng-click="adminSchemaEditor.addField()">
+							Add Field
+						</button>
+						<button class="btn btn-primary" ng-click="adminSchemaEditor.saveSchema()">
+							Save Schema
+						</button>
+						<button class="btn btn-primary" ng-click="adminSchemaEditor.deleteSchema()">
+							Delete Schema
+						</button>
+					</div>
+					<div ng-show="!adminSchemaEditor.selectedTable.name" class="col-md-6">
+						<button class="btn btn-primary" ng-click="adminSchemaEditor.createSchema()">
+							Create Schema
+						</button>
+					</div>
+				</div>
+			</div>
+			<hr />
+			<div class="row">
+				<div class="col-md-12">
+					<form>
+						<div class="col-md-6" ng-repeat="(fieldName, fieldValue) in adminSchemaEditor.selectedTable.fields">
+							<div class="form-group col-md-12">
+								<fieldset>
+									<legend>
+										<span ng-show="fieldValue.updatingName">
+											<input type="text" style="border: 0px;" placeholder="Display Name" ng-model="fieldValue.display_name" value="{{fieldValue.display_name}}" /> ({{fieldName}})
+										</span>
+										<a ng-show="!fieldValue.updatingName" ng-click="fieldValue.updatingName = !fieldValue.updatingName">{{fieldValue.display_name}} ({{fieldName}})</a>
+									</legend>
+									<label>Description</label>
+									<textarea class="form-control" ng-model="fieldValue.description">{{fieldValue.description}}</textarea>
+									<button class="btn btn-primary pull-right btn-xs" ng-click="adminSchemaEditor.deleteField(fieldName)">
+										Delete Field
+									</button>
+									<label>Field Type</label>
+									<select class="form-control" ng-model="fieldValue.type">
+										<option ng-repeat="(fieldType, databaseType) in adminSchemaEditor.fieldTypes" value="{{fieldType}}" ng-selected="{{fieldType.toLowerCase() == fieldValue.type.toLowerCase()}}">{{fieldType}}</option>
+									</select>
+									<div class="col-md-4">
+										<label>Mandatory</label>
+										<input type="checkbox" ng-checked="{{fieldValue.mandatory == 'true'}}" ng-model="fieldValue.mandatory" />
+									</div>
+									<div class="col-md-4">
+										<label>Read Only</label>
+										<input type="checkbox" ng-checked="{{fieldValue.read_only == 'true'}}" ng-model="fieldValue.read_only" />
+									</div>
+									<div class="col-md-4">
+										<label>Visible</label>
+										<input type="checkbox" ng-checked="{{fieldValue.visible == 'true'}}" ng-model="fieldValue.visible" />
+									</div>
+									<div ng-show="fieldValue.type.toLowerCase() == 'objectid'">
+										<label>Referenced Schema</label>
+										<select class="form-control" ng-model="fieldValue.ref">
+											<option ng-repeat="table in adminSchemaEditor.tables" value="{{table}}" ng-selected="{{table.toLowerCase() == fieldValue.ref.toLowerCase()}}">{{table}}</option>
+										</select>
+									</div>
+								</fieldset>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
