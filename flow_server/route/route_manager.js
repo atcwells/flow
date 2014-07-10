@@ -194,6 +194,3 @@ route_manager.prototype.setup = function() {
 };
 
 module.exports = route_manager;
-
-
-K1tt3nL1ck?

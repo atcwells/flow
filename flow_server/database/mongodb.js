@@ -82,8 +82,8 @@
         
         this.mongoose = require('mongoose');
         this.mongoose.connect(mongoUrl);
-        this.generator.setConnection(this.mongoose);
         this.generator = require('mongoose-gen');
+        this.generator.setConnection(this.mongoose);
 
         this._log.info('Connected to MongoDB at ' + host);
 
