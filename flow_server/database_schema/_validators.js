@@ -1,11 +1,11 @@
 return new Object({
-    email : function(value) {
+    _email : function(value) {
         return true;
     },
-    string : function(value) {
+    _string : function(value) {
 		return true;
     },
-    objectid : function(value) {
+    _objectid : function(value) {
 		return true;
     }
 });

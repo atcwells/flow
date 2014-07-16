@@ -24,19 +24,33 @@ return function system(response, callback) {
     };
 
     self.getAdminInfo = function(params) {
-        var table = $dbi('link');
-        table.find({
-            'menu_context' : 'admin'
-        }, function(err, results) {
+        var menu_context = $dbi('menu_context');
+        menu_context.find({
+            'name' : 'admin'
+        }, function(err, menu_contexts) {
             if (err) {
                 self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
                 self.callback();
             } else {
-                self.response.message.error = false;
-                self.response.message.data.records = results;
-                self.response.message.data.structure = $cache.get('schema.' + params.table);
-                self.response.message.data.installedPlugins = $server.plugin_manager.installedPlugins;
-                self.callback();
+                var menu_group = $dbi('menu_group');
+                menu_group.find({
+                    'menu_context' : menu_contexts[0]._id,
+                }, function(err, menu_groups) {
+                    var menu_item = $dbi('menu_item');
+                    menu_item.find({
+                        // 'menu_group' : menu_groups 
+                    }, function(err, menu_items) {
+                        if (err) {
+                            self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
+                            self.callback();
+                        } else {
+                            self.response.message.error = false;
+                            self.response.message.data.menu_groups = menu_groups;
+                            self.response.message.data.menu_items = menu_items;
+                            self.callback();
+                        }
+                    });
+                });
             }
         });
     };

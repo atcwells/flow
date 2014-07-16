@@ -8,23 +8,24 @@ function(Hook) {
         },
         link : function(scope, element, attributes) {
             scope.adminMenuGroups = [];
-            Hook('system/getAdminInfo', {}).then(function(data) {
-                angular.forEach(data.records, function(link) {
-                    if (link.menu_group === "") {
+            scope.refreshMenu = function(){
+                Hook('system/getAdminInfo', {}).then(function(data) {
+                    scope.adminMenuGroups = [];
+                    angular.forEach(data.menu_groups, function(group) {
                         var menuItem = {
-                            heading : link.name,
+                            heading : group.name,
                             submenuItems : []
                         };
-                        angular.forEach(data.records, function(submenuLink) {
-                            if (submenuLink.menu_group === link.name) {
-                                menuItem.submenuItems.push(submenuLink);
+                        angular.forEach(data.menu_items, function(menu_item) {
+                            if (menu_item.menu_group === group._id) {
+                                menuItem.submenuItems.push(menu_item);
                             }
                         });
                         scope.adminMenuGroups.push(menuItem);
-                        scope.installedPlugins = data.installedPlugins;
-                    }
-                });
-            });
+                    });
+                }); 
+            };
+            scope.refreshMenu();
         }
     };
 }]);

@@ -1,5 +1,5 @@
 {
-    "schema": "link",
+    "schema": "menu_item",
     "record": {
         "_id": "538ce84d23dbeed3a037e1ab",
         "name": "View Editor",

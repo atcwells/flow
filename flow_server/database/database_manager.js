@@ -69,14 +69,14 @@
         } else {
             var schemaFile = new $dir.json_file(self.schemaPath + schemaName + '.json');
             _.each(schemaFields, function(field, fieldName) {
-            	_.each(field, function(property, propertyName){
-            		if(property === true){
-            			schemaFields[fieldName][propertyName] = "true";
-            		}
-            		if(property === false){
-            			schemaFields[fieldName][propertyName] = "false";
-            		}
-            	});
+                _.each(field, function(property, propertyName) {
+                    if (property === true) {
+                        schemaFields[fieldName][propertyName] = "true";
+                    }
+                    if (property === false) {
+                        schemaFields[fieldName][propertyName] = "false";
+                    }
+                });
             });
             schemaFile.contents = {
                 name : schemaName,

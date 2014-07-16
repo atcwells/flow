@@ -3,7 +3,6 @@
     schema_manager.prototype.getMandatoryComponents = function() {
         var self = this;
         ['_mandatory_fields', '_mandatory_properties'].forEach(function(element, index) {
-            self[element] = new $dir.json_file(self.schemaPath + element + '.json').readFile().contents;
             var cachedElement = {
                 database_config : {}
             };
@@ -16,15 +15,11 @@
     schema_manager.prototype.getDecorators = function() {
         var self = this;
         ['_getters', '_setters', '_defaults', '_validators'].forEach(function(element, index) {
-            self[element] = new $dir.javascript_file(self.schemaPath + element + '.js').readFile().func;
             var cachedElement = {
                 database_config : {}
             };
             self._log.info('Caching ' + element + ' for database schema');
-            cachedElement.database_config[element] = {};
-            for (var key in self[element]) {
-                cachedElement.database_config[element][key] = self[element][key];
-            }
+            cachedElement.database_config[element] = new $dir.javascript_file(self.schemaPath + element + '.js').readFile().func;
             $cache.set(cachedElement);
         });
     };
@@ -34,7 +29,8 @@
         if (!schemaDefinition.fields) {
             schemaDefinition.fields = {};
         }
-        _.each(self._mandatory_fields, function(mandatoryField, fieldName) {
+        var mandatoryFields = $cache.get('database_config._mandatory_fields');
+        _.each(mandatoryFields, function(mandatoryField, fieldName) {
             if (!schemaDefinition.fields[fieldName]) {
                 var field = {};
                 field[fieldName] = mandatoryField;
@@ -45,7 +41,8 @@
 
     schema_manager.prototype.decorateMandatoryProperties = function(schemaDefinition) {
         var self = this;
-        _.each(self._mandatory_properties, function(property, propertyName) {
+        var mandatoryProperties = $cache.get('database_config._mandatory_properties');
+        _.each(mandatoryProperties, function(property, propertyName) {
             _.each(schemaDefinition.fields, function(field, fieldName) {
                 if (!field[propertyName]) {
                     schemaDefinition.fields[fieldName][propertyName] = property;
@@ -58,15 +55,17 @@
         var self = this;
         _.each(schemaDefinition.fields, function(field, fieldName) {
             ['_getters', '_setters', '_defaults', '_validators'].forEach(function(element, index) {
-                if (self[element] && self[element][field.type]) {
+                var extra = $cache.get('database_config.' + element);
+                var fieldType = '_' + field.type;
+                if (extra && extra[fieldType]) {
                     if (element === '_validators') {
-                        schemaDefinition.fields[fieldName].validate = field.type;
+                        schemaDefinition.fields[fieldName].validate = fieldType;
                     } else if (element === '_defaults') {
-                        schemaDefinition.fields[fieldName]['default'] = field.type;
+                        schemaDefinition.fields[fieldName]['default'] = fieldType;
                     } else if (element === '_setters') {
-                        schemaDefinition.fields[fieldName].set = field.type;
+                        schemaDefinition.fields[fieldName].set = fieldType;
                     } else if (element === '_getters') {
-                        schemaDefinition.fields[fieldName].get = field.type;
+                        schemaDefinition.fields[fieldName].get = fieldType;
                     }
                 } else {
                     if (element === '_validators' && schemaDefinition.fields[fieldName].validate) {

@@ -8,61 +8,50 @@
             "read_only": "false",
             "mandatory": "false",
             "visible": "true",
-            "get": "string",
-            "set": "string",
-            "validate": "string"
+            "set": "_string",
+            "validate": "_string",
+            "get": "_string"
         },
         "controller": {
             "type": "string",
             "read_only": "false",
             "mandatory": "true",
             "visible": "true",
-            "get": "string",
-            "set": "string",
-            "validate": "string",
             "description": "The Angular controller used for this Route.",
-            "display_name": "Controller"
-        },
-        "link": {
-            "type": "objectid",
-            "ref": "Link",
-            "read_only": "false",
-            "mandatory": "false",
-            "visible": "true",
-            "get": "objectid",
-            "set": "objectid",
-            "validate": "objectid",
-            "description": "The link by which this route is called.",
-            "display_name": "Link"
+            "display_name": "Controller",
+            "set": "_string",
+            "validate": "_string",
+            "get": "_string"
         },
         "name": {
             "type": "string",
             "visible": "true",
             "mandatory": "true",
             "read_only": "false",
-            "get": "string",
-            "set": "string",
-            "validate": "string",
-            "display_name": "Name"
+            "display_name": "Name",
+            "set": "_string",
+            "validate": "_string",
+            "get": "_string"
         },
         "display_name": {
             "type": "string",
             "visible": "true",
             "mandatory": "true",
             "read_only": "false",
-            "get": "string",
-            "set": "string",
-            "validate": "string",
             "description": "",
-            "display_name": "Display Name"
+            "display_name": "Display Name",
+            "set": "_string",
+            "validate": "_string",
+            "get": "_string"
         },
         "_created_on": {
             "type": "date",
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "default": "date",
-            "display_name": "Created On"
+            "display_name": "Created On",
+            "default": "_date",
+            "get": "_date"
         },
         "_created_by": {
             "type": "objectid",
@@ -70,19 +59,20 @@
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "get": "objectid",
-            "set": "objectid",
-            "validate": "objectid",
-            "display_name": "Created By"
+            "display_name": "Created By",
+            "set": "_objectid",
+            "validate": "_objectid",
+            "get": "_objectid"
         },
         "_updated_on": {
             "type": "date",
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "default": "date",
             "description": "Updated Last",
-            "display_name": "Updated On"
+            "display_name": "Updated On",
+            "default": "_date",
+            "get": "_date"
         },
         "_updated_by": {
             "type": "objectid",
@@ -90,10 +80,10 @@
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "get": "objectid",
-            "set": "objectid",
-            "validate": "objectid",
-            "display_name": "Updated By"
+            "display_name": "Updated By",
+            "set": "_objectid",
+            "validate": "_objectid",
+            "get": "_objectid"
         }
     }
 }

@@ -15,6 +15,16 @@ return function schema(response, callback) {
             self.callback();
         }
     };
+    
+    self.getFieldTypes = function(params) {
+        self.response.message.error = false;
+        self.response.message.data.fieldTypes = $cache.get('database_config._field_types');
+        self.response.message.data._getters = $server.asset_manager.get($cache.get('database_config.schema_directory') + '_getters.js').contents;
+        self.response.message.data._setters = $server.asset_manager.get($cache.get('database_config.schema_directory') + '_setters.js').contents;
+        self.response.message.data._defaults = $server.asset_manager.get($cache.get('database_config.schema_directory') + '_defaults.js').contents;
+        self.response.message.data._validators = $server.asset_manager.get($cache.get('database_config.schema_directory') + '_validators.js').contents;
+        self.callback();
+    };
 
     self.getSchemaNames = function(params) {
         self.response.message.data.schemaNames = self._getSchemaNames();

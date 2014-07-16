@@ -5,17 +5,29 @@ return function data(response, callback) {
 
     self.read = function(params) {
         var table = $dbi(params.table);
-        table.find(params.queryFields, function(err, results) {
-            if (err) {
-                self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
-                self.callback();
-            } else {
-                self.response.message.error = false;
-                self.response.message.data.records = results;
-                self.response.message.data.structure = $cache.get('schema.' + params.table);
-                self.callback();
-            }
+        var tableSchema = $cache.get('schema.' + params.table);
+        var populationFields = "";
+        _.each(tableSchema.fields, function(field, fieldName){
+        	if(field.ref){
+        		populationFields = (populationFields.length > 0) ? populationFields + " " + fieldName : fieldName;
+        	}
         });
+        if (!table) {
+            self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
+            self.callback();
+        } else {
+            table.find(params.queryFields).populate(populationFields).exec(function(err, results) {
+                if (err) {
+                    self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
+                    self.callback();
+                } else {
+                    self.response.message.error = false;
+                    self.response.message.data.records = results;
+                    self.response.message.data.structure = $cache.get('schema.' + params.table);
+                    self.callback();
+                }
+            });
+        }
     };
 
     self.readDistinct = function(params) {
@@ -49,13 +61,13 @@ return function data(response, callback) {
                     record.save(function(error, result) {
                         if (error) {
                             self.response.message.errorMessage = 'ERROR: Unable to save record with id:' + params.queryFields._id;
-                            if(error.message){
-                            	self.response.message.errorMessage = error.message;
-                            	self.response.message.errorData = error.errors;
+                            if (error.message) {
+                                self.response.message.errorMessage = error.message;
+                                self.response.message.errorData = error.errors;
                             }
                             self.callback();
                         } else {
-                        	self.response.message.data.record = result;
+                            self.response.message.data.record = result;
                             self.response.message.error = false;
                             self.callback();
                         }

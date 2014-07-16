@@ -6,48 +6,49 @@
             "visible": "true",
             "mandatory": "true",
             "read_only": "false",
-            "get": "string",
-            "set": "string",
-            "validate": "string",
-            "display_name": "Name"
+            "display_name": "Name",
+            "get": "_string",
+            "set": "_string",
+            "validate": "_string"
         },
         "group": {
             "type": "string",
             "visible": "true",
             "mandatory": "true",
             "read_only": "false",
-            "get": "string",
-            "set": "string",
-            "validate": "string",
-            "display_name": "Group"
+            "display_name": "Group",
+            "get": "_string",
+            "set": "_string",
+            "validate": "_string"
         },
         "value": {
             "type": "string",
             "visible": "true",
             "mandatory": "true",
             "read_only": "false",
-            "get": "string",
-            "set": "string",
-            "validate": "string",
-            "display_name": "Value"
+            "display_name": "Value",
+            "get": "_string",
+            "set": "_string",
+            "validate": "_string"
         },
         "display_name": {
             "type": "string",
             "visible": "true",
             "mandatory": "true",
             "read_only": "false",
-            "get": "string",
-            "set": "string",
-            "validate": "string",
-            "display_name": "Display Name"
+            "display_name": "Display Name",
+            "get": "_string",
+            "set": "_string",
+            "validate": "_string"
         },
         "_created_on": {
             "type": "date",
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "default": "date",
-            "display_name": "Created On"
+            "display_name": "Created On",
+            "get": "_date",
+            "default": "_date"
         },
         "_created_by": {
             "type": "objectid",
@@ -55,18 +56,19 @@
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "get": "objectid",
-            "set": "objectid",
-            "validate": "objectid",
-            "display_name": "Created By"
+            "display_name": "Created By",
+            "get": "_objectid",
+            "set": "_objectid",
+            "validate": "_objectid"
         },
         "_updated_on": {
             "type": "date",
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "default": "date",
-            "display_name": "Updated Last"
+            "display_name": "Updated Last",
+            "get": "_date",
+            "default": "_date"
         },
         "_updated_by": {
             "type": "objectid",
@@ -74,10 +76,10 @@
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "get": "objectid",
-            "set": "objectid",
-            "validate": "objectid",
-            "display_name": "Updated By"
+            "display_name": "Updated By",
+            "get": "_objectid",
+            "set": "_objectid",
+            "validate": "_objectid"
         }
     }
 }

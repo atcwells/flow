@@ -1,4 +1,4 @@
-var newViewModalController = function($scope, $modalInstance, objectType) {
+var enterNameModalController = function($scope, $modalInstance, objectType) {
     $scope.objectType = objectType;
     $scope.input = {};
     $scope.ok = function() {

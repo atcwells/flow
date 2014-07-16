@@ -33,7 +33,7 @@ function(Hook, $scope, toaster, $routeParams, $modal) {
 
     self.createView = function() {
         var modalInstance = $modal.open({
-            templateUrl : 'view/modal_enterName.html',
+            templateUrl : 'view/modal_newView.html',
             controller : newViewModalController,
             resolve : {
                 objectType : function() {
@@ -42,9 +42,12 @@ function(Hook, $scope, toaster, $routeParams, $modal) {
             }
         });
 
-        modalInstance.result.then(function(newViewName) {
+        modalInstance.result.then(function(newView) {
             Hook('view/createView', {
-                name : newViewName,
+                name : newView.name,
+                route_url : newView.route_url,
+                route_template : newView.route_template,
+                route_controller : newView.route_controller,
             }).then(function(data) {
                 var newView = {
                     path : data.view.filePath,

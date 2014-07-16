@@ -67,6 +67,9 @@ function(Hook, $scope, toaster, $routeParams) {
                     if (fieldName === 'name') {
                         structureObject.cellTemplate = '<div class="ngCellText" ng-class="col.colIndex()"><a href="#/record_form/{{recordList.recordTable}}/{{row.entity._id}}">{{COL_FIELD}}</a></div>';
                     }
+                    if (field.ref) {
+                        structureObject.cellTemplate = '<div class="ngCellText" ng-class="col.colIndex()"><a href="#/record_form/' + field.ref + '/{{COL_FIELD._id}}">{{COL_FIELD.display_name}}</a></div>';
+                    }
                     self.columnDefinitions.push(structureObject);
                 }
             });

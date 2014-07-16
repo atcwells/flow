@@ -6,55 +6,57 @@
             "read_only": "false",
             "mandatory": "true",
             "visible": "true",
-            "get": "string",
-            "set": "string",
-            "validate": "string",
-            "display_name": "Username"
+            "display_name": "Username",
+            "set": "_string",
+            "validate": "_string",
+            "get": "_string"
         },
         "name": {
             "type": "string",
             "read_only": "true",
             "mandatory": "false",
             "visible": "true",
-            "get": "string",
-            "set": "string",
-            "validate": "string",
-            "display_name": "Name"
+            "display_name": "Name",
+            "set": "_string",
+            "validate": "_string",
+            "get": "_string"
         },
         "email": {
             "type": "email",
             "read_only": "false",
             "mandatory": "false",
             "visible": "true",
-            "default": "email",
-            "validate": "email",
-            "display_name": "Email"
+            "display_name": "Email",
+            "default": "_email",
+            "validate": "_email"
         },
         "display_name": {
             "type": "string",
             "read_only": "false",
             "mandatory": "false",
             "visible": "true",
-            "get": "string",
-            "set": "string",
-            "validate": "string",
-            "display_name": "Dislplay Name"
+            "display_name": "Dislplay Name",
+            "set": "_string",
+            "validate": "_string",
+            "get": "_string"
         },
         "_created_on": {
             "type": "date",
             "read_only": "true",
             "mandatory": "false",
             "visible": "true",
-            "default": "date",
-            "display_name": "Created On"
+            "display_name": "Created On",
+            "default": "_date",
+            "get": "_date"
         },
         "_updated_on": {
             "type": "date",
             "read_only": "true",
             "mandatory": "false",
             "visible": "true",
-            "default": "date",
-            "display_name": "Updated Last"
+            "display_name": "Updated Last",
+            "default": "_date",
+            "get": "_date"
         },
         "_updated_by": {
             "type": "objectid",
@@ -62,10 +64,10 @@
             "read_only": "true",
             "mandatory": "false",
             "visible": "true",
-            "get": "objectid",
-            "set": "objectid",
-            "validate": "objectid",
-            "display_name": "Updated By"
+            "display_name": "Updated By",
+            "set": "_objectid",
+            "validate": "_objectid",
+            "get": "_objectid"
         },
         "_created_by": {
             "type": "objectid",
@@ -73,10 +75,10 @@
             "visible": "false",
             "mandatory": "false",
             "read_only": "true",
-            "get": "objectid",
-            "set": "objectid",
-            "validate": "objectid",
-            "display_name": "Created By"
+            "display_name": "Created By",
+            "set": "_objectid",
+            "validate": "_objectid",
+            "get": "_objectid"
         },
         "password": {
             "type": "password",

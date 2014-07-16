@@ -2,7 +2,7 @@ return function view(response, callback) {
     var self = this;
     self.response = response;
     self.callback = callback;
-
+    self.vas = /[A-Z]/g;
     self.getView = function(params) {
         var view = $server.asset_manager.get(params.view);
         if (view) {
@@ -66,10 +66,25 @@ return function view(response, callback) {
             var controller = new $dir.file('./flow_client/controllers/controller_' + params.name + '.js');
             controller.contents = "angular.module('<%= $cache.get(\"instance_config.name\") %>').controller('" + params.name + "', [\nfunction() {\n}]);";
             controller.writeFile();
-            self.response.message.error = false;
-            self.response.message.data.view = file;
-            self.response.message.data.controller = controller;
-            self.callback();
+            var Route = $dbi('angular_route');
+            var newRoute = Route({
+                templateUrl : params.route_template,
+                // link : params.route_url,
+                controller : params.route_controller,
+                name : params.route_url
+            });
+            newRoute.save(function(err, result) {
+                if (err) {
+                    self.response.message.error = true;
+                    self.response.message.errorMessage = "ERROR: Unable to save route: " + err;
+                    self.callback();
+                } else {
+                    self.response.message.error = false;
+                    self.response.message.data.view = file;
+                    self.response.message.data.controller = controller;
+                    self.callback();
+                }
+            });
         } catch (error) {
             self.response.message.error = true;
             self.response.message.errorMessage = "ERROR: Unable to save view: " + params;

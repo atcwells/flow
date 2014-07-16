@@ -1,5 +1,5 @@
 {
-    "schema": "link",
+    "schema": "menu_item",
     "record": {
         "_id": "538ce7a123dbeed3a037e1a7",
         "name": "Manage Routes",

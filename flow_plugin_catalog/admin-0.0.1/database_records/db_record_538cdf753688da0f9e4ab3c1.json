@@ -1,5 +1,5 @@
 {
-    "schema": "link",
+    "schema": "menu_item",
     "record": {
         "_id": "538cdf753688da0f9e4ab3c1",
         "name": "Cache Inspect",

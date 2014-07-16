@@ -2,10 +2,7 @@
 	<div class="list-group">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h4>Administration</h4>
-				<select class="form-control" ng-model="activePlugin">
-					<option ng-repeat="(name, plugin) in installedPlugins" value="{{name}}" ng-selected="{{activePlugin === name}}">{{name}}</option>
-				</select>
+				<h4>Administration <a ng-click="refreshMenu()"><span class="glyphicon glyphicon-refresh"></span></a></h4>
 			</div>
 			<div class="panel-body">
 				<accordion close-others="true">

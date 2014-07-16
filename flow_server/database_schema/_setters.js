@@ -1,14 +1,12 @@
 return new Object({
-    objectid : function(value) {
-    	console.log('_setter:objectid:' + value);
+    _objectid : function(value) {
         if (value === "") {
             return null;
         } else {
 			return value;
         }
     },
-    string : function(value) {
-    	console.log('_setter:string:' + value);
+    _string : function(value) {
     	return value;
     }
 });

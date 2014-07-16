@@ -1,10 +1,11 @@
 return new Object({
-    objectid : function(value) {
-    	console.log('_getter:objectid:' + value);
+    _objectid : function(value) {
         return value;
     },
-    string : function(value) {
-    	console.log('_getter:string:' + value);
-		return value;
+    _string : function(value) {
+        return value;
+    },
+    _date : function(value) {
+        return value;
     }
 });

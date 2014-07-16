@@ -1,5 +1,5 @@
 {
-    "schema": "link",
+    "schema": "menu_item",
     "record": {
         "_id": "538ce87b23dbeed3a037e1ac",
         "name": "Data Administration",

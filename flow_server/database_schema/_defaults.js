@@ -1,8 +1,8 @@
 return new Object({
-    email : function(value) {
+    _email : function(value) {
         return true;
     },
-    date : function() {
+    _date : function() {
         return Date.now();
     }
 });

@@ -1,5 +1,5 @@
 {
-    "schema": "link",
+    "schema": "menu_item",
     "record": {
         "_id": "53886c834c3209d7c3401b3c",
         "name": "Manage Schemas",

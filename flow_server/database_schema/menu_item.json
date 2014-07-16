@@ -1,57 +1,50 @@
 {
-    "name": "link",
+    "name": "menu_item",
     "fields": {
         "href": {
             "type": "string",
             "read_only": "false",
             "mandatory": "false",
             "visible": "true",
-            "get": "string",
-            "set": "string",
-            "validate": "string"
+            "set": "_string",
+            "validate": "_string",
+            "get": "_string"
         },
         "name": {
             "type": "string",
             "visible": "true",
             "mandatory": "true",
             "read_only": "false",
-            "get": "string",
-            "set": "string",
-            "validate": "string"
-        },
-        "menu_context": {
-            "type": "string",
-            "visible": "true",
-            "mandatory": "true",
-            "read_only": "false",
-            "get": "string",
-            "set": "string",
-            "validate": "string"
+            "set": "_string",
+            "validate": "_string",
+            "get": "_string"
         },
         "menu_group": {
-            "type": "string",
+            "type": "objectid",
             "visible": "true",
             "mandatory": "false",
             "read_only": "false",
-            "get": "string",
-            "set": "string",
-            "validate": "string"
+            "ref": "menu_group",
+            "set": "_objectid",
+            "validate": "_objectid",
+            "get": "_objectid"
         },
         "display_name": {
             "type": "string",
             "visible": "false",
             "mandatory": "true",
             "read_only": "false",
-            "get": "string",
-            "set": "string",
-            "validate": "string"
+            "set": "_string",
+            "validate": "_string",
+            "get": "_string"
         },
         "_created_on": {
             "type": "date",
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "default": "date"
+            "default": "_date",
+            "get": "_date"
         },
         "_created_by": {
             "type": "objectid",
@@ -59,16 +52,17 @@
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "get": "objectid",
-            "set": "objectid",
-            "validate": "objectid"
+            "set": "_objectid",
+            "validate": "_objectid",
+            "get": "_objectid"
         },
         "_updated_on": {
             "type": "date",
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "default": "date"
+            "default": "_date",
+            "get": "_date"
         },
         "_updated_by": {
             "type": "objectid",
@@ -76,9 +70,9 @@
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "get": "objectid",
-            "set": "objectid",
-            "validate": "objectid"
+            "set": "_objectid",
+            "validate": "_objectid",
+            "get": "_objectid"
         }
     }
 }

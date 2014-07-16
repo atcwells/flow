@@ -33,9 +33,9 @@
         var fieldTypes = new $dir.json_file(this.schemaPath + '_field_types.json').readFile().contents;
         var fields = {};
         $cache.set({
-        	database_config: {
-        		_field_types: fieldTypes
-        	}
+            database_config : {
+                _field_types : fieldTypes
+            }
         });
         _.each(schemaFields, function(schemaField, fieldName) {
             var field = schemaField;
@@ -58,7 +58,7 @@
     };
 
     mongodb.prototype.flushSchema = function(schemaName) {
-    	this._log.info('Flushing schema with name [' + schemaName + ']');
+        this._log.info('Flushing schema with name [' + schemaName + ']');
         if (this.mongoose.connection.base.collections && this.mongoose.connection.base.collections[schemaName]) {
             delete this.mongoose.connection.base.collections[schemaName];
         }
@@ -79,7 +79,7 @@
             var dbName = $cache.get('database_config.name');
             mongoUrl = 'mongodb://' + host + '/' + dbName;
         }
-        
+
         this.mongoose = require('mongoose');
         this.mongoose.connect(mongoUrl);
         this.generator = require('mongoose-gen');

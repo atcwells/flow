@@ -16,11 +16,12 @@ function(Hook, $routeParams, $compile, $scope, $timeout) {
                 return;
             }
             self.record = data.records[0];
+            console.log(data);
             self.originalRecord = angular.copy(data.records[0]);
             self.structure = data.structure;
             $timeout(function() {
                 for (var field in self.structure.fields) {
-                    if (!self.record[field]) {
+                    if (!self.record && !self.record[field]) {
                         self.record[field] = "";
                     }
                     if (self.structure.fields[field].visible == 'true') {
