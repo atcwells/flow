@@ -2,12 +2,11 @@ angular.module('<%= $cache.get("instance_config.name") %>').controller('adminFie
 function(Hook) {
 	var self = this;
 	self.fieldTypes = [];
-    self.selectedFieldName = {};
+    self.selectedFieldName = "";
     self.selectedField = {};
 	
     Hook('schema/getFieldTypes', {
     }).then(function(data) {
-        console.log(self._getters['objectid'].toString());
         self.fieldTypes = data.fieldTypes;
         self._getters = new Function(data._getters)();
         self._setters = new Function(data._setters)();
