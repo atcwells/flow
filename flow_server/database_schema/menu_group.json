@@ -8,7 +8,8 @@
             "read_only": "false",
             "set": "_string",
             "validate": "_string",
-            "get": "_string"
+            "get": "_string",
+            "display_name": "Name"
         },
         "display_name": {
             "type": "string",
@@ -17,7 +18,8 @@
             "read_only": "false",
             "set": "_string",
             "validate": "_string",
-            "get": "_string"
+            "get": "_string",
+            "display_name": "Display Name"
         },
         "_created_on": {
             "type": "date",
@@ -25,17 +27,8 @@
             "mandatory": "true",
             "read_only": "true",
             "default": "_date",
-            "get": "_date"
-        },
-        "_created_by": {
-            "type": "objectid",
-            "ref": "user",
-            "visible": "false",
-            "mandatory": "true",
-            "read_only": "true",
-            "set": "_objectid",
-            "validate": "_objectid",
-            "get": "_objectid"
+            "get": "_date",
+            "display_name": "Created On"
         },
         "_updated_on": {
             "type": "date",
@@ -43,7 +36,8 @@
             "mandatory": "true",
             "read_only": "true",
             "default": "_date",
-            "get": "_date"
+            "get": "_date",
+            "display_name": "Updated On"
         },
         "_updated_by": {
             "type": "objectid",
@@ -53,7 +47,8 @@
             "read_only": "true",
             "set": "_objectid",
             "validate": "_objectid",
-            "get": "_objectid"
+            "get": "_objectid",
+            "display_name": "Updated By"
         },
         "menu_context": {
             "type": "objectid",
@@ -63,7 +58,18 @@
             "mandatory": "false",
             "set": "_objectid",
             "validate": "_objectid",
-            "get": "_objectid"
+            "get": "_objectid",
+            "display_name": "Menu Context"
+        },
+        "_created_by": {
+            "type": "objectid",
+            "ref": "user",
+            "visible": "false",
+            "mandatory": "true",
+            "read_only": "true",
+            "get": "_objectid",
+            "set": "_objectid",
+            "validate": "_objectid"
         }
     }
 }

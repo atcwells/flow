@@ -4,17 +4,25 @@ return function system(response, callback) {
     self.callback = callback;
 
     self.refreshServer = function(params) {
+        console.log('test');
+        $server.bower_manager = new $dir.bower_manager();
+        $server.angular_manager = new $dir.angular_manager();
+        $server.client_manager = new $dir.client_manager();
         $server.bower_manager.readBowerJson();
         $server.bower_manager.getDependencyFiles();
         $server.angular_manager.searchForAngularModules();
         $server.client_manager.getClientFiles();
         $server.angular_manager.searchForAngularModules($server.bower_manager.scriptDependencies);
-
-        self.response.message.error = false;
-        self.callback();
+        $server.angular_manager.getAngularRoutes(function() {
+            $server.angular_manager.getAngularConstants(function() {
+                self.response.message.error = false;
+                self.callback();
+            });
+        });
     };
 
     self.refreshAngularApplication = function(params) {
+        var self = this;
         $server.angular_manager.getAngularRoutes(function() {
             $server.angular_manager.getAngularConstants(function() {
                 self.response.message.error = false;
@@ -38,7 +46,7 @@ return function system(response, callback) {
                 }, function(err, menu_groups) {
                     var menu_item = $dbi('menu_item');
                     menu_item.find({
-                        // 'menu_group' : menu_groups 
+                        // 'menu_group' : menu_groups
                     }, function(err, menu_items) {
                         if (err) {
                             self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;

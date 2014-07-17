@@ -9,7 +9,7 @@ function route_manager() {
         }
     });
     self._event.on('asset.removed', function(asset) {
-        if ($server.expressapp) {
+        if ($server.expressapp && $server.expressapp.routes) {
             for (key in $server.expressapp.routes.get) {
                 if ($server.expressapp.routes.get[key].path + "" === '/' + asset.fileType + '/' + asset.fileName) {
                     $server.expressapp.routes.get.splice(key, 1);

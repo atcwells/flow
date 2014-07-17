@@ -10,7 +10,7 @@
 					<p>
 						When adding a new third party package, usually via Bower, it can be necessary to recalculate the Angular modules included in the platform. Currently included modules are listed below, if you believe one is missing you can try recalculation. It will take a page refresh to make the application work with the new module.
 					</p>
-					<button ng-click="adminViews.refreshAngularApplication()" class="btn btn-primary">
+					<button ng-click="adminAngular.refreshAngularApplication()" class="btn btn-primary">
 						Refresh Angular Modules
 					</button>
 				</div>
@@ -22,7 +22,7 @@
 					<p>
 						When adding new Routes, Constants or changing the very core of the application, Angular will be out of date. Use this button to recalculate the Angular page, then perform a refresh to get the new application config.
 					</p>
-					<button ng-click="adminViews.refreshServer()" class="btn btn-primary">
+					<button ng-click="adminAngular.refreshServer()" class="btn btn-primary">
 						Refresh Angular Application
 					</button>
 				</div>
