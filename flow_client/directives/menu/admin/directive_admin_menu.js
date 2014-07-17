@@ -13,7 +13,7 @@ function(Hook) {
                     scope.adminMenuGroups = [];
                     angular.forEach(data.menu_groups, function(group) {
                         var menuItem = {
-                            heading : group.name,
+                            heading : group.display_name,
                             submenuItems : []
                         };
                         angular.forEach(data.menu_items, function(menu_item) {
