@@ -3,7 +3,7 @@ angular.module("<%= $cache.get('instance_config.name') %>").directive('inputPass
 function(Hook) {
     return {
         restrict : 'EAC',
-        templateUrl : '/view/largestring.html',
+        templateUrl : '/view/password.html',
         scope : {
             jsonData : '=',
             fieldName : '=',
