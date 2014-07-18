@@ -27,11 +27,11 @@ route_manager.prototype.utilRoutes = function() {
         res.writeHead(200, {
             'content-type' : 'text/html'
         });
-        // if (req.session.role != 'admin') {
+        if (req.session.role === 'admin') {
             var response = _.template($server.asset_manager.get('./flow_client/plugins/admin/views/adminIndex.html').contents);
-        // } else {
-            // var response = _.template($server.asset_manager.get('./flow_client/plugins/system/views/index.html').contents);
-        // }
+        } else {
+            var response = _.template($server.asset_manager.get('./flow_client/plugins/system/views/index.html').contents);
+        }
         res.end(response());
     };
 
@@ -95,8 +95,6 @@ route_manager.prototype.setup = function() {
     self.staticAssetRoutes();
     self.getAPIRoutes();
 
-    // new _dir.SessionManager();
-
     var settings = {
         cookie_secret : 'killthecat',
         db : 'test'
@@ -116,8 +114,16 @@ route_manager.prototype.setup = function() {
     $server.expressapp.use(passport.initialize());
     $server.expressapp.use(passport.session());
 
+    passport.serializeUser(function(user, done) {
+        done(null, user);
+    });
+
+    passport.deserializeUser(function(user, done) {
+        done(null, user);
+    });
+
     passport.use(new LocalStrategy(function(username, password, done) {
-        User.findOne({
+        $dbi('user').findOne({
             username : username
         }, function(err, user) {
             if (err) {
@@ -128,11 +134,11 @@ route_manager.prototype.setup = function() {
                     message : 'Incorrect username.'
                 });
             }
-            if (!user.validPassword(password)) {
-                return done(null, false, {
-                    message : 'Incorrect password.'
-                });
-            }
+            // if (!user.validPassword(password)) {
+            // return done(null, false, {
+            // message : 'Incorrect password.'
+            // });
+            // }
             return done(null, user);
         });
     }));
@@ -141,7 +147,25 @@ route_manager.prototype.setup = function() {
         // If this function gets called, authentication was successful.
         // `req.user` contains the authenticated user.
         req.session.role = 'admin';
-        res.redirect('/');
+        var data = {
+            userId : req.user.username,
+            userRole : 'admin',
+            sessionId : req.headers.cookie
+        };
+        res.json(data);
+    });
+
+    $server.expressapp.post('/auth/logout', function(req, res) {
+        // If this function gets called, authentication was successful.
+        // `req.user` contains the authenticated user.
+        req.logout();
+        if (req.session.role) {
+            delete req.session.role;
+        }
+        res.writeHead(200, {
+            'content-type' : 'application/json'
+        });
+        res.end("logout success");
     });
 
     // Initial request path.

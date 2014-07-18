@@ -1,5 +1,6 @@
 angular.module('<%= $cache.get("instance_config.name") %>').service('Session', ['$rootScope', 'AUTH_EVENTS', 'USER_ROLES',
 function($rootScope, AUTH_EVENTS, USER_ROLES) {
+    this.userId = 'guest';
     this.create = function(sessionId, userId, userRole) {
         this.sessionId = sessionId;
         this.userId = userId;

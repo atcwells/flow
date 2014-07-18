@@ -2,11 +2,17 @@ angular.module('<%= $cache.get("instance_config.name") %>').factory('AuthService
 function($http, Session, APP_CONST, $location) {
     return {
         login : function(credentials) {
-            return $http.post(APP_CONST.serverUri + '/admin/login/' + credentials.username, credentials).then(function(res) {
+            return $http.post('/auth/login', credentials).then(function(res) {
+            	console.log(res);
                 Session.create(res.data.sessionId, res.data.userId, res.data.role);
-                $location.url('/admin/home');
+                $location.url('/');
             });
-
+        },
+        logout : function() {
+            return $http.post('/auth/logout').then(function(res) {
+                Session.destroy();
+                $location.url('/');
+            });
         },
         isAuthenticated : function() {
             return !!Session.userId;

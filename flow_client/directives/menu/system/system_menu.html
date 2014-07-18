@@ -17,10 +17,10 @@
 				<div class="col-md-4">
 					<div class="collapse navbar-collapse pull-right" id="bs-example-navbar-collapse-1">
 						<div class="btn-group navbar-btn">
-							<button type="button" class="btn btn-default">
+							<button type="button" class="btn btn-default" ng-disabled="Session.userId != 'guest'" ng-click="redirectLogin()">
 								Login
 							</button>
-							<button type="button" disabled="true" class="btn btn-default">
+							<button type="button" class="btn btn-default" ng-disabled="Session.userId == 'guest'" ng-click="logout()">
 								Logout
 							</button>
 

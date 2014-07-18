@@ -1,5 +1,5 @@
-angular.module('<%= $cache.get("instance_config.name") %>').controller('adminLogin', ['Hook', '$location', 'AuthService', '$rootScope', 'CryptoService',
-function(Hook, $location, AuthService, $rootScope, CryptoService) {
+angular.module('<%= $cache.get("instance_config.name") %>').controller('login', ['Hook', '$location', 'AuthService', '$rootScope', 'CryptoService', 'AUTH_EVENTS', 
+function(Hook, $location, AuthService, $rootScope, CryptoService, AUTH_EVENTS) {
     var self = this;
 
     self.credentials = {
@@ -14,8 +14,8 @@ function(Hook, $location, AuthService, $rootScope, CryptoService) {
         } else {
             key = String.fromCharCode(event.charCode);
         }
-        key = CryptoService.SHA3(key);
-        self.credentials.password += key.toString(CryptoService.enc.Base64);
+        key = CryptoService.SHA3(self.credentials.password + key);
+        self.credentials.password = key.toString(CryptoService.enc.Base64);
     };
 
     self.login = function() {
