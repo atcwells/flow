@@ -6,9 +6,9 @@
             "visible": "true",
             "mandatory": "true",
             "read_only": "false",
-            "set": "_string",
-            "validate": "_string",
-            "get": "_string",
+            "set": "string",
+            "validate": "string",
+            "get": "string",
             "display_name": "Name"
         },
         "display_name": {
@@ -16,9 +16,9 @@
             "visible": "true",
             "mandatory": "true",
             "read_only": "false",
-            "set": "_string",
-            "validate": "_string",
-            "get": "_string",
+            "set": "string",
+            "validate": "string",
+            "get": "string",
             "display_name": "Display Name"
         },
         "_created_on": {
@@ -26,8 +26,8 @@
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "default": "_date",
-            "get": "_date",
+            "default": "date",
+            "get": "date",
             "display_name": "Created On"
         },
         "_updated_on": {
@@ -35,8 +35,8 @@
             "visible": "true",
             "mandatory": "true",
             "read_only": "true",
-            "default": "_date",
-            "get": "_date",
+            "default": "date",
+            "get": "date",
             "display_name": "Updated On"
         },
         "_updated_by": {
@@ -45,9 +45,9 @@
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "set": "_objectid",
-            "validate": "_objectid",
-            "get": "_objectid",
+            "set": "objectid",
+            "validate": "objectid",
+            "get": "objectid",
             "display_name": "Updated By"
         },
         "menu_context": {
@@ -56,9 +56,9 @@
             "visible": "true",
             "read_only": "false",
             "mandatory": "false",
-            "set": "_objectid",
-            "validate": "_objectid",
-            "get": "_objectid",
+            "set": "objectid",
+            "validate": "objectid",
+            "get": "objectid",
             "display_name": "Menu Context"
         },
         "_created_by": {
@@ -67,9 +67,9 @@
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "get": "_objectid",
-            "set": "_objectid",
-            "validate": "_objectid"
+            "get": "objectid",
+            "set": "objectid",
+            "validate": "objectid"
         }
     }
 }

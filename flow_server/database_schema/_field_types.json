@@ -5,5 +5,7 @@
 	"web_address": "string",
 	"email": "string",
 	"objectid": "objectid",
-	"date": "date"
+	"date": "date",
+	"created": "date",
+	"updated": "date"
 }

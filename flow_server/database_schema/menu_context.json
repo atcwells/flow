@@ -6,26 +6,26 @@
             "visible": "true",
             "mandatory": "true",
             "read_only": "false",
-            "set": "_string",
-            "validate": "_string",
-            "get": "_string"
+            "set": "string",
+            "validate": "string",
+            "get": "string"
         },
         "display_name": {
             "type": "string",
             "visible": "true",
             "mandatory": "true",
             "read_only": "false",
-            "set": "_string",
-            "validate": "_string",
-            "get": "_string"
+            "set": "string",
+            "validate": "string",
+            "get": "string"
         },
         "_created_on": {
             "type": "date",
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "default": "_date",
-            "get": "_date"
+            "default": "date",
+            "get": "date"
         },
         "_created_by": {
             "type": "objectid",
@@ -33,17 +33,17 @@
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "set": "_objectid",
-            "validate": "_objectid",
-            "get": "_objectid"
+            "set": "objectid",
+            "validate": "objectid",
+            "get": "objectid"
         },
         "_updated_on": {
             "type": "date",
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "default": "_date",
-            "get": "_date"
+            "default": "date",
+            "get": "date"
         },
         "_updated_by": {
             "type": "objectid",
@@ -51,9 +51,9 @@
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "set": "_objectid",
-            "validate": "_objectid",
-            "get": "_objectid"
+            "set": "objectid",
+            "validate": "objectid",
+            "get": "objectid"
         }
     }
 }

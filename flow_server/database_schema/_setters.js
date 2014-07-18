@@ -1,12 +1,12 @@
 return new Object({
-    _objectid : function(value) {
+    objectid : function(value) {
         if (value === "") {
             return null;
         } else {
 			return value;
         }
     },
-    _string : function(value) {
+    string : function(value) {
     	return value;
     }
 });

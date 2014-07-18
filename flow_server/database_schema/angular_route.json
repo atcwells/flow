@@ -8,9 +8,9 @@
             "read_only": "false",
             "mandatory": "false",
             "visible": "true",
-            "set": "_string",
-            "validate": "_string",
-            "get": "_string"
+            "set": "string",
+            "validate": "string",
+            "get": "string"
         },
         "controller": {
             "type": "string",
@@ -19,9 +19,9 @@
             "visible": "true",
             "description": "The Angular controller used for this Route.",
             "display_name": "Controller",
-            "set": "_string",
-            "validate": "_string",
-            "get": "_string"
+            "set": "string",
+            "validate": "string",
+            "get": "string"
         },
         "name": {
             "type": "string",
@@ -29,9 +29,9 @@
             "mandatory": "true",
             "read_only": "false",
             "display_name": "Name",
-            "set": "_string",
-            "validate": "_string",
-            "get": "_string"
+            "set": "string",
+            "validate": "string",
+            "get": "string"
         },
         "display_name": {
             "type": "string",
@@ -40,9 +40,9 @@
             "read_only": "false",
             "description": "",
             "display_name": "Display Name",
-            "set": "_string",
-            "validate": "_string",
-            "get": "_string"
+            "set": "string",
+            "validate": "string",
+            "get": "string"
         },
         "_created_on": {
             "type": "date",
@@ -50,8 +50,8 @@
             "mandatory": "true",
             "read_only": "true",
             "display_name": "Created On",
-            "default": "_date",
-            "get": "_date"
+            "default": "date",
+            "get": "date"
         },
         "_created_by": {
             "type": "objectid",
@@ -60,9 +60,9 @@
             "mandatory": "true",
             "read_only": "true",
             "display_name": "Created By",
-            "set": "_objectid",
-            "validate": "_objectid",
-            "get": "_objectid"
+            "set": "objectid",
+            "validate": "objectid",
+            "get": "objectid"
         },
         "_updated_on": {
             "type": "date",
@@ -71,8 +71,8 @@
             "read_only": "true",
             "description": "Updated Last",
             "display_name": "Updated On",
-            "default": "_date",
-            "get": "_date"
+            "default": "date",
+            "get": "date"
         },
         "_updated_by": {
             "type": "objectid",
@@ -81,9 +81,9 @@
             "mandatory": "true",
             "read_only": "true",
             "display_name": "Updated By",
-            "set": "_objectid",
-            "validate": "_objectid",
-            "get": "_objectid"
+            "set": "objectid",
+            "validate": "objectid",
+            "get": "objectid"
         }
     }
 }

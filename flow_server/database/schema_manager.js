@@ -56,7 +56,7 @@
         _.each(schemaDefinition.fields, function(field, fieldName) {
             ['_getters', '_setters', '_defaults', '_validators'].forEach(function(element, index) {
                 var extra = $cache.get('database_config.' + element);
-                var fieldType = '_' + field.type;
+                var fieldType = field.type;
                 if (extra && extra[fieldType]) {
                     if (element === '_validators') {
                         schemaDefinition.fields[fieldName].validate = fieldType;

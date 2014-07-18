@@ -12,7 +12,7 @@ function(Hook, $routeParams, $compile, $scope, $timeout) {
                 _id : id
             }
         }).then(function(data) {
-            if(!data.records){
+            if (!data.records) {
                 return;
             }
             self.record = data.records[0];
@@ -20,13 +20,20 @@ function(Hook, $routeParams, $compile, $scope, $timeout) {
             self.structure = data.structure;
             $timeout(function() {
                 for (var field in self.structure.fields) {
-                    if (!self.record && !self.record[field]) {
+                    if (!self.record) {
+                        self.record = {};
+                    }
+                    if (!self.record[field]) {
                         self.record[field] = "";
                     }
                     if (self.structure.fields[field].visible == 'true') {
                         var newEl = angular.element("<div field-model='recordForm.record." + field + "' field-name='" + field + "' json-data='" + angular.toJson(self.structure.fields[field]) + "' class='input-" + self.structure.fields[field].type + "'></div>");
                         angular.element('#' + field).append(newEl);
                         $compile(newEl)($scope);
+                    } else {
+						if(self.structure.fields[field].ref){
+							self.record[field] = self.structure.fields[field]._id;
+						}
                     }
                 }
             });

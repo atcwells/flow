@@ -1,11 +1,14 @@
 return new Object({
-    _objectid : function(value) {
+    objectid : function(value) {
         return value;
     },
-    _string : function(value) {
+    string : function(value) {
         return value;
     },
-    _date : function(value) {
+    date : function(value) {
         return value;
+    },
+    password : function(value) {
+    	return "●●●●●●●●";
     }
 });

@@ -7,10 +7,10 @@ return function data(response, callback) {
         var table = $dbi(params.table);
         var tableSchema = $cache.get('schema.' + params.table);
         var populationFields = "";
-        _.each(tableSchema.fields, function(field, fieldName){
-        	if(field.ref){
-        		populationFields = (populationFields.length > 0) ? populationFields + " " + fieldName : fieldName;
-        	}
+        _.each(tableSchema.fields, function(field, fieldName) {
+            if (field.ref) {
+                populationFields = (populationFields.length > 0) ? populationFields + " " + fieldName : fieldName;
+            }
         });
         if (!table) {
             self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
@@ -21,9 +21,17 @@ return function data(response, callback) {
                     self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
                     self.callback();
                 } else {
+                    var responseResults = [];
+                    for (var key in results) {
+						var obj = results[key].toObject();
+						for (var field in obj){
+							obj[field] = results[key][field];
+						}
+						responseResults.push(obj);
+                    }
                     self.response.message.error = false;
-                    self.response.message.data.records = results;
-                    self.response.message.data.structure = $cache.get('schema.' + params.table);
+                    self.response.message.data.records = responseResults;
+                    self.response.message.data.structure = tableSchema;
                     self.callback();
                 }
             });

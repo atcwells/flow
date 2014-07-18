@@ -25,6 +25,10 @@
         this._log.info('Creating schema called ' + schemaName);
         var fields = this.convertFieldTypes(schemaFields);
         var Schema = this.generator.schema(schemaName, fields);
+        Schema.schema.pre('save', function(next) {
+            this['_updated_on'] = new Date;
+            next();
+        });
         return Schema;
     };
 
