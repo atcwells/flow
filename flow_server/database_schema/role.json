@@ -1,58 +1,31 @@
 {
-    "name": "structure",
+    "name": "role",
     "fields": {
-        "schemaName": {
-            "type": "string",
-            "read_only": "false",
-            "mandatory": "false",
-            "visible": "true",
-            "set": "string",
-            "validate": "string",
-            "get": "string"
-        },
         "name": {
             "type": "string",
             "visible": "true",
             "mandatory": "true",
             "read_only": "false",
+            "get": "string",
             "set": "string",
-            "validate": "string",
-            "get": "string"
+            "validate": "string"
         },
         "display_name": {
             "type": "string",
             "visible": "true",
             "mandatory": "true",
             "read_only": "false",
+            "get": "string",
             "set": "string",
-            "validate": "string",
-            "get": "string"
-        },
-        "mandatory": {
-            "type": "boolean",
-            "read_only": "false",
-            "mandatory": "false",
-            "visible": "true"
-        },
-        "visible": {
-            "type": "boolean",
-            "read_only": "false",
-            "mandatory": "false",
-            "visible": "true"
-        },
-        "read_only": {
-            "type": "boolean",
-            "read_only": "false",
-            "mandatory": "false",
-            "visible": "true"
+            "validate": "string"
         },
         "_created_on": {
             "type": "date",
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "default": "date",
-            "get": "date"
+            "get": "date",
+            "default": "date"
         },
         "_created_by": {
             "type": "objectid",
@@ -60,17 +33,17 @@
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
+            "get": "objectid",
             "set": "objectid",
-            "validate": "objectid",
-            "get": "objectid"
+            "validate": "objectid"
         },
         "_updated_on": {
             "type": "date",
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
-            "default": "date",
-            "get": "date"
+            "get": "date",
+            "default": "date"
         },
         "_updated_by": {
             "type": "objectid",
@@ -78,9 +51,9 @@
             "visible": "false",
             "mandatory": "true",
             "read_only": "true",
+            "get": "objectid",
             "set": "objectid",
-            "validate": "objectid",
-            "get": "objectid"
+            "validate": "objectid"
         }
     }
 }

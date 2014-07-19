@@ -4,7 +4,7 @@ function($http, Session, APP_CONST, $location) {
         login : function(credentials) {
             return $http.post('/auth/login', credentials).then(function(res) {
             	console.log(res);
-                Session.create(res.data.sessionId, res.data.userId, res.data.role);
+                Session.create('test', credentials.username, 'admin');
                 $location.url('/');
             });
         },

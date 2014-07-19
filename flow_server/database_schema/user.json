@@ -87,6 +87,18 @@
             "mandatory": "false",
             "display_name": "Password",
             "get": "password"
+        },
+        "role": {
+            "type": "objectid",
+            "ref": "role",
+            "description": "",
+            "display_name": "Role",
+            "visible": "true",
+            "read_only": "false",
+            "mandatory": "false",
+            "get": "objectid",
+            "set": "objectid",
+            "validate": "objectid"
         }
     }
 }

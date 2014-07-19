@@ -149,7 +149,7 @@ route_manager.prototype.setup = function() {
         req.session.role = 'admin';
         var data = {
             userId : req.user.username,
-            userRole : 'admin',
+            userRole : req.user.role,
             sessionId : req.headers.cookie
         };
         res.json(data);
