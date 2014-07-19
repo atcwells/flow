@@ -7,14 +7,14 @@ function($http, toaster, $log, $q, DSCacheFactory) {
         //deleteOnExpire : 'aggressive', // Items will be deleted from this cache right when they expire.
         storageMode : 'localStorage'
     });
+    var dataCache = DSCacheFactory.get('dataCache');
 
     var fire = function(hook, params, callback) {
         var start = new Date().getTime();
         var deferred = $q.defer();
-        dataCache = DSCacheFactory.get('dataCache');
         var cachedData = dataCache.get(hook + JSON.stringify(params));
         if (cachedData) {
-            toaster.pop('success', "Success", "Hook operation " + hook + " succeeded.\n Time taken for request: " + (new Date().getTime() - start) + 'ms');
+            toaster.pop('success', "Success", "Hook operation " + hook + " (from cache) succeeded.\n Time taken for request: " + (new Date().getTime() - start) + 'ms');
             deferred.resolve(cachedData.data);
         } else {
             $http({
