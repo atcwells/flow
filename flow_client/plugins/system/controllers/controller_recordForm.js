@@ -16,6 +16,7 @@ function(Hook, $routeParams, $compile, $scope, $timeout) {
                 return;
             }
             self.record = data.records[0];
+    	console.log(self.record);
             self.originalRecord = angular.copy(data.records[0]);
             self.structure = data.structure;
             $timeout(function() {
@@ -60,6 +61,7 @@ function(Hook, $routeParams, $compile, $scope, $timeout) {
             self.record = data.record;
             self.originalRecord = angular.copy(self.record);
             self.validationErrors = {};
+    	console.log(self.record);
         }, function(error) {
             self.record = angular.copy(self.originalRecord);
             self.validationErrors = error.errorData;

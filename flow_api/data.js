@@ -55,6 +55,11 @@ return function data(response, callback) {
 
     self.update = function(params) {
         var table = $dbi(params.table);
+        for(var key in params.updateFields){
+        	if(_.isObject(params.updateFields[key]) && params.updateFields[key]._id){
+        		params.updateFields[key] = params.updateFields[key]._id;
+        	}
+        }
         if (params.queryFields._id) {
             table.findOne({
                 _id : params.queryFields._id
@@ -90,6 +95,11 @@ return function data(response, callback) {
 
     self.create = function(params) {
         var table = $dbi(params.table);
+        for(var key in params.updateFields){
+        	if(_.isObject(params.updateFields[key]) && params.updateFields[key]._id){
+        		params.updateFields[key] = params.updateFields[key]._id;
+        	}
+        }
         var record = table(params.updateFields);
         record.save(function(err, result) {
             if (err) {

@@ -213,7 +213,7 @@ route_manager.prototype.setup = function() {
             response.respond();
         }
     });
-
+    
     return this;
 };
 

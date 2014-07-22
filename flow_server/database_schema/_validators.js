@@ -1,6 +1,6 @@
 return new Object({
     email : function(value) {
-        return true;
+        return false;
     },
     string : function(value) {
 		return true;

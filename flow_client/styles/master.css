@@ -1,28 +1,31 @@
 a:hover {
-	cursor: pointer;
-	text-decoration: none;
+	cursor:pointer;
+	text-decoration:none;
 }
-.ngCell > div {
-	height: 100%;
+.ngCell> div {
+	height:100%;
 }
 .cg-busy-default-sign {
-	z-index: 10;
+	z-index:10;
 }
 .ace_editor {
-	min-height: 500px;
+	min-height:500px;
 }
-.ngCellElement > .glyphicon-circle-arrow-right {
-	position: relative;
-	font-size: 1.2em;
-	top: 8px;
-	left: 4px;
+.ngCellElement> .glyphicon-circle-arrow-right {
+	position:relative;
+	font-size:1.2em;
+	top:8px;
+	left:4px;
 }
 div.ngGrid {
-	border-radius: 3px;
+	border-radius:3px;
 }
 div.select2-container {
-	height: 26px;
+	height:26px;
 }
-div.select2-container > .select2-choice{
-	height: 26px;
+div.select2-container> .select2-choice {
+	height:26px;
+}
+#content {
+	padding-top:60px;
 }

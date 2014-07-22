@@ -21,7 +21,7 @@
 			<admin-menu></admin-menu>
 		</div>
 
-		<div id="#content">
+		<div id="content">
 			<div>
 				<system-menu></system-menu>
 			</div>
@@ -33,7 +33,6 @@
 			<% _.each($cache.get('bower.script_dependencies'), function(dep){ %>
 			<script type="application/javascript" src="<%= dep %>"></script>
 			<% }) %>
-			<script type="application/javascript" src="/javascript/_validators.js"></script>
 			<script type="application/javascript" src="/javascript/application.js"></script>
 			<% _.each($server.asset_manager.getServices(), function(dep){ %>
 			<script type="application/javascript" src="/javascript/<%= dep %>"></script>

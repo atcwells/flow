@@ -11,7 +11,8 @@ angular.module('one', [
 .constant('<%= groupName %>', {
 <% _.each(constantGroup, function(constant){ %>	<%= constant.name%>: '<%= constant.value %>',
 <% }) %>})<% }) %>
+.constant('FIELD_VALIDATORS', {<% _.each($cache.get('database_config._validators'), function(validator, validatorName){ %>
+	<%= validatorName %>: <%= validator.toString() %>,
+<% }) %>})
 .run([function() {
 }]);
-
-flow = {};
