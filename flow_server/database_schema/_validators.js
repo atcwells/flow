@@ -1,6 +1,6 @@
 return new Object({
     email : function(value) {
-        return false;
+        return /\S+@\S+/.test(value);
     },
     string : function(value) {
 		return true;

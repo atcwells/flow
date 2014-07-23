@@ -123,23 +123,30 @@ route_manager.prototype.setup = function() {
     });
 
     passport.use(new LocalStrategy(function(username, password, done) {
-        $dbi('user').findOne({
-            username : username
-        }, function(err, user) {
-            if (err) {
+        var MongoClient = require('mongodb').MongoClient;
+        MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
+            if (err)
                 return done(err);
-            }
-            if (!user) {
-                return done(null, false, {
-                    message : 'Incorrect username.'
-                });
-            }
-            // if (!user.validPassword(password)) {
-            // return done(null, false, {
-            // message : 'Incorrect password.'
-            // });
-            // }
-            return done(null, user);
+
+            var collection = db.collection('users');
+            collection.find({
+                username : username
+            }).toArray(function(err, user) {
+                db.close();
+                
+                if (!user) {
+                    return done(null, false, {
+                        message : 'Incorrect username.'
+                    });
+                }
+
+                if (password !== user[0].password) {
+                    return done(null, false, {
+                        message : 'Incorrect password.'
+                    });
+                }
+                return done(null, user);
+            });
         });
     }));
 
@@ -213,7 +220,7 @@ route_manager.prototype.setup = function() {
             response.respond();
         }
     });
-    
+
     return this;
 };
 

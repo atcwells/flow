@@ -1,14 +1,12 @@
 angular.module("<%= $cache.get('instance_config.name') %>").directive('inputValidation', ['FIELD_VALIDATORS',
-function(FIELD_VALIDATORS) {
-	'use strict';
+function(FIELD_VALIDATORS) {'use strict';
 
     return {
         require : 'ngModel',
         link : function(scope, el, attrs, ctrl) {
-            console.log(attrs.inputValidation);
-
-            scope.$watch('value', function(value) {
-                applyValidity(FIELD_VALIDATORS[attrs.inputValidation], value);
+            ctrl.$parsers.unshift(function(viewValue) {
+                applyValidity(FIELD_VALIDATORS[attrs.inputValidation], viewValue);
+                return viewValue;
             });
 
             function applyValidity(validator, value) {
@@ -20,6 +18,7 @@ function(FIELD_VALIDATORS) {
                     ctrl.$setValidity('invalid-input-' + attrs.inputValidation, false);
                 }
             }
+
         }
     };
-}]); 
+}]);
