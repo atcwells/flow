@@ -2,7 +2,7 @@ angular.module('<%= $cache.get("instance_config.name") %>').factory('Hook', ['$h
 function($http, toaster, $log, $q, DSCacheFactory) {
 
     DSCacheFactory('dataCache', {
-        maxAge : 90000, // Items added to this cache expire after 15 minutes.
+        maxAge : 0, // Items added to this cache expire after 15 minutes.
         cacheFlushInterval : 600000, // This cache will clear itself every hour.
         //deleteOnExpire : 'aggressive', // Items will be deleted from this cache right when they expire.
         storageMode : 'localStorage'
@@ -13,7 +13,7 @@ function($http, toaster, $log, $q, DSCacheFactory) {
         var start = new Date().getTime();
         var deferred = $q.defer();
         var cachedData = dataCache.get(hook + JSON.stringify(params));
-        if (cachedData) {
+        if (false /*cachedData*/) {
             toaster.pop('success', "Success", "Hook operation " + hook + " (from cache) succeeded.\n Time taken for request: " + (new Date().getTime() - start) + 'ms');
             deferred.resolve(cachedData.data);
         } else {

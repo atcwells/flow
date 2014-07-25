@@ -54,6 +54,13 @@
             return $server.dbi.schema[schemaName].model;
         }
     };
+    
+    database_manager.prototype.getDBI = function(schemaName) {
+        var self = this;
+        if (schemaName && $server.dbi.schema[schemaName]) {
+            return new $dir.database_interface($server.dbi.schema[schemaName]);
+        }
+    };
 
     database_manager.prototype.alterSchema = function(schemaName, schemaFields) {
         this.removeSchema(schemaName);

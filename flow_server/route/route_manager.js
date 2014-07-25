@@ -133,13 +133,11 @@ route_manager.prototype.setup = function() {
                 username : username
             }).toArray(function(err, user) {
                 db.close();
-                
                 if (!user) {
                     return done(null, false, {
                         message : 'Incorrect username.'
                     });
                 }
-
                 if (password !== user[0].password) {
                     return done(null, false, {
                         message : 'Incorrect password.'

@@ -4,50 +4,15 @@ return function data(response, callback) {
     self.callback = callback;
 
     self.read = function(params) {
-        var table = $dbi(params.table);
-        var tableSchema = $cache.get('schema.' + params.table);
-        var populationFields = "";
-        _.each(tableSchema.fields, function(field, fieldName) {
-            if (field.ref) {
-                populationFields = (populationFields.length > 0) ? populationFields + " " + fieldName : fieldName;
-            }
-        });
-        if (!table) {
-            self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
-            self.callback();
-        } else {
-            table.find(params.queryFields).populate(populationFields).exec(function(err, results) {
-                if (err) {
-                    self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
-                    self.callback();
-                } else {
-                    var responseResults = [];
-                    for (var key in results) {
-						var obj = results[key].toObject();
-						for (var field in obj){
-							obj[field] = results[key][field];
-						}
-						responseResults.push(obj);
-                    }
-                    self.response.message.error = false;
-                    self.response.message.data.records = responseResults;
-                    self.response.message.data.structure = tableSchema;
-                    self.callback();
-                }
-            });
-        }
-    };
-
-    self.readDistinct = function(params) {
-        var table = $dbi.querySchema(params.table);
-        table.find().distinct(params.distinctField, function(err, results) {
+        var table = $dbi2(params.table);
+        table.find(params.queryFields, function(err, results) {
             if (err) {
-                self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
+                self.response.message.errorMessage = results;
                 self.callback();
             } else {
                 self.response.message.error = false;
                 self.response.message.data.records = results;
-                self.response.message.data.structure = $cache.get('schema.' + params.table);
+                self.response.message.data.structure = table.schemaDefinition;
                 self.callback();
             }
         });
@@ -55,19 +20,17 @@ return function data(response, callback) {
 
     self.update = function(params) {
         var table = $dbi(params.table);
-        for(var key in params.updateFields){
-        	if(_.isObject(params.updateFields[key]) && params.updateFields[key]._id){
-        		params.updateFields[key] = params.updateFields[key]._id;
-        	}
+        for (var key in params.updateFields) {
+            if (_.isObject(params.updateFields[key]) && params.updateFields[key]._id != undefined) {
+                params.updateFields[key] = params.updateFields[key]._id;
+            }
         }
-        if (params.queryFields._id) {
-            table.findOne({
-                _id : params.queryFields._id
-            }, function(err, record) {
-                if (err) {
-                    self.response.message.errorMessage = 'ERROR: Unable to find record with id:' + params.queryFields._id;
-                    self.callback();
-                } else {
+        table.find(params.queryFields, function(err, records) {
+            if (err) {
+                self.response.message.errorMessage = results;
+                self.callback();
+            } else {
+                records.forEach(function(record) {
                     _.each(params.updateFields, function(field, fieldName) {
                         record[fieldName] = field;
                     });
@@ -85,20 +48,17 @@ return function data(response, callback) {
                             self.callback();
                         }
                     });
-                }
-            });
-        } else {
-            self.response.message.errorMessage = 'ERROR: No _id specified, unable to update.';
-            self.callback();
-        }
+                });
+            }
+        });
     };
 
     self.create = function(params) {
         var table = $dbi(params.table);
-        for(var key in params.updateFields){
-        	if(_.isObject(params.updateFields[key]) && params.updateFields[key]._id){
-        		params.updateFields[key] = params.updateFields[key]._id;
-        	}
+        for (var key in params.updateFields) {
+            if (_.isObject(params.updateFields[key]) && params.updateFields[key]._id) {
+                params.updateFields[key] = params.updateFields[key]._id;
+            }
         }
         var record = table(params.updateFields);
         record.save(function(err, result) {

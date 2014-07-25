@@ -14,9 +14,11 @@ function(Hook, $scope, toaster, $routeParams) {
     };
 
     self.createNewRecord = function() {
+    	console.log(self.recordList);
         self.recordList.push({
             name : '...',
         });
+        // console.log(self.recordList);
     };
 
     self.selectRow = function(row) {
@@ -98,7 +100,13 @@ function(Hook, $scope, toaster, $routeParams) {
             },
             updateFields : rowEdited
         }).then(function(data) {
-        	evt.targetScope.row.entity = angular.copy(data.record);
+        	angular.forEach(self.records, function(record, index) {
+        		if(record._id = data.record._id){
+        			console.log('test');
+        			record = angular.copy(data.record);
+        		}
+        	});
+        	// evt.targetScope.row.entity = angular.copy(data.record);
         }, function(error){
         	evt.targetScope.row.entity = angular.copy(self.currentlyEditedCellValue);
         });

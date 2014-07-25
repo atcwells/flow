@@ -32,6 +32,7 @@ _flow_installer.prototype.startup = function startup() {
         installDatabaseManager : function(callback) {
             $server.dbi = new $dir.database_manager();
             $dbi = $server.dbi.querySchema;
+            $dbi2 = $server.dbi.getDBI;
             callback();
         },
     }, function() {
