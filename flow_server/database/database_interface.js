@@ -1,7 +1,8 @@
 (function() {
 
-    var database_interface = function(schema) {
+    var database_interface = function(schema, userId) {
         this.schema = schema;
+        this.userId = userId;
         this.schemaDefinition = $cache.get('schema.' + this.schema.schemaDefinition.name);
         return this;
     };
@@ -42,6 +43,11 @@
     database_interface.prototype.createRecord = function(data, callback) {
         var self = this;
         var newData = _convertObjectsToIds(data);
+        newData._updated_by = this.userId;
+        newData._created_by = this.userId;
+        if(newData.password){
+        	delete newData.password;
+        }
         var newRecord = this.schema.model(newData);
         newRecord.save(function(err, data) {
             if (err) {

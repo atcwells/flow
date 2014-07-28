@@ -2,9 +2,10 @@ return function data(response, user, callback) {
     var self = this;
     self.response = response;
     self.callback = callback;
+    self.user = user;
 
     self.read = function(params) {
-        var table = $dbi2(params.table);
+        var table = $dbi2(params.table, self.user._id);
         table.find(params.queryFields, function(err, results) {
             if (err) {
                 self.response.message.errorMessage = results;
@@ -22,7 +23,7 @@ return function data(response, user, callback) {
         var table = $dbi(params.table);
         for (var key in params.updateFields) {
             if (_.isObject(params.updateFields[key]) && params.updateFields[key]._id == null) {
-				params.updateFields[key] = '';
+                params.updateFields[key] = '';
             } else if (_.isObject(params.updateFields[key]) && params.updateFields[key]._id != undefined) {
                 params.updateFields[key] = params.updateFields[key]._id;
             }
@@ -36,7 +37,13 @@ return function data(response, user, callback) {
                     _.each(params.updateFields, function(field, fieldName) {
                         record[fieldName] = field;
                     });
+                    record._updated_by = self.user._id;
+                    if (record.password) {
+                        delete newData.password;
+                    }
                     record.save(function(error, result) {
+                        console.log(error);
+                        console.log(result);
                         if (error) {
                             self.response.message.errorMessage = 'ERROR: Unable to save record with id:' + params.queryFields._id;
                             if (error.message) {
@@ -45,9 +52,12 @@ return function data(response, user, callback) {
                             }
                             self.callback();
                         } else {
-                            self.response.message.data.records = [result];
-                            self.response.message.error = false;
-                            self.callback();
+                            self.read({
+                                table : params.table,
+                                queryFields : {
+                                    _id : result._id
+                                }
+                            });
                         }
                     });
                 });
@@ -56,7 +66,7 @@ return function data(response, user, callback) {
     };
 
     self.create = function(params) {
-        var table = $dbi2(params.table);
+        var table = $dbi2(params.table, self.user._id);
         table.createRecord(params.updateFields, function(err, result) {
             if (err) {
                 self.response.message.errorMessage = result;
@@ -70,7 +80,7 @@ return function data(response, user, callback) {
     };
 
     self.remove = function(params) {
-        var table = $dbi2(params.table);
+        var table = $dbi2(params.table, self.user._id);
         table.deleteRecords(params.queryFields, function(err, result) {
             if (err) {
                 self.response.message.errorMessage = result;

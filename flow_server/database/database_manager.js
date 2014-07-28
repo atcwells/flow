@@ -55,10 +55,10 @@
         }
     };
     
-    database_manager.prototype.getDBI = function(schemaName) {
+    database_manager.prototype.getDBI = function(schemaName, userId) {
         var self = this;
         if (schemaName && $server.dbi.schema[schemaName]) {
-            return new $dir.database_interface($server.dbi.schema[schemaName]);
+            return new $dir.database_interface($server.dbi.schema[schemaName], userId);
         }
     };
 

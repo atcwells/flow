@@ -27,12 +27,36 @@ route_manager.prototype.utilRoutes = function() {
         res.writeHead(200, {
             'content-type' : 'text/html'
         });
-        if (req.user.role === 'admin') {
-            var response = _.template($server.asset_manager.get('./flow_client/plugins/admin/views/adminIndex.html').contents);
+        if (req.user && req.user[0].role) {
+            var MongoClient = require('mongodb').MongoClient;
+            var BSON = require('mongodb').BSONPure;
+            var o_id = new BSON.ObjectID(req.user[0].role);
+            MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
+                if (err) {
+                    var response = _.template($server.asset_manager.get('./flow_client/plugins/system/views/index.html').contents);
+                    res.end(response());
+                }
+                var collection = db.collection('roles');
+                collection.find({
+                    _id : o_id
+                }).toArray(function(err, role) {
+                    db.close();
+                    if (!role || role.length == 0) {
+                        var response = _.template($server.asset_manager.get('./flow_client/plugins/system/views/index.html').contents);
+                        res.end(response());
+                    } else if (role[0].name === 'admin') {
+                        var response = _.template($server.asset_manager.get('./flow_client/plugins/admin/views/adminIndex.html').contents);
+                        res.end(response());
+                    } else {
+                        var response = _.template($server.asset_manager.get('./flow_client/plugins/system/views/index.html').contents);
+                        res.end(response());
+                    }
+                });
+            });
         } else {
             var response = _.template($server.asset_manager.get('./flow_client/plugins/system/views/index.html').contents);
+            res.end(response());
         }
-        res.end(response());
     };
 
     self.routes['/flushCache'] = function(req, res) {
@@ -58,7 +82,7 @@ route_manager.prototype.getAPIRoutes = function() {
     _.each(apiFiles, function(file) {
         self.apiRoutes['/api/' + file.fileName.slice(0, file.fileName.length - 3) + '/:method'] = function(request, response, next) {
             var apiFile = $server.asset_manager.get(file.filePath);
-            var api = new apiFile.func(response, request.user, next);
+            var api = new apiFile.func(response, request.user[0], next);
             api[request.params.method](request.body);
         };
     });
@@ -151,7 +175,6 @@ route_manager.prototype.setup = function() {
     $server.expressapp.post('/auth/login', passport.authenticate('local'), function(req, res) {
         // If this function gets called, authentication was successful.
         // `req.user` contains the authenticated user.
-        req.session.role = 'admin';
         var data = {
             userId : req.user.username,
             userRole : req.user.role,

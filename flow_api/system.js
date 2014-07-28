@@ -2,6 +2,7 @@ return function system(response, user, callback) {
     var self = this;
     self.response = response;
     self.callback = callback;
+    self.user = user;
 
     self.refreshServer = function(params) {
         $server.bower_manager = new $dir.bower_manager();
