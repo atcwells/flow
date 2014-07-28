@@ -27,7 +27,7 @@ route_manager.prototype.utilRoutes = function() {
         res.writeHead(200, {
             'content-type' : 'text/html'
         });
-        if (req.session.role === 'admin') {
+        if (req.user.role === 'admin') {
             var response = _.template($server.asset_manager.get('./flow_client/plugins/admin/views/adminIndex.html').contents);
         } else {
             var response = _.template($server.asset_manager.get('./flow_client/plugins/system/views/index.html').contents);
@@ -58,7 +58,7 @@ route_manager.prototype.getAPIRoutes = function() {
     _.each(apiFiles, function(file) {
         self.apiRoutes['/api/' + file.fileName.slice(0, file.fileName.length - 3) + '/:method'] = function(request, response, next) {
             var apiFile = $server.asset_manager.get(file.filePath);
-            var api = new apiFile.func(response, next);
+            var api = new apiFile.func(response, request.user, next);
             api[request.params.method](request.body);
         };
     });

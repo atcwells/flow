@@ -1,4 +1,4 @@
-return function plugin(response, callback) {
+return function plugin(response, user, callback) {
     var self = this;
     self.response = response;
     self.callback = callback;

@@ -1,4 +1,4 @@
-return function cache(response, callback) {
+return function cache(response, user, callback) {
     var self = this;
     self.response = response;
     self.callback = callback;

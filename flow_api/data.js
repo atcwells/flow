@@ -1,4 +1,4 @@
-return function data(response, callback) {
+return function data(response, user, callback) {
     var self = this;
     self.response = response;
     self.callback = callback;
@@ -21,7 +21,9 @@ return function data(response, callback) {
     self.update = function(params) {
         var table = $dbi(params.table);
         for (var key in params.updateFields) {
-            if (_.isObject(params.updateFields[key]) && params.updateFields[key]._id != undefined) {
+            if (_.isObject(params.updateFields[key]) && params.updateFields[key]._id == null) {
+				params.updateFields[key] = '';
+            } else if (_.isObject(params.updateFields[key]) && params.updateFields[key]._id != undefined) {
                 params.updateFields[key] = params.updateFields[key]._id;
             }
         }
@@ -43,7 +45,7 @@ return function data(response, callback) {
                             }
                             self.callback();
                         } else {
-                            self.response.message.data.record = result;
+                            self.response.message.data.records = [result];
                             self.response.message.error = false;
                             self.callback();
                         }
@@ -54,42 +56,29 @@ return function data(response, callback) {
     };
 
     self.create = function(params) {
-        var table = $dbi(params.table);
-        for (var key in params.updateFields) {
-            if (_.isObject(params.updateFields[key]) && params.updateFields[key]._id) {
-                params.updateFields[key] = params.updateFields[key]._id;
-            }
-        }
-        var record = table(params.updateFields);
-        record.save(function(err, result) {
+        var table = $dbi2(params.table);
+        table.createRecord(params.updateFields, function(err, result) {
             if (err) {
-                self.response.message.errorMessage = 'ERROR: Unable to save new record';
+                self.response.message.errorMessage = result;
                 self.callback();
             } else {
                 self.response.message.error = false;
-                self.response.message.data.record = result;
+                self.response.message.data.records = result;
                 self.callback();
             }
         });
     };
 
     self.remove = function(params) {
-        var table = $dbi(params.table);
-        table.findById(params.queryFields._id, function(err, record) {
-            if (err || !record) {
-                self.response.message.errorMessage = 'ERROR: Unable to find record with id: ' + params.queryFields._id;
+        var table = $dbi2(params.table);
+        table.deleteRecords(params.queryFields, function(err, result) {
+            if (err) {
+                self.response.message.errorMessage = result;
                 self.callback();
             } else {
-                record.remove(function(err, results) {
-                    if (err) {
-                        self.response.message.errorMessage = 'ERROR: Unable to delete record with id: ' + params.queryFields._id;
-                        self.callback();
-                    } else {
-                        self.response.message.error = false;
-                        self.response.message.data.records = results;
-                        self.callback();
-                    }
-                });
+                self.response.message.error = false;
+                self.response.message.data.records = result;
+                self.callback();
             }
         });
     };

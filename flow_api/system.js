@@ -1,10 +1,9 @@
-return function system(response, callback) {
+return function system(response, user, callback) {
     var self = this;
     self.response = response;
     self.callback = callback;
 
     self.refreshServer = function(params) {
-        console.log('test');
         $server.bower_manager = new $dir.bower_manager();
         $server.angular_manager = new $dir.angular_manager();
         $server.client_manager = new $dir.client_manager();

@@ -1,4 +1,4 @@
-return function view(response, callback) {
+return function view(response, user, callback) {
     var self = this;
     self.response = response;
     self.callback = callback;

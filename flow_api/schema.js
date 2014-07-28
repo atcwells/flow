@@ -1,4 +1,4 @@
-return function schema(response, callback) {
+return function schema(response, user, callback) {
     var self = this;
     self.response = response;
     self.callback = callback;

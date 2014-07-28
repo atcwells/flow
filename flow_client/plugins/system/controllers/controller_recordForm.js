@@ -57,10 +57,9 @@ function(Hook, $routeParams, $compile, $scope, $timeout) {
             },
             updateFields : self.record
         }).then(function(data) {
-            self.record = data.record;
+            self.record = data.records[0];
             self.originalRecord = angular.copy(self.record);
             self.validationErrors = {};
-    	console.log(self.record);
         }, function(error) {
             self.record = angular.copy(self.originalRecord);
             self.validationErrors = error.errorData;

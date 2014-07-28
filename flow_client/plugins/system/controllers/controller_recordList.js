@@ -1,5 +1,5 @@
-angular.module('<%= $cache.get("instance_config.name") %>').controller('recordList', ['Hook', '$scope', 'toaster', '$routeParams',
-function(Hook, $scope, toaster, $routeParams) {
+angular.module('<%= $cache.get("instance_config.name") %>').controller('recordList', ['Hook', '$scope', 'toaster', '$routeParams', '$timeout',
+function(Hook, $scope, toaster, $routeParams, $timeout) {
     var self = this;
     self.recordList = [];
     self.recordTable = $routeParams.table;
@@ -14,11 +14,9 @@ function(Hook, $scope, toaster, $routeParams) {
     };
 
     self.createNewRecord = function() {
-    	console.log(self.recordList);
         self.recordList.push({
             name : '...',
         });
-        // console.log(self.recordList);
     };
 
     self.selectRow = function(row) {
@@ -31,18 +29,20 @@ function(Hook, $scope, toaster, $routeParams) {
     };
 
     self.deleteSelectedRecords = function() {
-        angular.forEach(self.selectedRows, function(row) {
-            Hook('data/remove', {
-                table : $routeParams.table,
-                queryFields : {
-                    _id : row
+        Hook('data/remove', {
+            table : $routeParams.table,
+            queryFields : self.selectedRows
+        }).then(function(data) {
+        	console.log(data.records);
+        	console.log(self.recordList);
+        	
+            angular.forEach(self.recordList, function(record, index) {
+            	console.log(data.records.indexOf(record._id));
+                if (data.records.indexOf(record._id)) {
+                	//TODO: Fix this twatty thing.
+                	console.log('Removing: ' + index);
+                    self.recordList.splice(index, 1);
                 }
-            }).then(function(data) {
-                angular.forEach(self.recordList, function(record, index) {
-                    if (row === record._id) {
-                        self.recordList.splice(index, 1);
-                    }
-                });
             });
         });
     };
@@ -63,9 +63,9 @@ function(Hook, $scope, toaster, $routeParams) {
                         field : fieldName,
                         enableCellEdit : !(field.read_only == 'true') ? true : false
                     };
-                	if(field.display_name){
-                		structureObject.displayName = field.display_name;
-                	}
+                    if (field.display_name) {
+                        structureObject.displayName = field.display_name;
+                    }
                     if (fieldName === 'name') {
                         structureObject.cellTemplate = '<div class="ngCellText" ng-class="col.colIndex()"><a href="#/record_form/{{recordList.recordTable}}/{{row.entity._id}}">{{COL_FIELD}}</a></div>';
                     }
@@ -100,15 +100,10 @@ function(Hook, $scope, toaster, $routeParams) {
             },
             updateFields : rowEdited
         }).then(function(data) {
-        	angular.forEach(self.records, function(record, index) {
-        		if(record._id = data.record._id){
-        			console.log('test');
-        			record = angular.copy(data.record);
-        		}
-        	});
-        	// evt.targetScope.row.entity = angular.copy(data.record);
-        }, function(error){
-        	evt.targetScope.row.entity = angular.copy(self.currentlyEditedCellValue);
+            self.recordList.splice(evt.targetScope.row.rowIndex, 1, angular.copy(data.records[0]));
+            evt.targetScope.row.entity = angular.copy(data.records[0]);
+        }, function(error) {
+            evt.targetScope.row.entity = angular.copy(self.currentlyEditedCellValue);
         });
     });
 
