@@ -24,8 +24,7 @@ $server.startup = function() {
         },
         setup : function(callback) {
             self._log.info('Installing flow components.');
-            var controller = new $dir._flow_controller();
-            $server.controller = controller;
+            $server.controller = new $dir._flow_controller();
             $server.controller.startup(callback);
         },
         setupExpress : function(callback) {

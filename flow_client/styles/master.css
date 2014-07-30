@@ -9,7 +9,7 @@ a:hover {
 	z-index:10;
 }
 .ace_editor {
-	min-height:500px;
+	min-height:400px;
 }
 .ngCellElement> .glyphicon-circle-arrow-right {
 	position:relative;

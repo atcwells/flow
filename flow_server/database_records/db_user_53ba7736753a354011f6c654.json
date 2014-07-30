@@ -1,0 +1,15 @@
+{
+    "_id": "53ba7736753a354011f6c654",
+    "name": "admin",
+    "display_name": "admin",
+    "test": "true",
+    "__v": 0,
+    "username": "admin",
+    "_updated_by": "53b5458d10dc5300006bc7ea",
+    "password": "●●●●●●●●",
+    "role": "53c9f444e5695bf499e24edf",
+    "_created_by": null,
+    "_updated_on": "2014-07-30T08:47:46.289Z",
+    "_created_on": "2014-07-07T10:32:22.828Z",
+    "email": "admin@example.com"
+}

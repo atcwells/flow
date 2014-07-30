@@ -13,7 +13,7 @@
         },
         "name": {
             "type": "string",
-            "read_only": "true",
+            "read_only": "false",
             "mandatory": "false",
             "visible": "true",
             "display_name": "Name",
@@ -28,14 +28,15 @@
             "visible": "true",
             "display_name": "Email",
             "default": "email",
-            "validate": "email"
+            "validate": "email",
+            "get": "email"
         },
         "display_name": {
             "type": "string",
             "read_only": "false",
             "mandatory": "false",
             "visible": "true",
-            "display_name": "Dislplay Name",
+            "display_name": "Display Name",
             "set": "string",
             "validate": "string",
             "get": "string"

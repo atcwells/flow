@@ -53,6 +53,11 @@
             if (err) {
                 callback(true, 'ERROR: Unable to create record on table ' + self.schemaDefinition.name);
             } else {
+            	if(!$server.controller.production){
+            		var dbFile = new $dir.json_file($cache.get('database_config.data_directory') + '/db_record_' + data._id + '.json');
+            		dbFile.contents = data;
+            		dbFile.writeFile();
+            	}
                 self.find({
                     _id : data._id
                 }, function(err, data) {

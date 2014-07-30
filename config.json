@@ -14,7 +14,8 @@
 		"name": "test",
 		"username": "",
 		"password": "",
-		"schema_directory": "./flow_server/database_schema/"
+		"schema_directory": "./flow_server/database_schema/",
+		"data_directory": "./flow_server/database_records/"
 	},
 	"plugin_config": {
 		"catalog": {

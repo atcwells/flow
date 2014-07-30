@@ -7,6 +7,6 @@ return new Object({
         }
     },
     string : function(value) {
-    	return value;
+        return value;
     }
 });

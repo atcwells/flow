@@ -124,16 +124,6 @@ server_manager.prototype = {
         }
         this._log.error('Node server stopped.');
     },
-    _detectProduction : function detectProduction() {
-        var ip = process.env.OPENSHIFT_NODEJS_IP;
-        if (!ip) {
-            this._log.warn("Detected development environment");
-            return false;
-        } else {
-            this._log.warn("Detected production environment");
-            return true;
-        }
-    },
 };
 
 module.exports = server_manager;

@@ -39,11 +39,14 @@ return function data(response, user, callback) {
                     });
                     record._updated_by = self.user._id;
                     if (record.password) {
-                        delete newData.password;
+                        delete record.password;
                     }
                     record.save(function(error, result) {
-                        console.log(error);
-                        console.log(result);
+                        if (!$server.controller.production) {
+                            var dbFile = new $dir.json_file($cache.get('database_config.data_directory') + '/db_' + params.table + '_' + result._id + '.json');
+                            dbFile.contents = result;
+                            dbFile.writeFile();
+                        }
                         if (error) {
                             self.response.message.errorMessage = 'ERROR: Unable to save record with id:' + params.queryFields._id;
                             if (error.message) {

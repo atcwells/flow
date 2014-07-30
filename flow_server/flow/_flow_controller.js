@@ -1,6 +1,7 @@
 function _flow_controller() {
     var self = this;
     self._setupTerminationHandlers();
+    self.production = self._detectProduction();
     return this;
 }
 
@@ -35,13 +36,13 @@ _flow_controller.prototype.startup = function startup(cb) {
             callback();
         },
         getAPIFiles : function(callback) {
-        	$server.api_manager.getAPIFiles();
-        	callback();
+            $server.api_manager.getAPIFiles();
+            callback();
         },
         getAngularApplication : function(callback) {
             $server.angular_manager.searchForAngularModules($server.bower_manager.scriptDependencies);
-            $server.angular_manager.getAngularRoutes(function(){
-            	$server.angular_manager.getAngularConstants(callback);
+            $server.angular_manager.getAngularRoutes(function() {
+                $server.angular_manager.getAngularConstants(callback);
             });
         }
     }, function() {
@@ -86,4 +87,14 @@ _flow_controller.prototype._terminator = function terminator(sig) {
     this._log.error('Node server stopped.');
 };
 
+_flow_controller.prototype._detectProduction = function detectProduction() {
+    var ip = process.env.OPENSHIFT_NODEJS_IP;
+    if (!ip) {
+        this._log.warn("Detected development environment");
+        return false;
+    } else {
+        this._log.warn("Detected production environment");
+        return true;
+    }
+};
 module.exports = _flow_controller;

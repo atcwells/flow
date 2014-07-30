@@ -1,0 +1,36 @@
+<div id="adminFieldTypes" class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Manage Field Types</h4>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-6">
+					<button ng-click="adminFieldTypes.deleteFieldType()" ng-disabled="!adminFieldTypes.selectedFieldName" class="btn btn-primary">
+						Delete
+					</button>
+					<button ng-click="adminFieldTypes.createFieldType()" class="btn btn-primary">
+						Create New...
+					</button>
+				</div>
+				<div class="col-md-6">
+					<select
+					ui-select2="select2Options"
+					id="viewNameSelection"
+					style="width: 100%; margin-top: 4px;"
+					ng-model="adminFieldTypes.selectedFieldName"
+					data-placeholder="Select a field">
+						<option value=""></option>
+						<option ng-repeat="(name, field) in adminFieldTypes.fieldTypes" value="{{name}}">{{name}}</option>
+					</select>
+				</div>
+				<div class="col-md-12" ng-show="adminFieldTypes.selectedFieldName">
+					<h5>Database Type</h5>
+					<p>
+						Field type "{{adminFieldTypes.selectedFieldName}}" is of database type: "{{adminFieldTypes.fieldTypes[adminFieldTypes.selectedFieldName]}}". This cannot be changed, in order to alter this, a new field must be created and this one deleted. All data for this field will be lost when the field is removed.
+					</p>
+				</div>
+			</div>
+		</div
+	</div>
+</div>

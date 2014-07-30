@@ -1,0 +1,14 @@
+{
+    "_id": "53d8aec5848e6d308e78df3e",
+    "name": "test",
+    "username": "test",
+    "_updated_by": "53b5458d10dc5300006bc7ea",
+    "_created_by": "53b5458d10dc5300006bc7ea",
+    "__v": 0,
+    "display_name": "test",
+    "role": "53c9f44ee5695bf499e24ee0",
+    "password": "●●●●●●●●",
+    "_updated_on": "2014-07-30T08:47:49.272Z",
+    "_created_on": "2014-07-30T08:37:25.678Z",
+    "email": "e@xample.com"
+}

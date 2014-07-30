@@ -9,7 +9,7 @@ function($http, toaster, $log, $q, DSCacheFactory) {
     });
     var dataCache = DSCacheFactory.get('dataCache');
 
-    var fire = function(hook, params, callback) {
+    var fire = function(hook, params) {
         var start = new Date().getTime();
         var deferred = $q.defer();
         var cachedData = dataCache.get(hook + JSON.stringify(params));
@@ -40,7 +40,7 @@ function($http, toaster, $log, $q, DSCacheFactory) {
         }
         return deferred.promise;
     };
-    return function(hook, params, callback) {
-        return fire(hook, params, callback);
+    return function(hook, params) {
+        return fire(hook, params);
     };
 }]);

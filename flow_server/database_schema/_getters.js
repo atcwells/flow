@@ -8,7 +8,10 @@ return new Object({
     date : function(value) {
         return value;
     },
+    email : function(value) {
+        return value;
+    },
     password : function(value) {
-    	return "●●●●●●●●";
+        return "●●●●●●●●";
     }
 });
