@@ -3,11 +3,11 @@ function plugin_manager() {
 
     this.installationPath = $cache.get('plugin_config.installation_path');
     this.catalogPath = $cache.get('plugin_config.catalog.path');
+    this.requiredPlugins = $cache.get('plugin_config.installed');
     
     this.getCatalog();
 
     this.installedPlugins = {};
-    this.requiredPlugins = $cache.get('plugin_config.installed');
     this.checkInstalledPlugins();
     this.installRequiredPlugins();
     return this;
