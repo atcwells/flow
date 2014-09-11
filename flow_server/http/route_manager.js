@@ -106,10 +106,6 @@ route_manager.prototype.setup = function() {
     self.utilRoutes();
     self.staticAssetRoutes();
 
-    var settings = {
-        cookie_secret : 'killthecat',
-        db : 'test'
-    };
     var session = require('express-session');
     var MongoStore = require('connect-mongo')(session);
     var passport = require('passport');
@@ -117,9 +113,11 @@ route_manager.prototype.setup = function() {
 
     $server.expressapp.use(require('body-parser').json());
     $server.expressapp.use(session({
-        secret : settings.cookie_secret,
+        secret : $cache.get('instance_config.cookie_secret'),
+        saveUninitialized: true,
+		resave: true,
         store : new MongoStore({
-            db : settings.db,
+            db : $cache.get('database_config.name'),
         })
     }));
     $server.expressapp.use(passport.initialize());
