@@ -5,7 +5,6 @@ function _flow_controller() {
         bower_manager : 'manager/bower_manager',
         angular_manager : 'manager/angular_manager',
         client_manager : 'manager/client_manager',
-        api_manager : 'manager/api_manager',
         database_manager : 'database/database_manager',
         plugin : 'plugin/plugin'
     }, self);
@@ -36,7 +35,6 @@ function _flow_controller() {
             $server.bower_manager = new self.bower_manager();
             $server.angular_manager = new self.angular_manager();
             $server.client_manager = new self.client_manager();
-            $server.api_manager = new self.api_manager();
             async.series({
                 getBowerDependencies : function(callback) {
                     $server.bower_manager.readBowerJson();
@@ -56,10 +54,6 @@ function _flow_controller() {
                 },
                 getClientDependencies : function(callback) {
                     $server.client_manager.getClientFiles();
-                    callback();
-                },
-                getAPIFiles : function(callback) {
-                    $server.api_manager.getAPIFiles();
                     callback();
                 },
                 getAngularApplication : function(callback) {

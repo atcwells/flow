@@ -1,6 +1,6 @@
 {
   "name": "flow",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "",
   "main": "server/flow/flow.js",
   "dependencies": {
@@ -21,7 +21,7 @@
     "passport-local": "^1.0.0",
     "mongodb": "^1.4.7",
     "strip-comments": "^0.1.6",
-    "responsive-route-manager": "^0.2.0"
+    "responsive-route-manager": "^0.2.2"
   },
   "devDependencies": {},
   "scripts": {

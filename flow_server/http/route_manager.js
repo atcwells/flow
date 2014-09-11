@@ -1,7 +1,6 @@
 
 
 function route_manager() {
-    var bodyParser = require('body-parser');
     var self = this;
     self.routes = {};
     self.apiRoutes = {};
@@ -201,10 +200,11 @@ route_manager.prototype.setup = function() {
 
 	var RAM = require('responsive-route-manager');
 
-	var ram = new RAM({
+	$server.api_manager = new RAM({
 		folder : $cache.get('instance_config.api_directory'),
 	    clientType : 'functional-api',
-	    mountPath : 'api'
+	    mountPath : 'api',
+	    logger : self._log
 	}, $server.expressapp);
 
     return this;
