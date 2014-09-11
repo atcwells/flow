@@ -17,18 +17,18 @@
     },
 
     api_manager.prototype.getAPIFiles = function() {
-    	var apiDirectory = $cache.get('instance_config.api_directory');
-        file.walkSync(apiDirectory, function(dirPath, dirs, files) {
-            if (files.length) {
-                _.each(files, function(file) {
-                    new $dir.javascript_file(dirPath + file).readFile();
-                });
-            }
-        });
+    	// var apiDirectory = $cache.get('instance_config.api_directory');
+        // file.walkSync(apiDirectory, function(dirPath, dirs, files) {
+            // if (files.length) {
+                // _.each(files, function(file) {
+                    // new $dir.javascript_file(dirPath + file).readFile();
+                // });
+            // }
+        // });
     };
 
     function api_manager() {
-    	this.setupDirectoryWatching();
+    	// this.setupDirectoryWatching();
     };
 
     module.exports = api_manager;

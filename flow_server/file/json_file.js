@@ -3,10 +3,6 @@ function json_file(filePath) {
     return this;
 };
 
-json_file.prototype.properties = {
-    inherits : "file",
-};
-
 json_file.prototype.readFile = function readFile() {
     try {
         this._super.readFile.call(this);
@@ -30,4 +26,5 @@ json_file.prototype.writeFile =function write() {
     return this;
 };
 
+_.inheritPrototype(json_file, $dir.file);
 module.exports = json_file;

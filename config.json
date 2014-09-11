@@ -6,7 +6,7 @@
 		"title": "one",
 		"database_type": "MongoDB",
 		"client_directory": "./flow_client/",
-		"api_directory": "./flow_api/"
+		"api_directory": "/flow_api"
 	},
 	"database_config": {
 		"host": "localhost",

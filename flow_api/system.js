@@ -1,8 +1,15 @@
-return function system(response, user, callback) {
+module.exports = function system(request, response, callback) {
     var self = this;
+    self.user = (request && request.user[0]) || {};
+    self.request = request;
     self.response = response;
     self.callback = callback;
-    self.user = user;
+
+	self.properties = {
+		responseMechanism: 'sendJSON',
+		name: 'system',
+		verb: 'post'
+	};
 
     self.refreshServer = function(params) {
         $server.bower_manager = new $dir.bower_manager();
@@ -16,7 +23,7 @@ return function system(response, user, callback) {
         $server.angular_manager.getAngularRoutes(function() {
             $server.angular_manager.getAngularConstants(function() {
                 self.response.message.error = false;
-                self.callback();
+                self.callback(response);
             });
         });
     };
@@ -26,7 +33,7 @@ return function system(response, user, callback) {
         $server.angular_manager.getAngularRoutes(function() {
             $server.angular_manager.getAngularConstants(function() {
                 self.response.message.error = false;
-                self.callback();
+                self.callback(response);
             });
         });
     };
@@ -38,7 +45,7 @@ return function system(response, user, callback) {
         }, function(err, menu_contexts) {
             if (err) {
                 self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
-                self.callback();
+                self.callback(response);
             } else {
                 var menu_group = $dbi('menu_group');
                 menu_group.find({
@@ -50,12 +57,12 @@ return function system(response, user, callback) {
                     }, function(err, menu_items) {
                         if (err) {
                             self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
-                            self.callback();
+                            self.callback(response);
                         } else {
                             self.response.message.error = false;
                             self.response.message.data.menu_groups = menu_groups;
                             self.response.message.data.menu_items = menu_items;
-                            self.callback();
+                            self.callback(response);
                         }
                     });
                 });

@@ -24,4 +24,5 @@ javascript_file.prototype = {
     }
 };
 
+_.inheritPrototype(javascript_file, $dir.file);
 module.exports = javascript_file;

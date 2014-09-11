@@ -1,20 +1,27 @@
-return function data(response, user, callback) {
+module.exports = function data(request, response, callback) {
     var self = this;
+    self.user = (request && request.user[0]) || {};
+    self.request = request;
     self.response = response;
     self.callback = callback;
-    self.user = user;
+
+	self.properties = {
+		responseMechanism: 'sendJSON',
+		name: 'data',
+		verb: 'post'
+	};
 
     self.read = function(params) {
         var table = $dbi2(params.table, self.user._id);
         table.find(params.queryFields, function(err, results) {
             if (err) {
                 self.response.message.errorMessage = results;
-                self.callback();
+                self.callback(response);
             } else {
                 self.response.message.error = false;
                 self.response.message.data.records = results;
                 self.response.message.data.structure = table.schemaDefinition;
-                self.callback();
+                self.callback(response);
             }
         });
     };
@@ -31,7 +38,7 @@ return function data(response, user, callback) {
         table.find(params.queryFields, function(err, records) {
             if (err) {
                 self.response.message.errorMessage = results;
-                self.callback();
+                self.callback(response);
             } else {
                 records.forEach(function(record) {
                     _.each(params.updateFields, function(field, fieldName) {
@@ -42,19 +49,19 @@ return function data(response, user, callback) {
                         delete record.password;
                     }
                     record.save(function(error, result) {
-                        if (!$server.controller.production) {
-                            var dbFile = new $dir.json_file($cache.get('database_config.data_directory') + '/db_' + params.table + '_' + result._id + '.json');
-                            dbFile.contents = result;
-                            dbFile.writeFile();
-                        }
                         if (error) {
                             self.response.message.errorMessage = 'ERROR: Unable to save record with id:' + params.queryFields._id;
                             if (error.message) {
                                 self.response.message.errorMessage = error.message;
                                 self.response.message.errorData = error.errors;
                             }
-                            self.callback();
+                            self.callback(response);
                         } else {
+                            if (!$server.controller.production) {
+                                var dbFile = new $dir.json_file($cache.get('database_config.data_directory') + '/db_' + params.table + '_' + result._id + '.json');
+                                dbFile.contents = result;
+                                dbFile.writeFile();
+                            }
                             self.read({
                                 table : params.table,
                                 queryFields : {
@@ -73,11 +80,11 @@ return function data(response, user, callback) {
         table.createRecord(params.updateFields, function(err, result) {
             if (err) {
                 self.response.message.errorMessage = result;
-                self.callback();
+                self.callback(response);
             } else {
                 self.response.message.error = false;
                 self.response.message.data.records = result;
-                self.callback();
+                self.callback(response);
             }
         });
     };
@@ -87,11 +94,11 @@ return function data(response, user, callback) {
         table.deleteRecords(params.queryFields, function(err, result) {
             if (err) {
                 self.response.message.errorMessage = result;
-                self.callback();
+                self.callback(response);
             } else {
                 self.response.message.error = false;
                 self.response.message.data.records = result;
-                self.callback();
+                self.callback(response);
             }
         });
     };

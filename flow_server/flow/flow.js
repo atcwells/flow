@@ -9,27 +9,34 @@ $dbi = {};
 
 $server.startup = function() {
     var self = this;
+    $dir = new $dir(process.env.PWD + '/flow_server');
+
+    _.include({
+        flow_installer : 'flow/flow_installer',
+        flow_controller : 'flow/flow_controller',
+        http_server : 'http/http_server',
+        express : 'express'
+    }, self);
 
     async.series({
         preload : function(callback) {
-            $dir = new $dir(process.env.PWD + '/flow_server');
-            self._log = new $dir._log('Flow');
+            var logger = require(process.env.PWD + '/flow_server/_util/_log');
+            self._log = new logger('Flow');
             self._log.info('Instantiated directory interface.');
             callback();
         },
         install : function(callback) {
             self._log.info('Installing flow components.');
-            $server.installer = new $dir._flow_installer();
+            $server.installer = new self.flow_installer();
             callback();
         },
         setup : function(callback) {
             self._log.info('Installing flow components.');
-            $server.controller = new $dir._flow_controller();
+            $server.controller = new self.flow_controller();
             $server.controller.startup(callback);
         },
         setupExpress : function(callback) {
-            express = require('express');
-            $server.expressapp = express();
+            $server.expressapp = self.express();
             callback();
         },
         setupRoutes : function(callback) {
@@ -38,7 +45,7 @@ $server.startup = function() {
         },
         start : function(callback) {
             self._log.info('Starting HTTP Server.');
-            $server.http_server = new $dir.http_server();
+            $server.http_server = new self.http_server();
             callback();
         }
     }, function() {

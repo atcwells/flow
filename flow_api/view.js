@@ -1,26 +1,34 @@
-return function view(response, user, callback) {
+module.exports = function view(request, response, callback) {
     var self = this;
+    self.user = (request && request.user && request.user[0]) || {};
+    self.request = request;
     self.response = response;
     self.callback = callback;
-    self.vas = /[A-Z]/g;
+
+	self.properties = {
+		responseMechanism: 'sendJSON',
+		name: 'view',
+		verb: 'post'
+	};
+    
     self.getView = function(params) {
         var view = $server.asset_manager.get(params.view);
         if (view) {
             self.response.message.error = false;
             self.response.message.data.view = view;
             self.response.message.data.controller = $server.asset_manager.getControllerForView(view);
-            self.callback();
+            self.callback(response);
         } else {
             self.response.message.error = true;
             self.response.message.errorMessage = "ERROR: Unable to find view: " + params;
-            self.callback();
+            self.callback(response);
         }
     };
 
     self.getViewNames = function(params) {
         self.response.message.error = false;
         self.response.message.data.viewNames = self._getViewNames();
-        self.callback();
+        self.callback(response);
     };
 
     self.save = function(params) {
@@ -32,11 +40,11 @@ return function view(response, user, callback) {
             controller.contents = params.controller.contents;
             controller.writeFile();
             self.response.message.error = false;
-            self.callback();
+            self.callback(response);
         } catch (error) {
             self.response.message.error = true;
             self.response.message.errorMessage = "ERROR: Unable to save view: " + params;
-            self.callback();
+            self.callback(response);
         }
     };
 
@@ -50,11 +58,11 @@ return function view(response, user, callback) {
             $server.asset_manager.removeAsset(params.controller.filePath);
             self.response.message.data.viewNames = self._getViewNames();
             self.response.message.error = false;
-            self.callback();
+            self.callback(response);
         } catch (error) {
             self.response.message.error = true;
             self.response.message.errorMessage = "ERROR: Unable to save view: " + params;
-            self.callback();
+            self.callback(response);
         }
     };
 
@@ -77,18 +85,18 @@ return function view(response, user, callback) {
                 if (err) {
                     self.response.message.error = true;
                     self.response.message.errorMessage = "ERROR: Unable to save route: " + err;
-                    self.callback();
+                    self.callback(response);
                 } else {
                     self.response.message.error = false;
                     self.response.message.data.view = file;
                     self.response.message.data.controller = controller;
-                    self.callback();
+                    self.callback(response);
                 }
             });
         } catch (error) {
             self.response.message.error = true;
             self.response.message.errorMessage = "ERROR: Unable to save view: " + params;
-            self.callback();
+            self.callback(response);
         }
     };
 

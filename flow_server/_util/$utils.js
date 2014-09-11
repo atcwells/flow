@@ -1,14 +1,9 @@
-if ( typeof Object.create !== 'function') {
-    Object.create = function create(o) {
-        function F() {
-        }
-        F.prototype = o;
-        return new F();
-    };
-};
-if ( typeof Object.inheritPrototype !== 'function') {
-    Object.inheritPrototype = function inheritPrototype(childObject, parentObject) {
+_.mixin({
+    'inheritPrototype' : function inheritPrototype(childObject, parentObject) {
         _.each(parentObject.prototype, function(property, propertyName) {
+        	if (!childObject.prototype){
+        		childObject.prototype = {};
+        	}
             if (!childObject.prototype[propertyName]) {
                 childObject.prototype[propertyName] = property;
             } else {
@@ -22,8 +17,24 @@ if ( typeof Object.inheritPrototype !== 'function') {
                 _.assign(childObject.prototype.properties, parentObject.prototype.properties);
             }
         });
-    };
-};
+    }
+});
+
+_.mixin({
+    'include' : function include(includes, context) {
+        _.each(includes, function(includePath, includeName) {
+            if (includePath.indexOf('/') > -1) {
+                var include = require(process.env.PWD + '/flow_server/' + includePath + '.js');
+                console.log('    Extending ' + includeName + ' with Logger (_log)');
+                var logger = require(process.env.PWD + '/flow_server/_util/_log');
+                include.prototype._log = new logger(includeName);
+                context[includeName] = include;
+            } else {
+				context[includeName] = require(includePath);
+            }
+        });
+    }
+});
 
 _.mixin({
     'stripLeadingDot' : function stripLeadingDot(string) {

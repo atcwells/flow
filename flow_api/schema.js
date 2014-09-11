@@ -1,7 +1,15 @@
-return function schema(response, user, callback) {
+module.exports = function schema(request, response, callback) {
     var self = this;
+    self.user = (request && request.user[0]) || {};
+    self.request = request;
     self.response = response;
     self.callback = callback;
+
+	self.properties = {
+		responseMechanism: 'sendJSON',
+		name: 'schema',
+		verb: 'post'
+	};
 
     self.getSchema = function(params) {
         var schema = $cache.get('schema.' + params.table);
@@ -9,10 +17,10 @@ return function schema(response, user, callback) {
             self.response.message.error = false;
             self.response.message.data.schemaDefinition = $cache.get('schema.' + params.table);
             self.response.message.data.fieldTypes = $cache.get('database_config._field_types');
-            self.callback();
+            self.callback(response);
         } else {
             self.response.message.errorMessage = "ERROR: Unable to find schema called: " + params.table;
-            self.callback();
+            self.callback(response);
         }
     };
 
@@ -20,17 +28,17 @@ return function schema(response, user, callback) {
         self.response.message.data.schemaNames = self._getSchemaNames();
         self.response.message.error = false;
         self.response.message.data.fieldTypes = $cache.get('database_config._field_types');
-        self.callback();
+        self.callback(response);
     };
 
     self.saveSchema = function(params) {
         try {
             $server.dbi.alterSchema(params.name, params.schema);
             self.response.message.error = false;
-            self.callback();
+            self.callback(response);
         } catch (err) {
             self.response.message.errorMessage = "ERROR: Unable to modify schema";
-            self.callback();
+            self.callback(response);
         }
     };
 
@@ -40,10 +48,10 @@ return function schema(response, user, callback) {
             $cache.unset('schema.' + params.name);
             self.response.message.error = false;
             self.response.message.data.schemaNames = self._getSchemaNames();
-            self.callback();
+            self.callback(response);
         } catch (err) {
             self.response.message.errorMessage = "ERROR: Unable to delete schema";
-            self.callback();
+            self.callback(response);
         }
     };
 
@@ -54,10 +62,10 @@ return function schema(response, user, callback) {
             self.response.message.data.schemaNames = self._getSchemaNames();
             self.response.message.data.schemaDefinition = $cache.get('schema.' + params.name);
             self.response.message.data.fieldTypes = $cache.get('database_config._field_types');
-            self.callback();
+            self.callback(response);
         } catch (err) {
             self.response.message.errorMessage = "ERROR: Unable to delete schema";
-            self.callback();
+            self.callback(response);
         }
     };
 

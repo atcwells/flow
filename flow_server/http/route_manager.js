@@ -1,3 +1,5 @@
+
+
 function route_manager() {
     var bodyParser = require('body-parser');
     var self = this;
@@ -27,7 +29,7 @@ route_manager.prototype.utilRoutes = function() {
         res.writeHead(200, {
             'content-type' : 'text/html'
         });
-        if (req.user && req.user[0].role) {
+        if (req.user && req.user[0].role && req.user[0].role.length != 0) {
             var MongoClient = require('mongodb').MongoClient;
             var BSON = require('mongodb').BSONPure;
             var o_id = new BSON.ObjectID(req.user[0].role);
@@ -76,19 +78,6 @@ route_manager.prototype.utilRoutes = function() {
     return this;
 };
 
-route_manager.prototype.getAPIRoutes = function() {
-    var self = this;
-    var apiFiles = $server.asset_manager.getAPIFiles();
-    _.each(apiFiles, function(file) {
-        self.apiRoutes['/api/' + file.fileName.slice(0, file.fileName.length - 3) + '/:method'] = function(request, response, next) {
-            var apiFile = $server.asset_manager.get(file.filePath);
-            var api = new apiFile.func(response, request.user[0], next);
-            api[request.params.method](request.body);
-        };
-    });
-    return this;
-};
-
 route_manager.prototype.staticAssetRoutes = function() {
     var self = this;
     ['view', 'javascript', 'style'].forEach(function(assetGroup) {
@@ -117,7 +106,6 @@ route_manager.prototype.setup = function() {
     var self = this;
     self.utilRoutes();
     self.staticAssetRoutes();
-    self.getAPIRoutes();
 
     var settings = {
         cookie_secret : 'killthecat',
@@ -128,7 +116,7 @@ route_manager.prototype.setup = function() {
     var passport = require('passport');
     var LocalStrategy = require('passport-local').Strategy;
 
-    $server.expressapp.use(require('body-parser')());
+    $server.expressapp.use(require('body-parser').json());
     $server.expressapp.use(session({
         secret : settings.cookie_secret,
         store : new MongoStore({
@@ -203,7 +191,7 @@ route_manager.prototype.setup = function() {
 
     // Bower dependencies will end here with a response.
     ['bower_components', 'flow_readme'].forEach(function(dir) {
-        $server.expressapp.use('/' + dir, express.static(process.env.PWD + '/' + dir));
+        $server.expressapp.use('/' + dir, require('express').static(process.env.PWD + '/' + dir));
     });
 
     // Setup get requests for all text based content
@@ -211,36 +199,13 @@ route_manager.prototype.setup = function() {
         $server.expressapp.get(routePath, route);
     });
 
-    // Initiate API routes
-    $server.expressapp.use('/api', function(request, response, next) {
-        response.message = {
-            error : true,
-            errorMessage : 'ERROR: API call /api' + request.path + ' not found.',
-            data : {}
-        };
-        response.respond = function() {
-            this.writeHead(200, {
-                'content-type' : 'application/json'
-            });
-            this.end(")]}',\n" + JSON.stringify(this.message));
-        };
-        next();
-    });
+	var RAM = require('responsive-route-manager');
 
-    // Give API Routes access to the function being called.
-    _.each(self.apiRoutes, function(route, routePath) {
-        $server.expressapp.post(routePath, route);
-    });
-
-    // Finish out API requests, removing the error if not needed.
-    $server.expressapp.use('/api', function(request, response, next) {
-        if (!response.headerSent) {
-            if (!response.message.error) {
-                delete response.message.errorMessage;
-            }
-            response.respond();
-        }
-    });
+	var ram = new RAM({
+		folder : $cache.get('instance_config.api_directory'),
+	    clientType : 'functional-api',
+	    mountPath : 'api'
+	}, $server.expressapp);
 
     return this;
 };

@@ -8,7 +8,6 @@ function _directory_builder(path) {
     $dir = this;
 
     this.discoverLibraries(path);
-    this.setupInheritance();
     this.setupDecoratedLibraries();
 
     console.log('  Finished server preload.');
@@ -36,24 +35,6 @@ _directory_builder.prototype = {
                     }
                 }
             });
-        });
-    },
-    setupInheritance : function() {
-        var self = this;
-        _.each(self, function(prop, propName) {
-            if (prop.prototype && prop.prototype.properties && prop.prototype.properties.inherits) {
-                var parent = prop.prototype.properties.inherits;
-                if (_.isString(parent)) {
-                    if (!self[parent]) {
-                        console.log('FATAL ERROR: ' + parent + ' does not exist');
-                        process.exit(1);
-                    }
-                    Object.inheritPrototype(prop, self[parent]);
-                    console.log('    Inheriting ' + propName + ' from ' + parent);
-                } else {
-                    console.log('FATAL ERROR: cannot inherit ' + propName + ' from ' + parent + ', ' + parent + ' is not a valid parent');
-                }
-            }
         });
     },
     setupDecoratedLibraries : function() {
