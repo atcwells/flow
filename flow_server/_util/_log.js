@@ -3,7 +3,7 @@
     var winston = require('winston');
     winston.loggers.add('_log', {
         console : {
-            level : 'debug',
+            level : 'info',
             colorize : 'true',
         }
     });
@@ -23,34 +23,34 @@
 
         this.info = function(message) {
             _logger.transports.console.label = label;
-        	process.stdout.write(DateHelper.constructLogsDate());
-            _logger.info(message);
+        	// process.stdout.write(DateHelper.constructLogsDate());
+            _logger.info(DateHelper.constructLogsDate() + message);
         };
 
         this.debug = function(message) {
             _logger.transports.console.label = label;
-        	process.stdout.write(DateHelper.constructLogsDate());
-            _logger.debug(message);
+        	// process.stdout.write(DateHelper.constructLogsDate());
+            _logger.debug(DateHelper.constructLogsDate() + message);
         };
 
         this.error = function(message) {
             _logger.transports.console.label = label;
-        	process.stdout.write(DateHelper.constructLogsDate());
-            _logger.error(message);
+        	// process.stdout.write(DateHelper.constructLogsDate());
+            _logger.error(DateHelper.constructLogsDate() + message);
             var stack = new Error().stack;
             console.log(stack + '\n');
         };
 
         this.profile = function(message) {
             _logger.transports.console.label = label;
-        	process.stdout.write(DateHelper.constructLogsDate());
-            _logger.profile(message);
+        	// process.stdout.write(DateHelper.constructLogsDate());
+            _logger.profile(DateHelper.constructLogsDate() + message);
         };
 
         this.warn = function(message) {
             _logger.transports.console.label = label;
-        	process.stdout.write(DateHelper.constructLogsDate());
-            _logger.warn(message);
+        	// process.stdout.write(DateHelper.constructLogsDate());
+            _logger.warn(DateHelper.constructLogsDate() + message);
         };
     };
 

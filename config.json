@@ -33,6 +33,6 @@
 		}
 	},
 	"cache_config": {
-		"strategy": "cache_object_store"
+		"strategy": "object-store"
 	}
 }

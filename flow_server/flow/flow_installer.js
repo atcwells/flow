@@ -2,7 +2,6 @@ function flow_installer() {
     var self = this;
 
     _.include({
-        cache_manager : 'cache/cache_manager',
         asset_manager : 'manager/asset_manager',
         route_manager : 'http/route_manager',
         json_file : 'file/json_file',
@@ -24,8 +23,10 @@ function flow_installer() {
                     callback();
                 },
                 installCacheManager : function(callback) {
-                    $cache = new self.cache_manager();
-                    $cache.setup(self.config.cache_config.strategy);
+                    $cache = require('responsive-cache-interface')({
+                    	logger: new $dir._log('$cache'),
+                    	cacheStrategy : self.config.cache_config.strategy
+                    });
                     $cache.set(self.config);
                     callback();
                 },
