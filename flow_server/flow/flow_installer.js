@@ -1,11 +1,10 @@
-function flow_installer() {
+function flow_installer(cb) {
     var self = this;
 
     _.include({
         asset_manager : 'manager/asset_manager',
         route_manager : 'http/route_manager',
         json_file : 'file/json_file',
-        database_manager : 'database/database_manager',
         plugin_manager : 'plugin/plugin_manager'
     }, self);
 
@@ -43,13 +42,19 @@ function flow_installer() {
                     callback();
                 },
                 installDatabaseManager : function(callback) {
-                    $server.dbi = new self.database_manager();
-                    $dbi = $server.dbi.querySchema;
-                    $dbi2 = $server.dbi.getDBI;
-                    callback();
+                  var RDM = require('responsive-database-manager');
+                  $dbi = RDM({
+                    mongoUrl: 'mongodb://127.0.0.1:27017/test',
+                    schemaDirectory: '/flow_schema',
+                    useMongooseFixes: true,
+                    backupRecords: true,
+                    backupDirectory: '/flow_records',
+                    logger: self._log
+                  }, callback);
                 },
             }, function() {
                 self._log.info('Flow installation complete');
+                cb();
             });
             return this;
         }

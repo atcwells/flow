@@ -1,10 +1,10 @@
-angular.module('<%= $cache.get("instance_config.name") %>').controller('recordForm', ['Hook', '$routeParams', '$compile', '$scope', '$timeout',
-function(Hook, $routeParams, $compile, $scope, $timeout) {
+angular.module('<%= $cache.get("instance_config.name") %>').controller('recordForm', ['Hook', '$routeParams', '$compile', '$scope', '$timeout', '$location',
+function(Hook, $routeParams, $compile, $scope, $timeout, $location) {
     var self = this;
     self.recordTable = $routeParams.table;
     self.originalRecord = {};
     self.record = {};
-
+console.log($location.path());
     self.getRecord = function(id) {
         self.promise = Hook('data/read', {
             table : $routeParams.table,
@@ -60,6 +60,8 @@ function(Hook, $routeParams, $compile, $scope, $timeout) {
             self.record = data.records[0];
             self.originalRecord = angular.copy(self.record);
             self.validationErrors = {};
+            $location.path('/record_form/' + $routeParams.table + '/' + data.records[0]._id);
+            
         }, function(error) {
             self.record = angular.copy(self.originalRecord);
             self.validationErrors = error.errorData;

@@ -7,7 +7,9 @@
 		"database_type": "MongoDB",
 		"client_directory": "./flow_client/",
 		"api_directory": "/flow_api",
-		"cookie_secret" : "killthecat"
+		"cookie_secret" : "killthecat",
+		"production": "false",
+		"log_level" : "debug"
 	},
 	"database_config": {
 		"host": "localhost",

@@ -1,0 +1,31 @@
+Fix up each of the managers so that the code is separated from the flow application.
+Remove dependencies no longer required once managers are complete.
+setup image work! so far no ability to do/manage/attach images.
+make database editing more robust. Currently occasionally requires a restart to complete changes, this MUST not happen.
+ensure in development mode all changes are written to the filesystem.
+ensure in production mode all changes are not written to the filesystem.
+
+Complete:
+Route management. Route manager is a seperate module.
+Cache management. Cache manager is a seperate module.
+
+Need to complete:
+Split out database into manager.
+Split out assets into manager.
+Split out plugins into manager.
+Split out properties into manager.
+
+REWRITE TO USE KOA :( || REWRITE TO USE PROMISES :(
+
+Ideas:
+
+write controllers automatically from an API? That way developer would only need to configure an API and a view to be working.
+controller files would contain the methods from an object, such as save, create, etc, meaning a view would simply call the methods
+from the server side object. (really an auto-generated controller linked to an auto-generated service, see below).
+
+services auto-generated from API files:
+1.) APIs
+2.) Authorisation
+3.) Integrations
+meaning developer has to 'call' (really a wired up service) an api from a controller such as 'example.getView()'. 
+'getView' is actually a function within an auto-generated service which talks to the corresponding API.

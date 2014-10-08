@@ -33,9 +33,10 @@ module.exports = function schema(request, response, callback) {
 
     self.saveSchema = function(params) {
         try {
-            $server.dbi.alterSchema(params.name, params.schema);
-            self.response.message.error = false;
-            self.callback(response);
+            $dbi.changeSchema(params.name, params.schema, function(err, msg) {
+              self.response.message.error = false;
+              self.callback(response);
+            });
         } catch (err) {
             self.response.message.errorMessage = "ERROR: Unable to modify schema";
             self.callback(response);
@@ -44,11 +45,12 @@ module.exports = function schema(request, response, callback) {
 
     self.deleteSchema = function(params) {
         try {
-            $server.dbi.removeSchema(params.name);
-            $cache.unset('schema.' + params.name);
-            self.response.message.error = false;
-            self.response.message.data.schemaNames = self._getSchemaNames();
-            self.callback(response);
+            $dbi.removeSchema(params.name, function(err, msg) {
+              $cache.unset('schema.' + params.name);
+              self.response.message.error = false;
+              self.response.message.data.schemaNames = self._getSchemaNames();
+              self.callback(response);
+            });
         } catch (err) {
             self.response.message.errorMessage = "ERROR: Unable to delete schema";
             self.callback(response);
@@ -57,15 +59,16 @@ module.exports = function schema(request, response, callback) {
 
     self.createSchema = function(params) {
         try {
-            $server.dbi.addSchema(params.name);
+          $dbi.setupSchema(params.name, {}, function(err, msg) {
             self.response.message.error = false;
             self.response.message.data.schemaNames = self._getSchemaNames();
             self.response.message.data.schemaDefinition = $cache.get('schema.' + params.name);
             self.response.message.data.fieldTypes = $cache.get('database_config._field_types');
             self.callback(response);
+          });
         } catch (err) {
-            self.response.message.errorMessage = "ERROR: Unable to delete schema";
-            self.callback(response);
+          self.response.message.errorMessage = "ERROR: Unable to delete schema";
+          self.callback(response);
         }
     };
 

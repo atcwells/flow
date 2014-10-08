@@ -10,7 +10,7 @@ module.exports = function view(request, response, callback) {
 		name: 'view',
 		verb: 'post'
 	};
-    
+
     self.getView = function(params) {
         var view = $server.asset_manager.get(params.view);
         if (view) {
@@ -74,10 +74,9 @@ module.exports = function view(request, response, callback) {
             var controller = new $dir.file('./flow_client/controllers/controller_' + params.name + '.js');
             controller.contents = "angular.module('<%= $cache.get(\"instance_config.name\") %>').controller('" + params.name + "', [\nfunction() {\n}]);";
             controller.writeFile();
-            var Route = $dbi('angular_route');
+            var Route = $dbi.schema('angular_route');
             var newRoute = Route({
                 templateUrl : params.route_template,
-                // link : params.route_url,
                 controller : params.route_controller,
                 name : params.route_url
             });

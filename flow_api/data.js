@@ -5,14 +5,14 @@ module.exports = function data(request, response, callback) {
     self.response = response;
     self.callback = callback;
 
-	self.properties = {
-		responseMechanism: 'sendJSON',
-		name: 'data',
-		verb: 'post'
-	};
+    self.properties = {
+        responseMechanism : 'sendJSON',
+        name : 'data',
+        verb : 'post'
+    };
 
     self.read = function(params) {
-        var table = $dbi2(params.table, self.user._id);
+        var table = $dbi.schema(params.table, self.user._id);
         table.find(params.queryFields, function(err, results) {
             if (err) {
                 self.response.message.errorMessage = results;
@@ -27,7 +27,7 @@ module.exports = function data(request, response, callback) {
     };
 
     self.update = function(params) {
-        var table = $dbi(params.table);
+        var table = $dbi.schema(params.table);
         for (var key in params.updateFields) {
             if (_.isObject(params.updateFields[key]) && params.updateFields[key]._id == null) {
                 params.updateFields[key] = '';
@@ -57,8 +57,8 @@ module.exports = function data(request, response, callback) {
                             }
                             self.callback(response);
                         } else {
-                            if (!$server.controller.production) {
-                                var dbFile = new $dir.json_file($cache.get('database_config.data_directory') + '/db_' + params.table + '_' + result._id + '.json');
+                            if ($cache.get('instance_config.production') == 'false') {
+                                var dbFile = new $dir.json_file($cache.get('database_config.data_directory') + '/db_record_' + params.table + '_' + result._id + '.json');
                                 dbFile.contents = result;
                                 dbFile.writeFile();
                             }
@@ -76,7 +76,7 @@ module.exports = function data(request, response, callback) {
     };
 
     self.create = function(params) {
-        var table = $dbi2(params.table, self.user._id);
+        var table = $dbi.schema(params.table, self.user._id);
         table.createRecord(params.updateFields, function(err, result) {
             if (err) {
                 self.response.message.errorMessage = result;
@@ -90,7 +90,7 @@ module.exports = function data(request, response, callback) {
     };
 
     self.remove = function(params) {
-        var table = $dbi2(params.table, self.user._id);
+        var table = $dbi.schema(params.table, self.user._id);
         table.deleteRecords(params.queryFields, function(err, result) {
             if (err) {
                 self.response.message.errorMessage = result;

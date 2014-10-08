@@ -34,7 +34,7 @@ angular_manager.prototype.searchFileForAngularModules = function searchFileForAn
 
 angular_manager.prototype.getAngularRoutes = function getAngularRoutes(callback) {
     var self = this;
-    $dbi2('angular_route').find({}, function(err, routes) {
+    $dbi.schema('angular_route').find({}, function(err, routes) {
         var routes = {
             angular : {
                 routes : routes,
@@ -47,10 +47,10 @@ angular_manager.prototype.getAngularRoutes = function getAngularRoutes(callback)
 
 angular_manager.prototype.getAngularConstants = function getAngularConstants(callback) {
     var self = this;
-    $dbi2('angular_constant').findDistinct('group', function(err, groups) {
+    $dbi.schema('angular_constant').findDistinct('group', function(err, groups) {
         var count = 0;
         _.each(groups, function(group) {
-            $dbi2('angular_constant').find({
+            $dbi.schema('angular_constant').find({
                 group : group
             }, function(err, constants) {
                 var constantGroup = {

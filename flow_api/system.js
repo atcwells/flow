@@ -39,7 +39,7 @@ module.exports = function system(request, response, callback) {
     };
 
     self.getAdminInfo = function(params) {
-        var menu_context = $dbi('menu_context');
+        var menu_context = $dbi.schema('menu_context');
         menu_context.find({
             'name' : 'admin'
         }, function(err, menu_contexts) {
@@ -47,11 +47,11 @@ module.exports = function system(request, response, callback) {
                 self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
                 self.callback(response);
             } else {
-                var menu_group = $dbi('menu_group');
+                var menu_group = $dbi.schema('menu_group');
                 menu_group.find({
                     'menu_context' : menu_contexts[0]._id,
                 }, function(err, menu_groups) {
-                    var menu_item = $dbi('menu_item');
+                    var menu_item = $dbi.schema('menu_item');
                     menu_item.find({
                         // 'menu_group' : menu_groups
                     }, function(err, menu_items) {

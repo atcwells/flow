@@ -27,8 +27,7 @@ $server.startup = function() {
         },
         install : function(callback) {
             self._log.info('Installing flow components.');
-            $server.installer = new self.flow_installer();
-            callback();
+            $server.installer = new self.flow_installer(callback);
         },
         setup : function(callback) {
             self._log.info('Installing flow components.');

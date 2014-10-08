@@ -5,7 +5,6 @@ function _flow_controller() {
         bower_manager : 'manager/bower_manager',
         angular_manager : 'manager/angular_manager',
         client_manager : 'manager/client_manager',
-        database_manager : 'database/database_manager',
         plugin : 'plugin/plugin'
     }, self);
 

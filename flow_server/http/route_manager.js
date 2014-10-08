@@ -1,5 +1,3 @@
-
-
 function route_manager() {
     var self = this;
     self.routes = {};
@@ -107,18 +105,18 @@ route_manager.prototype.setup = function() {
     self.staticAssetRoutes();
 
     var session = require('express-session');
-    var MongoStore = require('connect-mongo')(session);
+    var MongoStore = require('connect-mongostore')(session);
     var passport = require('passport');
     var LocalStrategy = require('passport-local').Strategy;
 
     $server.expressapp.use(require('body-parser').json());
     $server.expressapp.use(session({
-        secret : $cache.get('instance_config.cookie_secret'),
-        saveUninitialized: true,
-		resave: true,
-        store : new MongoStore({
-            db : $cache.get('database_config.name'),
-        })
+      secret : $cache.get('instance_config.cookie_secret'),
+      saveUninitialized: true,
+      resave: true,
+      store : new MongoStore({
+          db : $cache.get('database_config.name'),
+      })
     }));
     $server.expressapp.use(passport.initialize());
     $server.expressapp.use(passport.session());
@@ -158,19 +156,17 @@ route_manager.prototype.setup = function() {
     }));
 
     $server.expressapp.post('/auth/login', passport.authenticate('local'), function(req, res) {
-        // If this function gets called, authentication was successful.
-        // `req.user` contains the authenticated user.
-        var data = {
-            userId : req.user.username,
-            userRole : req.user.role,
-            sessionId : req.headers.cookie
-        };
-        res.json(data);
+      // If this function gets called, authentication was successful.
+      // `req.user` contains the authenticated user.
+      var data = {
+          userId : req.user.username,
+          userRole : req.user.role,
+          sessionId : req.headers.cookie
+      };
+      res.json(data);
     });
 
     $server.expressapp.post('/auth/logout', function(req, res) {
-        // If this function gets called, authentication was successful.
-        // `req.user` contains the authenticated user.
         req.logout();
         if (req.session.role) {
             delete req.session.role;
@@ -197,7 +193,6 @@ route_manager.prototype.setup = function() {
     });
 
 	var RAM = require('responsive-route-manager');
-
 	$server.api_manager = new RAM({
 		folder : $cache.get('instance_config.api_directory'),
 	    clientType : 'functional-api',

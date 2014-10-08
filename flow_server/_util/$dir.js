@@ -46,8 +46,6 @@ _directory_builder.prototype = {
             if (prop.prototype) {
                 console.log('    Extending ' + propName + ' with Logger (_log)');
                 prop.prototype._log = new self._log(propName);
-                console.log('    Extending ' + propName + ' with Validator (_val)');
-                prop.prototype._val = new self.validator(propName);
                 console.log('    Extending ' + propName + ' with EventEmitter (_event)');
                 prop.prototype._event = _event;
             }
