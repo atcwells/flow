@@ -40,7 +40,7 @@ Objects are stored in an in-memory cache where needed, and can retreived in the 
 #### API:
 Javascript API automatically called where URL begins with '/api/OBJECT/METHOD', where OBJECT and METHOD correspond to those within the API files in 'flow_api'.
 
-## License 
+## License
 
 (The MIT License)
 

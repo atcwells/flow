@@ -35,7 +35,7 @@ function(Hook, $scope, toaster, $routeParams, $timeout) {
         }).then(function(data) {
         	console.log(data.records);
         	console.log(self.recordList);
-        	
+
             angular.forEach(self.recordList, function(record, index) {
             	console.log(data.records.indexOf(record._id));
                 if (data.records.indexOf(record._id)) {
@@ -57,7 +57,7 @@ function(Hook, $scope, toaster, $routeParams, $timeout) {
                 cellTemplate : '<span class="text-center"><a ng-click="recordList.selectRow(row);" class="glyphicon glyphicon-circle-arrow-right"></a></span>',
                 width : '26px',
             });
-            angular.forEach(data.structure.fields, function(field, fieldName) {
+            angular.forEach(data.structure, function(field, fieldName) {
                 if (field.visible) {
                     var structureObject = {
                         field : fieldName,

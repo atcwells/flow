@@ -12,23 +12,25 @@ module.exports = function schema(request, response, callback) {
 	};
 
     self.getSchema = function(params) {
-        var schema = $cache.get('schema.' + params.table);
-        if (schema) {
-            self.response.message.error = false;
-            self.response.message.data.schemaDefinition = $cache.get('schema.' + params.table);
-            self.response.message.data.fieldTypes = $cache.get('database_config._field_types');
-            self.callback(response);
-        } else {
-            self.response.message.errorMessage = "ERROR: Unable to find schema called: " + params.table;
-            self.callback(response);
-        }
+      $dbi.getSchemaDefinition(params.name, function(err, def) {
+        self.response.message.error = false;
+        self.response.message.data.schemaDefinition = def;
+        $dbi.getFieldTypes(function(err, types) {
+          self.response.message.data.fieldTypes = types;
+          self.callback(response);
+        });
+      });
     };
 
     self.getSchemaNames = function(params) {
-        self.response.message.data.schemaNames = self._getSchemaNames();
+      $dbi.getSchemaNames(function(err, names) {
+        self.response.message.data.schemaNames = names;
         self.response.message.error = false;
-        self.response.message.data.fieldTypes = $cache.get('database_config._field_types');
-        self.callback(response);
+        $dbi.getFieldTypes(function(err, types) {
+          self.response.message.data.fieldTypes = types
+          self.callback(response);
+        });
+      });
     };
 
     self.saveSchema = function(params) {
@@ -48,8 +50,11 @@ module.exports = function schema(request, response, callback) {
             $dbi.removeSchema(params.name, function(err, msg) {
               $cache.unset('schema.' + params.name);
               self.response.message.error = false;
-              self.response.message.data.schemaNames = self._getSchemaNames();
-              self.callback(response);
+
+              $dbi.getSchemaNames(function(err, names) {
+                self.response.message.data.schemaNames = names;
+                self.callback(response);
+              });
             });
         } catch (err) {
             self.response.message.errorMessage = "ERROR: Unable to delete schema";
@@ -59,12 +64,20 @@ module.exports = function schema(request, response, callback) {
 
     self.createSchema = function(params) {
         try {
-          $dbi.setupSchema(params.name, {}, function(err, msg) {
+          $dbi.addSchema(params.name, {}, function(err, msg) {
             self.response.message.error = false;
-            self.response.message.data.schemaNames = self._getSchemaNames();
-            self.response.message.data.schemaDefinition = $cache.get('schema.' + params.name);
-            self.response.message.data.fieldTypes = $cache.get('database_config._field_types');
-            self.callback(response);
+            $dbi.getSchemaNames(function(err, names) {
+              self.response.message.data.schemaNames = names;
+
+              $dbi.getSchemaDefinition(params.name, function(err, def) {
+                self.response.message.data.schemaDefinition = def
+
+                $dbi.getFieldTypes(function(err, types) {
+                  self.response.message.data.fieldTypes = types;
+                  self.callback(response);
+                });
+              });
+            });
           });
         } catch (err) {
           self.response.message.errorMessage = "ERROR: Unable to delete schema";
@@ -75,7 +88,6 @@ module.exports = function schema(request, response, callback) {
 	/*
 	 * Private methods
 	 */
-
     self._getSchemaNames = function() {
         var schemaDefs = $cache.get('schema');
         var schemaNames = [];

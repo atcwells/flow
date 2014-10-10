@@ -45,10 +45,10 @@ function flow_installer(cb) {
                   var RDM = require('responsive-database-manager');
                   $dbi = RDM({
                     mongoUrl: 'mongodb://127.0.0.1:27017/test',
-                    schemaDirectory: '/flow_schema',
+                    schemaDirectory: '/flow_server/_schema',
                     useMongooseFixes: true,
                     backupRecords: true,
-                    backupDirectory: '/flow_records',
+                    backupDirectory: '/flow_server/_records',
                     logger: self._log
                   }, callback);
                 },

@@ -10,13 +10,15 @@ module.exports = function fields(request, response, callback) {
 		name: 'fields',
 		verb: 'post'
 	};
-	
+
     self.getFieldTypes = function(params) {
         self.response.message.error = false;
-        self.response.message.data.fieldTypes = $cache.get('database_config._field_types');
-        self.callback(response);
+        $dbi.getFieldTypes(function(err, types) {
+          self.response.message.data.fieldTypes = types;
+          self.callback(response);
+        });
     };
-    
+
     self.createFieldType = function(params) {
     	self.response.message.error = false;
         var fieldTypes = $server.asset_manager.get($cache.get('database_config.schema_directory') + '_field_types.json');
@@ -27,8 +29,10 @@ module.exports = function fields(request, response, callback) {
         		_field_types: params.fieldTypes
         	}
         });
-        self.response.message.data.fieldTypes = $cache.get('database_config._field_types');
-        self.callback(response);
+        $dbi.getFieldTypes(function(err, types) {
+          self.response.message.data.fieldTypes = types;
+          self.callback(response);
+        });
     };
 
     self.getMiddleware = function(params) {
@@ -48,7 +52,7 @@ module.exports = function fields(request, response, callback) {
         self.response.message.error = false;
         self.callback(response);
     };
-    
+
     self.saveSetters = function(params) {
         var setters = $server.asset_manager.get($cache.get('database_config.schema_directory') + '_setters.js');
         setters.contents = params._setters;
@@ -57,7 +61,7 @@ module.exports = function fields(request, response, callback) {
         self.response.message.error = false;
         self.callback(response);
     };
-    
+
     self.saveDefaults = function(params) {
         var defaults = $server.asset_manager.get($cache.get('database_config.schema_directory') + '_defaults.js');
         defaults.contents = params._defaults;
@@ -66,7 +70,7 @@ module.exports = function fields(request, response, callback) {
         self.response.message.error = false;
         self.callback(response);
     };
-    
+
     self.saveValidators = function(params) {
         var validators = $server.asset_manager.get($cache.get('database_config.schema_directory') + '_validators.js');
         validators.contents = params._validators;

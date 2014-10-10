@@ -58,20 +58,6 @@ route_manager.prototype.utilRoutes = function() {
         }
     };
 
-    self.routes['/flushCache'] = function(req, res) {
-        res.writeHead(200, {
-            'content-type' : 'text/html'
-        });
-        $server.controller.restart();
-        res.end('<div>Cache Flushed:</div><br /><ul></ul>');
-    };
-
-    self.routes['/viewCache'] = function(req, res) {
-        res.writeHead(200, {
-            'content-type' : 'application/json'
-        });
-        res.end(JSON.stringify($cache.getAll()));
-    };
     return this;
 };
 
@@ -109,7 +95,6 @@ route_manager.prototype.setup = function() {
     var passport = require('passport');
     var LocalStrategy = require('passport-local').Strategy;
 
-    $server.expressapp.use(require('body-parser').json());
     $server.expressapp.use(session({
       secret : $cache.get('instance_config.cookie_secret'),
       saveUninitialized: true,
@@ -131,7 +116,7 @@ route_manager.prototype.setup = function() {
 
     passport.use(new LocalStrategy(function(username, password, done) {
         var MongoClient = require('mongodb').MongoClient;
-        MongoClient.connect('mongodb://127.0.0.1:27017/test', function(err, db) {
+        MongoClient.connect($cache.get('database_config.uri'), function(err, db) {
             if (err)
                 return done(err);
 

@@ -17,13 +17,13 @@ function(Hook) {
                             submenuItems : []
                         };
                         angular.forEach(data.menu_items, function(menu_item) {
-                            if (menu_item.menu_group === group._id) {
+                            if (menu_item.menu_group._id === group._id) {
                                 menuItem.submenuItems.push(menu_item);
                             }
                         });
                         scope.adminMenuGroups.push(menuItem);
                     });
-                }); 
+                });
             };
             scope.refreshMenu();
         }

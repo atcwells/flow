@@ -4,7 +4,7 @@ function(Hook, $routeParams, $compile, $scope, $timeout, $location) {
     self.recordTable = $routeParams.table;
     self.originalRecord = {};
     self.record = {};
-console.log($location.path());
+
     self.getRecord = function(id) {
         self.promise = Hook('data/read', {
             table : $routeParams.table,
@@ -19,23 +19,23 @@ console.log($location.path());
             self.originalRecord = angular.copy(data.records[0]);
             self.structure = data.structure;
             $timeout(function() {
-                for (var field in self.structure.fields) {
-                    if (!self.record) {
-                        self.record = {};
-                    }
-                    if (!self.record[field]) {
-                        self.record[field] = "";
-                    }
-                    if (self.structure.fields[field].visible == 'true') {
-                        var newEl = angular.element("<div field-model='recordForm.record." + field + "' field-name='" + field + "' json-data='" + angular.toJson(self.structure.fields[field]) + "' class='input-" + self.structure.fields[field].type + "'></div>");
-                        angular.element('#' + field).append(newEl);
-                        $compile(newEl)($scope);
-                    } else {
-						if(self.structure.fields[field].ref){
-							self.record[field] = self.structure.fields[field]._id;
-						}
-                    }
+              for (var field in self.structure) {
+                if (!self.record) {
+                  self.record = {};
                 }
+                if (!self.record[field]) {
+                  self.record[field] = "";
+                }
+                if (self.structure[field].visible == 'true') {
+                  var newEl = angular.element("<div field-model='recordForm.record." + field + "' field-name='" + field + "' json-data='" + angular.toJson(self.structure[field]) + "' class='input-" + self.structure[field].type + "'></div>");
+                  angular.element('#' + field).append(newEl);
+                  $compile(newEl)($scope);
+                } else {
+      						if(self.structure[field].ref){
+      							self.record[field] = self.structure[field]._id;
+      						}
+                }
+              }
             });
         });
     };
@@ -61,7 +61,7 @@ console.log($location.path());
             self.originalRecord = angular.copy(self.record);
             self.validationErrors = {};
             $location.path('/record_form/' + $routeParams.table + '/' + data.records[0]._id);
-            
+
         }, function(error) {
             self.record = angular.copy(self.originalRecord);
             self.validationErrors = error.errorData;

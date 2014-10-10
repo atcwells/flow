@@ -47,25 +47,24 @@ module.exports = function system(request, response, callback) {
                 self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
                 self.callback(response);
             } else {
-                var menu_group = $dbi.schema('menu_group');
-                menu_group.find({
-                    'menu_context' : menu_contexts[0]._id,
-                }, function(err, menu_groups) {
-                    var menu_item = $dbi.schema('menu_item');
-                    menu_item.find({
-                        // 'menu_group' : menu_groups
-                    }, function(err, menu_items) {
-                        if (err) {
-                            self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
-                            self.callback(response);
-                        } else {
-                            self.response.message.error = false;
-                            self.response.message.data.menu_groups = menu_groups;
-                            self.response.message.data.menu_items = menu_items;
-                            self.callback(response);
-                        }
-                    });
+              $dbi.schema('menu_group').find({
+                  // 'menu_context' : menu_contexts[0]._id,
+              }, function(err, menu_groups) {
+                var menu_item = $dbi.schema('menu_item');
+                menu_item.find({
+                    // 'menu_group' : menu_groups
+                }, function(err, menu_items) {
+                    if (err) {
+                        self.response.message.errorMessage = 'ERROR: Unable to read table ' + params.table;
+                        self.callback(response);
+                    } else {
+                        self.response.message.error = false;
+                        self.response.message.data.menu_groups = menu_groups;
+                        self.response.message.data.menu_items = menu_items;
+                        self.callback(response);
+                    }
                 });
+              });
             }
         });
     };
