@@ -21,3 +21,12 @@ services auto-generated from API files:
 3.) Integrations
 meaning developer has to 'call' (really a wired up service) an api from a controller such as 'example.getView()'.
 'getView' is actually a function within an auto-generated service which talks to the corresponding API.
+
+Controller's written to client with mix of:
+
+functions,
+onload - call some functions
+
+server side libraries
+client side libraries
+ui libraries

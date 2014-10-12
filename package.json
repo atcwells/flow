@@ -17,8 +17,8 @@
     "passport-local": "^1.0.0",
     "mongodb": "^1.4.7",
     "strip-comments": "^0.1.6",
-    "responsive-route-manager": "0.3.8",
-    "responsive-database-manager": "0.6.1",
+    "responsive-route-manager": "0.4.0",
+    "responsive-database-manager": "0.6.5",
     "responsive-cache-manager": "0.2.1",
     "connect-mongostore": "^0.1.4"
   },

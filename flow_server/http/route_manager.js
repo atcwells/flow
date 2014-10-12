@@ -92,8 +92,6 @@ route_manager.prototype.setup = function() {
 
     var session = require('express-session');
     var MongoStore = require('connect-mongostore')(session);
-    var passport = require('passport');
-    var LocalStrategy = require('passport-local').Strategy;
 
     $server.expressapp.use(session({
       secret : $cache.get('instance_config.cookie_secret'),
@@ -103,69 +101,6 @@ route_manager.prototype.setup = function() {
           db : $cache.get('database_config.name'),
       })
     }));
-    $server.expressapp.use(passport.initialize());
-    $server.expressapp.use(passport.session());
-
-    passport.serializeUser(function(user, done) {
-        done(null, user);
-    });
-
-    passport.deserializeUser(function(user, done) {
-        done(null, user);
-    });
-
-    passport.use(new LocalStrategy(function(username, password, done) {
-        var MongoClient = require('mongodb').MongoClient;
-        MongoClient.connect($cache.get('database_config.uri'), function(err, db) {
-            if (err)
-                return done(err);
-
-            var collection = db.collection('users');
-            collection.find({
-                username : username
-            }).toArray(function(err, user) {
-                db.close();
-                if (!user) {
-                    return done(null, false, {
-                        message : 'Incorrect username.'
-                    });
-                }
-                if (password !== user[0].password) {
-                    return done(null, false, {
-                        message : 'Incorrect password.'
-                    });
-                }
-                return done(null, user);
-            });
-        });
-    }));
-
-    $server.expressapp.post('/auth/login', passport.authenticate('local'), function(req, res) {
-      // If this function gets called, authentication was successful.
-      // `req.user` contains the authenticated user.
-      var data = {
-          userId : req.user.username,
-          userRole : req.user.role,
-          sessionId : req.headers.cookie
-      };
-      res.json(data);
-    });
-
-    $server.expressapp.post('/auth/logout', function(req, res) {
-        req.logout();
-        if (req.session.role) {
-            delete req.session.role;
-        }
-        res.writeHead(200, {
-            'content-type' : 'application/json'
-        });
-        res.end("logout success");
-    });
-
-    // Initial request path.
-    $server.expressapp.use('/', function(req, res, next) {
-        next();
-    });
 
     // Bower dependencies will end here with a response.
     ['bower_components', 'flow_readme'].forEach(function(dir) {
@@ -177,12 +112,21 @@ route_manager.prototype.setup = function() {
         $server.expressapp.get(routePath, route);
     });
 
-	var RAM = require('responsive-route-manager');
-	$server.api_manager = new RAM({
+  var RAM = require('responsive-route-manager');
+
+  $server.auth_router = new RAM({
+    mongoUri : $cache.get('database_config.uri'),
+    userTable : 'user',
+    clientType : 'passport-auth',
+    mountPath : 'auth',
+    logger : self._log
+  }, $server.expressapp);
+
+	$server.api_router = new RAM({
 		folder : $cache.get('instance_config.api_directory'),
-	    clientType : 'functional-api',
-	    mountPath : 'api',
-	    logger : self._log
+    clientType : 'functional-api',
+    mountPath : 'api',
+    logger : self._log
 	}, $server.expressapp);
 
     return this;
