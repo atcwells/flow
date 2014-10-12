@@ -116,18 +116,20 @@ route_manager.prototype.setup = function() {
 
   $server.auth_router = new RAM({
     mongoUri : $cache.get('database_config.uri'),
-    userTable : 'user',
+    userTable : 'users',
     clientType : 'passport-auth',
     mountPath : 'auth',
     logger : self._log
-  }, $server.expressapp);
+  }, $server.expressapp, function() {
+
+  });
 
 	$server.api_router = new RAM({
 		folder : $cache.get('instance_config.api_directory'),
     clientType : 'functional-api',
     mountPath : 'api',
     logger : self._log
-	}, $server.expressapp);
+	}, $server.expressapp, function(){});
 
     return this;
 };
