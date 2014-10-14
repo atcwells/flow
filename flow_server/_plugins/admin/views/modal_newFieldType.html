@@ -1,0 +1,25 @@
+<div class="modal-header">
+	<h3 class="modal-title">New Field Type</h3>
+</div>
+<div class="modal-body">
+	<label>Name:</label>
+	<input type="text" class="form-control" ng-model="input.newName" placeholder="Name" />
+	<h5>Please choose a database field type:</h5>
+	<select
+	ui-select2="select2Options"
+	id="viewNameSelection"
+	style="width: 100%; margin-top: 4px;"
+	ng-model="input.type"
+	data-placeholder="Select a field type">
+		<option value=""></option>
+		<option ng-repeat="type in fieldTypes" value="{{type}}">{{type}}</option>
+	</select>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-disabled="!input.validForm" ng-click="ok()">
+		OK
+	</button>
+	<button class="btn btn-warning" ng-click="cancel()">
+		Cancel
+	</button>
+</div>

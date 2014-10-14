@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title></title>
+		<% _.each($cache.get('bower.style_dependencies'), function(dep){ %>
+		<link rel="stylesheet" type="text/css" href="<%= dep %>" />
+		<% }) %>
+		<% _.each($server.asset_manager.getAssetGroup("style"), function(dep){ %>
+		<link rel="stylesheet" type="text/css" href="/style/<%= dep.fileName %>" />
+		<% }) %>
+	</head>
+	<body ng-app="one">
+
+		<div id="content">
+			<div>
+				<system-menu></system-menu>
+			</div>
+			<div ng-view=""></div>
+		</div>
+
+		<div id="dependencies">
+			<script type="application/javascript" src="/bower_components/ace-builds/src-min-noconflict/ace.js"></script>
+			<% _.each($cache.get('bower.script_dependencies'), function(dep){ %>
+			<script type="application/javascript" src="<%= dep %>"></script>
+			<% }) %>
+			<script type="application/javascript" src="/javascript/application.js"></script>
+			<% _.each($server.asset_manager.getServices(), function(dep){ %>
+			<script type="application/javascript" src="/javascript/<%= dep %>"></script>
+			<% }) %>
+			<% _.each($server.asset_manager.getControllers(), function(dep){ %>
+			<script type="application/javascript" src="/javascript/<%= dep %>"></script>
+			<% }) %>
+			<% _.each($server.asset_manager.getDirectives(), function(dep){ %>
+			<script type="application/javascript" src="/javascript/<%= dep %>"></script>
+			<% }) %>
+		</div>
+	</body>
+</html>

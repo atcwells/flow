@@ -1,0 +1,62 @@
+<div id="recordList" class="container">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>Manage Views</h4>
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-5">
+					<select
+					ui-select2="select2Options"
+					class="col-md-12"
+					id="viewNameSelection"
+					style="padding: 0px; margin-top: 4px;"
+					ng-change="adminViews.selectView()"
+					ng-model="adminViews.selectedViewName"
+					data-placeholder="Select a view">
+						<option value=""></option>
+						<option ng-repeat="view in adminViews.viewNames" value="{{view}}">{{view.name}}</option>
+					</select>
+				</div>
+				<button ng-click="adminViews.saveView()" ng-disabled="!adminViews.selectedViewName" class="btn btn-primary">
+					Save
+				</button>
+				<button ng-click="adminViews.deleteView()" ng-disabled="!adminViews.selectedViewName" class="btn btn-primary">
+					Delete
+				</button>
+				<button ng-click="adminViews.createView()" class="btn btn-primary">
+					Create New...
+				</button>
+			</div>
+			<br />
+			<div ng-show="adminViews.selectedViewName">
+				<div class="row">
+					<div class="col-md-12">
+						<label>View</label>
+						<div ui-ace="{
+						useWrapMode : false,
+						showGutter: false,
+						theme:'twilight',
+						mode: 'html',
+						onLoad: aceLoaded,
+						onChange: aceChanged
+						}" ng-model="adminViews.selectedView.contents" class="well"></div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<label>View Controller</label>
+						<div ui-ace="{
+						useWrapMode : false,
+						showGutter: false,
+						theme:'twilight',
+						mode: 'javascript',
+						onLoad: aceLoaded,
+						onChange: aceChanged
+						}" ng-model="adminViews.selectedController.contents" class="well"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

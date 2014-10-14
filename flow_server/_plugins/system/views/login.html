@@ -1,0 +1,26 @@
+<div class="container row center-block">
+	<div class="col-lg-3">
+		<!-- placeholder to center login form -->
+	</div>
+	<div class="jumbotron col-lg-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h4>Login</h4>
+			</div>
+			<div class="panel-body">
+				<form ng-submit="login.login()">
+					<input type="text" ng-model="login.credentials.username" class="form-control" placeholder="Username" />
+					<br />
+					<input type="password" ng-model="login.password" ng-change="login.passwordUpdate(this)" class="form-control" placeholder="Password" />
+					<br />
+					<button class="btn btn-primary pull-right" type="submit">
+						Login
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-3">
+		<!-- placeholder to center login form -->
+	</div>
+</div>

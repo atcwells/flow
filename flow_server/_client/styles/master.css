@@ -1,0 +1,35 @@
+a:hover {
+	cursor:pointer;
+	text-decoration:none;
+}
+.ngCell> div {
+	height:100%;
+}
+.cg-busy-default-sign {
+	z-index:10;
+}
+.ace_editor {
+	min-height:400px;
+}
+.ngCellElement> .glyphicon-circle-arrow-right {
+	position:relative;
+	font-size:1.2em;
+	top:8px;
+	left:4px;
+}
+div.ngGrid {
+	border-radius:3px;
+}
+div.select2-container {
+	height:26px;
+}
+div.select2-container> .select2-choice {
+	height:26px;
+}
+.container {
+    position: relative;
+    top: 50%;
+}
+#content {
+	padding-top: 70px;
+}

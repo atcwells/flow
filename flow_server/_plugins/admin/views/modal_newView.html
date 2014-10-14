@@ -1,0 +1,22 @@
+<div class="modal-header">
+	<h3 class="modal-title">New View</h3>
+</div>
+<div class="modal-body">
+	<label>Name:</label>
+	<input type="text" class="form-control" ng-model="input.newName" placeholder="Name" />
+	<h5>When creating a new View, a new Route is also created so that the view is publicly accessible. The values below are ascertained automatically.</h5>
+	<label>URL Name:</label>
+	<input type="text" class="form-control" ng-disabled="true" id="route_url" ng-value="input.newName.replace(upperCaseMatch, '_$&').toLowerCase()" placeholder="Name" />
+	<label>Template Name:</label>
+	<input type="text" class="form-control" ng-disabled="true" id="route_template" ng-value="input.newName + '.html'" placeholder="Template Name" />
+	<label>Controller:</label>
+	<input type="text" class="form-control" ng-disabled="true" id="route_controller" ng-value="input.newName + ' as ' + input.newName" placeholder="Name" />
+</div>
+<div class="modal-footer">
+	<button class="btn btn-primary" ng-click="ok()">
+		OK
+	</button>
+	<button class="btn btn-warning" ng-click="cancel()">
+		Cancel
+	</button>
+</div>
