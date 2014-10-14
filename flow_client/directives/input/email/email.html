@@ -1,7 +1,0 @@
-<label for="{{fieldName}}">
-  <span ng-if="jsonData.display_name">{{jsonData.display_name}}</span>
-  <span ng-if="!jsonData.display_name">{{fieldName}}</span>
-  <span class="text-danger" ng-if="jsonData.mandatory == 'true' && !fieldModel"> Required</span>
-</label>
-<input id="{{fieldName}}" type="text" ng-model="fieldModel" input-validation="email" class="form-control" ng-disabled="jsonData.read_only == 'true'" ng-required="jsonData.mandatory == 'true'" />
-<br />

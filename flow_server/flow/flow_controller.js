@@ -1,12 +1,10 @@
+var bower_manager = require(shell.pwd() + '/flow_server/manager/bower_manager');
+var angular_manager = require(shell.pwd() + '/flow_server/manager/angular_manager');
+var client_manager = require(shell.pwd() + '/flow_server/manager/client_manager');
+var _log = new $logger('Flow Controller');
+
 function _flow_controller() {
     var self = this;
-
-    _.include({
-        bower_manager : 'manager/bower_manager',
-        angular_manager : 'manager/angular_manager',
-        client_manager : 'manager/client_manager',
-        plugin : 'plugin/plugin'
-    }, self);
 
     var instance = {
         getProduction : function getProduction() {
@@ -17,39 +15,28 @@ function _flow_controller() {
         },
         restart : function restart() {
             var self = this;
-            self._log.warn("Refreshing server...");
-            self._log.warn("..Flushing Cache...");
+            _log.warn("Refreshing server...");
+            _log.warn("..Flushing Cache...");
             $cache.flush();
             $server.installer.readConfig();
             $cache.set($server.installer.config);
-            self._log.warn("..Flushing Schemas...");
+            _log.warn("..Flushing Schemas...");
             $server.dbi.flushSchemas();
-            $server.dbi = new self.database_manager();
-            self._log.warn("..Shutting down HTTPServer");
+            $server.dbi = new database_manager();
+            _log.warn("..Shutting down HTTPServer");
             $server.http_server.shutdown();
-            self._log.info("Server startup beginning...");
+            _log.info("Server startup beginning...");
             this.startup();
         },
         startup : function startup(cb) {
-            $server.bower_manager = new self.bower_manager();
-            $server.angular_manager = new self.angular_manager();
-            $server.client_manager = new self.client_manager();
+            $server.bower_manager = new bower_manager();
+            $server.angular_manager = new angular_manager();
+            $server.client_manager = new client_manager();
             async.series({
                 getBowerDependencies : function(callback) {
                     $server.bower_manager.readBowerJson();
                     $server.bower_manager.getDependencyFiles();
                     callback();
-                },
-                getInstalledPlugins : function(callback) {
-                    var numberOfPlugins = 0;
-                    var pluginNames = _.keys($server.plugin_manager.installedPlugins);
-                    _.each(pluginNames, function(pluginName) {
-                        new self.plugin(pluginName, function() {
-                            if (++numberOfPlugins == pluginNames.length) {
-                                callback();
-                            }
-                        });
-                    });
                 },
                 getClientDependencies : function(callback) {
                     $server.client_manager.getClientFiles();
@@ -62,7 +49,7 @@ function _flow_controller() {
                     });
                 }
             }, function() {
-                self._log.info('Flow configuration complete');
+                _log.info('Flow configuration complete');
                 cb();
             });
         },
@@ -73,14 +60,14 @@ function _flow_controller() {
 
     var _terminator = function terminator(sig) {
         if ( typeof sig === "string") {
-            self._log.error('Received ' + sig + ' - terminating app ...');
+            _log.error('Received ' + sig + ' - terminating app ...');
             process.exit(1);
         }
         this._log.error('Node server stopped.');
     };
 
     var _setupTerminationHandlers = function setupTerminationHandlers() {
-        self._log.info('Configuring Manual Termination Handlers');
+        _log.info('Configuring Manual Termination Handlers');
         process.on('exit', function() {
             self._terminator();
         });
@@ -94,10 +81,10 @@ function _flow_controller() {
     var _detectProduction = function _detectProduction() {
         var ip = process.env.OPENSHIFT_NODEJS_IP;
         if (!ip) {
-            self._log.warn("Detected development environment");
+            _log.warn("Detected development environment");
             return false;
         } else {
-            self._log.warn("Detected production environment");
+            _log.warn("Detected production environment");
             return true;
         }
     };

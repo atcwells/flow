@@ -1,3 +1,6 @@
+var file = require(shell.pwd() + '/flow_server/file/file');
+var _log = new $logger('file');
+
 function bower_manager() {
     this.bowerDependencies = [];
     this.styleDependencies = [];
@@ -7,7 +10,7 @@ function bower_manager() {
 
 bower_manager.prototype.readBowerJson = function readBowerJson() {
     var self = this;
-    self.bowerFile = new $dir.json_file('./bower.json').readFile().contents;
+    self.bowerFile = new file('./bower.json').readJsonFile().contents;
     _.each(this.bowerFile.dependencies, function(dependency, depName) {
         self.bowerDependencies.push(depName);
     });
@@ -36,7 +39,7 @@ bower_manager.prototype.getDependencyFiles = function getDependencyFiles() {
 
 bower_manager.prototype.getFilesForDependency = function getFilesForDependency(dependencyName) {
     var self = this;
-    var dependencyBowerFile = new $dir.json_file('./bower_components/' + dependencyName + '/bower.json').readFile();
+    var dependencyBowerFile = new file('./bower_components/' + dependencyName + '/bower.json').readJsonFile();
     if (dependencyBowerFile.contents) {
         var dependencies = dependencyBowerFile.contents.main;
         if (!_.isArray(dependencies)) {
@@ -52,7 +55,7 @@ bower_manager.prototype.getFilesForDependency = function getFilesForDependency(d
             }
         });
     }
-    self._event.emit('file.unmount', dependencyBowerFile);
+    $event.emit('file.unmount', dependencyBowerFile);
 };
 
 bower_manager.prototype.installPackage = function installPackage(package, callback) {

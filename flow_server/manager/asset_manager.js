@@ -1,23 +1,23 @@
 function asset_manager() {
     var self = this;
     self.assetLibrary = {};
-    self._event.on('file.written', function(data) {
+    $event.on('file.written', function(data) {
         self.addAsset(data);
     });
-    self._event.on('file.read', function(data) {
+    $event.on('file.read', function(data) {
         self.addAsset(data);
     });
-    self._event.on('file.unmount', function(data) {
+    $event.on('file.unmount', function(data) {
         self.unmountAsset(data);
     });
-    self._event.on('file.copied', function(data) {
+    $event.on('file.copied', function(data) {
         self.addAsset(data);
     });
-    self._event.on('file.moved', function(data) {
+    $event.on('file.moved', function(data) {
         self.removeAsset(data);
         self.addAsset(data);
     });
-    self._event.on('file.deleted', function(data) {
+    $event.on('file.deleted', function(data) {
         self.removeAsset(data);
     });
     return self;
@@ -31,7 +31,7 @@ asset_manager.prototype = {
             this.assetLibrary[fileType] = {};
         }
         this.assetLibrary[fileType][assetObject.filePath] = assetObject;
-        this._event.emit('asset.added', assetObject);
+        $event.emit('asset.added', assetObject);
         return this;
     },
     unmountAsset : function unmountAsset(assetObject) {
@@ -40,7 +40,7 @@ asset_manager.prototype = {
             this.assetLibrary[fileType][assetObject.filePath] = false;
         }
         assetObject.fileType = fileType;
-        this._event.emit('asset.removed', assetObject);
+        $event.emit('asset.removed', assetObject);
         return this;
     },
     removeAsset : function removeAsset(fileName) {

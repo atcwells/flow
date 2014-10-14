@@ -1,36 +1,37 @@
 (function() {
 
-    var file = require('file');
+  var fileWalker = require('file');
+  var file = require(shell.pwd() + '/flow_server/file/file');
 
-    client_manager.prototype.setupDirectoryWatching = function() {
-        var self = this;
-        var hound = require('hound');
-        var clientDir = $cache.get('instance_config.client_directory');
-        var watcher = hound.watch(clientDir.slice(0, clientDir.length - 1));
+  client_manager.prototype.setupDirectoryWatching = function() {
+      var self = this;
+      var hound = require('hound');
+      var clientDir = $cache.get('client_config.installation_path');
+      var watcher = hound.watch(shell.pwd() + clientDir);
 
-        watcher.on('create', function(file, stats) {
-            new $dir.file(file).readFile();
-        });
-        watcher.on('change', function(file, stats) {
-            new $dir.file(file).readFile();
-        });
-    },
-    
-    client_manager.prototype.getClientFiles = function() {
-        file.walkSync($cache.get('instance_config.client_directory'), function(dirPath, dirs, files) {
-        	if(dirPath.indexOf('plugins') === -1){
-                if(files.length){
-                	_.each(files, function(file){
-                		new $dir.file('./' + dirPath + '/' + file).readFile();
-                	});
-                }
-        	}
-        });
-    };
+      watcher.on('create', function(file, stats) {
+          new $dir.file(file).readFile();
+      });
+      watcher.on('change', function(file, stats) {
+          new $dir.file(file).readFile();
+      });
+  },
 
-    function client_manager() {
-    	this.setupDirectoryWatching();
-    };
+  client_manager.prototype.getClientFiles = function() {
+      fileWalker.walkSync(shell.pwd() + $cache.get('client_config.installation_path'), function(dirPath, dirs, files) {
+      	if(dirPath.indexOf('plugins') === -1){
+              if(files.length){
+              	_.each(files, function(fileName){
+              		new file(dirPath + '/' + fileName).readFile();
+              	});
+              }
+      	}
+      });
+  };
 
-    module.exports = client_manager;
+  function client_manager() {
+  	this.setupDirectoryWatching();
+  };
+
+  module.exports = client_manager;
 })();

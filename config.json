@@ -5,8 +5,8 @@
 		"port": "9001",
 		"title": "one",
 		"database_type": "MongoDB",
-		"client_directory": "./flow_client/",
-		"api_directory": "/flow_api",
+		"client_directory": "./flow_server/_client/",
+		"api_directory": "/flow_server/_api",
 		"cookie_secret" : "killthecat",
 		"production": "false",
 		"log_level" : "debug"
@@ -22,20 +22,12 @@
 		"data_directory": "/flow_server/_records/"
 	},
 	"plugin_config": {
-		"catalog": {
-			"path": "./flow_plugin_catalog/"
-		},
-		"installation_path": "./flow_client/plugins/",
-		"installed": {
-			"system": {
-				"version": "0.0.1"
-			},
-			"admin": {
-				"version": "0.0.1"
-			}
-		}
+		"installation_path": "./flow_server/_plugins/"
 	},
 	"cache_config": {
 		"strategy": "object-store"
+	},
+	"client_config": {
+		"installation_path" : "/flow_server/_client"
 	}
 }
