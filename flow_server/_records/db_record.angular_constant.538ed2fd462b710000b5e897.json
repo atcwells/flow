@@ -1,0 +1,14 @@
+{
+    "table": "angular_constant",
+    "data": {
+        "_id": "538ed2fd462b710000b5e897",
+        "name": "loginFailed",
+        "value": "auth-login-failed",
+        "_updated_on": "Mon Oct 13 2014 13:24:23 GMT+0100 (BST)",
+        "_created_on": "Wed Jun 04 2014 09:04:13 GMT+0100 (BST)",
+        "__v": 0,
+        "group": "AUTH_EVENTS",
+        "display_name": "",
+        "_updated_by": null
+    }
+}

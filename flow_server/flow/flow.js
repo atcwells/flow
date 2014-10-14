@@ -39,13 +39,11 @@ $server.startup = function() {
             callback();
         },
         setupRoutes : function(callback) {
-            $server.route_manager.setup();
-            callback();
+            $server.route_manager.setup(callback);
         },
         start : function(callback) {
             self._log.info('Starting HTTP Server.');
-            $server.http_server = new self.http_server();
-            callback();
+            $server.http_server = new self.http_server(callback);
         }
     }, function() {
         self._log.info('Flow setup complete.');

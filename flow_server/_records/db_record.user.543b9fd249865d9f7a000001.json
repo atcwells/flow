@@ -1,0 +1,15 @@
+{
+    "table": "user",
+    "data": {
+        "username": "alex.wells",
+        "_id": "543b9fd249865d9f7a000001",
+        "_updated_on": "Mon Oct 13 2014 11:27:23 GMT+0100 (BST)",
+        "_updated_by": null,
+        "_created_by": "[object Object]",
+        "_created_on": "Mon Oct 13 2014 10:48:02 GMT+0100 (BST)",
+        "__v": 0,
+        "display_name": "Alex Wells",
+        "name": "Alex Wells",
+        "email": "e@xample.com"
+    }
+}

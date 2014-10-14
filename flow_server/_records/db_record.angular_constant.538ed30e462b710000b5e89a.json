@@ -1,0 +1,14 @@
+{
+    "table": "angular_constant",
+    "data": {
+        "_id": "538ed30e462b710000b5e89a",
+        "name": "notAuthenticated",
+        "value": "auth-not-authenticated",
+        "__v": 0,
+        "group": "AUTH_EVENTS",
+        "_updated_on": "Mon Oct 13 2014 13:24:39 GMT+0100 (BST)",
+        "_created_on": "Wed Jun 04 2014 09:04:30 GMT+0100 (BST)",
+        "display_name": "Not Authenticated",
+        "_updated_by": null
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "table": "angular_constant",
+    "data": {
+        "_id": "538ed314462b710000b5e89b",
+        "name": "notAuthorized",
+        "value": "auth-not-authorized",
+        "__v": 0,
+        "group": "AUTH_EVENTS",
+        "_updated_on": "Mon Oct 13 2014 13:25:04 GMT+0100 (BST)",
+        "_created_on": "Wed Jun 04 2014 09:04:36 GMT+0100 (BST)",
+        "_updated_by": null,
+        "display_name": ""
+    }
+}

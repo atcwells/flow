@@ -1,6 +1,6 @@
 module.exports = function schema(request, response, callback) {
     var self = this;
-    self.user = (request && request.user[0]) || {};
+    self.user = (request && request.user && request.user[0]) || {};
     self.request = request;
     self.response = response;
     self.callback = callback;

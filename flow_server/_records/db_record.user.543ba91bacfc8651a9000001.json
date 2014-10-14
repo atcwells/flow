@@ -1,0 +1,15 @@
+{
+    "table": "user",
+    "data": {
+        "display_name": "Gudrun Muller",
+        "_id": "543ba91bacfc8651a9000001",
+        "_updated_on": "Mon Oct 13 2014 11:29:08 GMT+0100 (BST)",
+        "_updated_by": null,
+        "_created_by": "[object Object]",
+        "_created_on": "Mon Oct 13 2014 11:27:39 GMT+0100 (BST)",
+        "__v": 0,
+        "username": "gudrun.muller",
+        "name": "Gudrun Muller",
+        "email": "e@xample.com"
+    }
+}

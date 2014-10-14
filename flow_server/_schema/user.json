@@ -70,7 +70,7 @@
             "display_name": "Password"
         },
         "role": {
-            "type": "string",
+            "type": "objectid",
             "ref": "role",
             "description": "",
             "display_name": "Role",

@@ -48,7 +48,7 @@ angular_manager.prototype.getAngularRoutes = function getAngularRoutes(callback)
 angular_manager.prototype.getAngularConstants = function getAngularConstants(callback) {
     var self = this;
     $dbi.schema('angular_constant').findDistinct('group', function(err, groups) {
-        var count = 0;
+        var groupsToEvauate = groups.length;
         _.each(groups, function(group) {
             $dbi.schema('angular_constant').find({
                 group : group
@@ -60,8 +60,8 @@ angular_manager.prototype.getAngularConstants = function getAngularConstants(cal
                 };
                 constantGroup.angular.constants[group] = constants;
                 $cache.set(constantGroup);
-                count++;
-                if (count === groups.length) {
+                groupsToEvauate--;
+                if (!groupsToEvauate) {
                     callback();
                 }
             });

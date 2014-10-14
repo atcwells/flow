@@ -1,16 +1,17 @@
-function http_server() {
+function http_server(callback) {
     this.setup();
-    this.startup();
+    this.startup(callback);
     return this;
 };
 
 http_server.prototype = {
     constructor : http_server,
-    startup : function startup() {
+    startup : function startup(callback) {
     	var self = this;
         self._log.info('HTTP server starting up...');
         this.server = $server.expressapp.listen(self.port, self.ipaddress, function() {
             self._log.info('HTTP server started on ' + self.ipaddress + ':' + self.port);
+            callback(null, '');
         });
     },
     shutdown : function shutdown() {

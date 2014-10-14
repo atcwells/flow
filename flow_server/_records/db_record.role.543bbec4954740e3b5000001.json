@@ -1,0 +1,12 @@
+{
+    "table": "role",
+    "data": {
+        "__v": 0,
+        "_updated_on": "Mon Oct 13 2014 13:00:04 GMT+0100 (BST)",
+        "name": "admin",
+        "_updated_by": null,
+        "_created_by": null,
+        "_created_on": "Mon Oct 13 2014 13:00:04 GMT+0100 (BST)",
+        "_id": "543bbec4954740e3b5000001"
+    }
+}

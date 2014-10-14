@@ -1,0 +1,14 @@
+{
+    "table": "angular_constant",
+    "data": {
+        "_id": "538ed302462b710000b5e898",
+        "name": "logoutSuccess",
+        "value": "auth-logout-success",
+        "__v": 0,
+        "group": "AUTH_EVENTS",
+        "_updated_on": "Mon Oct 13 2014 13:25:09 GMT+0100 (BST)",
+        "_created_on": "Wed Jun 04 2014 09:04:18 GMT+0100 (BST)",
+        "_updated_by": null,
+        "display_name": ""
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "table": "user",
+    "data": {
+        "_id": "543baa4f4f204b1db0000001",
+        "_updated_on": "Mon Oct 13 2014 11:33:38 GMT+0100 (BST)",
+        "name": "admin",
+        "username": "admin",
+        "_updated_by": null,
+        "_created_by": null,
+        "_created_on": "Mon Oct 13 2014 11:32:47 GMT+0100 (BST)",
+        "__v": 0,
+        "display_name": "admin",
+        "email": "admin@example.com"
+    }
+}

@@ -1,13 +1,5 @@
-Fix up each of the managers so that the code is separated from the flow application.
-Remove dependencies no longer required once managers are complete.
+
 setup image work! so far no ability to do/manage/attach images.
-
-Need to complete:
-Split out assets into manager.
-Split out plugins into manager.
-Split out properties into manager.
-
-REWRITE TO USE KOA :( || REWRITE TO USE PROMISES :(
 
 Ideas:
 
@@ -27,6 +19,32 @@ Controller's written to client with mix of:
 functions,
 onload - call some functions
 
-server side libraries
-client side libraries
-ui libraries
+server side libraries?
+client side libraries?
+ui libraries?
+
+
+
+TO WRITE!!!!
+
+PLUGINS:
+NPM install itself from a package location
+a plugin needs to register all schema with database
+load all records (don't overwrite on production systems, clear down tables and rewrite on dev)
+register all following with route-manager, asset-manager, client-manager:
+
+  'directives',
+  'controllers',
+  'api',
+  'views',
+  'services'
+
+finally allow access to pages, this process should not prevent the rest of the platform from running.
+
+CLIENT
+the client manager needs a record of all files within a directory structure, and the filetypes
+file's responsibilities can only be derived from folder name (at the moment all I can think of)
+ability to roll up all files, including js/css dependencies into a public release file.
+
+IMAGE Handling:
+Can be done with an API file, loaded by the (future!) image_library plugin
