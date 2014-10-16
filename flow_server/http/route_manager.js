@@ -39,7 +39,7 @@ route_manager.prototype.utilRoutes = function() {
 };
 
 route_manager.prototype.staticAssetRoutes = function() {
-  self.routes['/javascript/_validators.js'] = function(req, res) {
+  this.routes['/javascript/_validators.js'] = function(req, res) {
     res.writeHead(200, {
       'content-type' : 'application/javascript'
     });

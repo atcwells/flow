@@ -3,7 +3,7 @@ async = require('async');
 shell = require('shelljs');
 var express = require('express');
 var events = require('events');
-  
+
 require(process.env.PWD + '/flow_server/util/$utils');
 
 $logger = require(process.env.PWD + '/flow_server/util/$logger');
@@ -15,6 +15,7 @@ $dbi = {};
 var flow_installer = require(shell.pwd() + '/flow_server/flow/flow_installer');
 var flow_controller = require(shell.pwd() + '/flow_server/flow/flow_controller');
 var http_server = require(shell.pwd() + '/flow_server/http/http_server');
+var file = require(shell.pwd() + '/flow_server/file/file');
 
 $server.startup = function() {
     var self = this;
@@ -25,9 +26,15 @@ $server.startup = function() {
             self._log.info('Instantiated directory interface.');
             callback();
         },
+        readConfig : function(callback) {
+            self._log.info('Reading config from [./config.json]');
+            self.config = new file(shell.pwd() + '/config.json').readJsonFile().contents;
+            self._log.info('Successfully read config');
+            callback();
+        },
         install : function(callback) {
             self._log.info('Installing flow components.');
-            $server.installer = new flow_installer(callback);
+            $server.installer = new flow_installer(self.config, callback);
         },
         setup : function(callback) {
             self._log.info('Installing flow components.');

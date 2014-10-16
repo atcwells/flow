@@ -1,0 +1,50 @@
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<ul class="nav nav-tabs">
+						<li>
+							<a href="#notes" data-url="readme-notes.html" class="readme-section" data-target="notes" data-toggle="tab" data-tab-url="/readme/readme-notes.html">Notes</a>
+						</li>
+						<li>
+							<a href="#startup" data-url="readme-startup.html" class="readme-section" data-target="startup" data-toggle="tab">Application Startup</a>
+						</li>
+						<li>
+							<a href="#components" data-url="readme-components.html" class="readme-section" data-target="components" data-toggle="tab">Core Components</a>
+						</li>
+					</ul>
+
+					<div class="tab-content">
+						<div class="tab-pane readme-section-content" id="notes"></div>
+						<div class="tab-pane readme-section-content" id="startup"></div>
+						<div class="tab-pane readme-section-content" id="components"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="/bower_components/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script>
+            $('a.readme-section').each(function(k, tab) {
+                var tabDiv = $(tab).attr('data-target');
+                $(tab).on('shown.bs.tab', function(e) {
+                    $.ajax({
+                        url : $(e.currentTarget).attr('data-url'),
+                        success : function(data) {
+                            if (data) {
+                                $('#' + tabDiv).html(data);
+                                $('a.readme-section').removeClass('active');
+                                $('.readme-section-content').removeClass('active');
+                                $('#' + tabDiv).addClass('active');
+                            }
+                        }
+                    });
+                });
+            });
+		</script>
+	</body>
+</html>

@@ -1,0 +1,142 @@
+<div class="container">
+	<div class="row">
+		<div class="col-md-10">
+			<h3 class="page-header">Inheritance</h3>
+			<p>
+				Objects inherit methods and properties from other Objects prototypes. This is configured at startup, so if you change this, you must restart the instance for changes to take effect. Other methods (which are overwritten by the child) are available on the _super object. For instance:
+			</p>
+			<div>
+				<pre>
+    function User(_id) { 
+        this._id = _id; 
+        return this;
+    };
+    User.prototype = { 
+        constructor : User,
+        properties : { 
+            inherits : "Person"
+        }
+    } 
+    
+    function Person(_id) { 
+        this._id = _id;
+        return this; 
+    }; 
+    Person.prototype = {
+        constructor : Person,
+        properties : { 
+            hair_colour: 'red', 
+        } 
+    }</pre>
+			</div>
+			<p>
+				In the above example, because User inherits from Person it will receive red hair.
+			</p>
+			<h3 class="page-header">Conventions (code)</h3>
+			<h5>All classes are lower case seperated by underscores, this is because various aspects of the application automatically convert names to lower case unexpectedly.</h5>
+			<kbd>_</kbd> a class that should not be used. It is dangerous to use and is in general either extended from, or used singly. can be thought of as an abstract object
+			<br />
+			<kbd>$</kbd> a global class that can be used by all objects (including ajax endpoints)
+			<br />
+			<h3 class="page-header">Conventions (file)</h3>
+			<kbd>$</kbd> at start of filename, indicates a class used solely by the main 'boss.js' script.
+			<br />
+			<kbd>lower_case</kbd> all filenames are lower case seperated by underscores, this is because various aspects of the application automatically convert names to lower case unexpectedly. <h3 class="page-header">Global objects ($)</h3>
+			<kbd>$server</kbd> a class which contains all aspects of the server. <h5>Public methods</h5>
+			<ul>
+				<li>
+					startup: starts it up
+				</li>
+				<li>
+					restart: restarts safely, re-instantiating all objects. Relatively expensive
+				</li>
+				<li>
+					shutdown: shuts it down
+				</li>
+				<li>
+					childProcessCommand: can run a command against the OS
+				</li>
+				<li>
+					readConfig: reads the config file from the './config.json' location
+				</li>
+			</ul>
+			<h5>Properties</h5>
+			<ul>
+				<li>
+					asset_manager: controls all files. contains a record of all files installed, and can minify and productionise files upon reqest.
+				</li>
+				<li>
+					plugin_manager: controls installed plugins, and installs/uninstalls plugins upon request.
+				</li>
+				<li>
+					client_manager: controls all files in the client - client-side JS, CSS etc and makes sure they are included in the index page.
+				</li>
+				<li>
+					angular_manager: controls the root Angular 'App' file, and all the angular routing, constants, and setup.
+				</li>
+				<li>
+					route_manager: Should never be directly interacted with. By itself it watches for assets to be created and then creates routes automatically for them, depending on their type.
+				</li>
+				<li>
+					http_server: The web server instance for this application, can be restarted using methods within the class.
+				</li>
+			</ul>
+			<kbd>$cache</kbd> a class which can contain any cached object.
+			<br />
+			<h5>Public methods</h5>
+			<ul>
+				<li>
+					getAll: gets all cache items currently stored.
+				</li>
+				<li>
+					get: get a single cache item, or a cache group. Cache items are dot-notated, like an object syntax.
+				</li>
+				<li>
+					unset: unsets a single item or group, using dot-notation.
+				</li>
+				<li>
+					set: sets an object. Bear in mind that objects will simply overwrite previously held objects.
+				</li>
+				<li>
+					flush: empties the entire cache.
+				</li>
+				<li>
+					setup: called upon installation, not really useful.
+				</li>
+			</ul>
+			<h5>Properties</h5>
+			<ul>
+				<li>
+					_cacheObject: the cache store. Don't touch.
+				</li>
+			</ul>
+			<kbd>$dir</kbd> a class which enables the instantiation of any object from any other object location. 
+			<h5>Public methods</h5>
+			<ul>
+				<li>no methods. To instantiate a new object from the flow_server directory, use "new $dir.[Object](params)"</li>
+			</ul>
+			<h5>Properties</h5>
+			<ul>
+				<li>
+					List of properties is extensive, being every class available to the application.
+				</li>
+			</ul>
+			<kbd>$dbi</kbd> a class containing all of the Database schemas, allowing for universal access to the database.
+			<h5>Public methods</h5>
+			<ul>
+				<li>
+					no methods. Object should be directly called to retrieve a database table for further use.
+				</li>
+			</ul>
+			<h5>Properties</h5>
+			<ul>
+				<li>
+					no properties.
+				</li>
+			</ul>
+		</div>
+		<div class="col-md-1" data-spy="affix" data-offset-top="60" data-offset-bottom="200">
+			<a href="#">test</a>
+		</div>
+	</div>
+</div>
