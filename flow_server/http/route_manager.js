@@ -39,19 +39,6 @@ route_manager.prototype.utilRoutes = function() {
 };
 
 route_manager.prototype.staticAssetRoutes = function() {
-  var self = this;
-  ['view', 'javascript', 'style'].forEach(function(assetGroup) {
-    var assets = $server.asset_manager.getAssetGroup(assetGroup);
-    _.each(assets, function(asset) {
-      self.routes['/' + assetGroup + '/' + asset.fileName] = function(req, res) {
-        res.contentType(asset.fileName);
-        res.writeHead(200);
-        var response = _.template($server.asset_manager.get(asset.filePath).contents);
-        res.end(response());
-      };
-    });
-  });
-
   self.routes['/javascript/_validators.js'] = function(req, res) {
     res.writeHead(200, {
       'content-type' : 'application/javascript'
@@ -79,9 +66,7 @@ route_manager.prototype.setup = function(callback) {
   }));
 
   // Bower dependencies will end here with a response.
-  ['bower_components', 'flow_readme'].forEach(function(dir) {
-    $server.expressapp.use('/' + dir, require('express').static(process.env.PWD + '/' + dir));
-  });
+  $server.expressapp.use('/bower_components', require('express').static(shell.pwd() + '/bower_components'));
 
   // Setup get requests for all text based content
   _.each(self.routes, function(route, routePath) {
@@ -89,22 +74,33 @@ route_manager.prototype.setup = function(callback) {
   });
 
   $server.auth_router = new RAM({
-    mongoUri : $cache.get('database_config.uri'),
     userTable : 'users',
-    clientType : 'passport-auth',
-    mountPath : 'auth',
-    logger : new $logger('Auth Router')
+    watchFiles : true,
+    folder : '/flow_server/_plugins/readme/views/',
+    clientType : 'static',
+    mountPath : 'readme',
+    logger : new $logger('Readme Router')
   }, $server.expressapp, function(err, msg) {
 
-    $server.api_router = new RAM({
-      folder : $cache.get('instance_config.api_directory'),
-      clientType : 'functional-api',
-      mountPath : 'api',
-      logger : new $logger('API Router')
-    }, $server.expressapp, function(err, msg){
+    $server.auth_router = new RAM({
+      mongoUri : $cache.get('database_config.uri'),
+      userTable : 'users',
+      watchFiles : true,
+      clientType : 'passport-auth',
+      mountPath : 'auth',
+      logger : new $logger('Auth Router')
+    }, $server.expressapp, function(err, msg) {
       callback(null, '');
+      // $server.api_router = new RAM({
+      //   folder : $cache.get('instance_config.api_directory'),
+      //   watchFiles : true,
+      //   clientType : 'functional-api',
+      //   mountPath : 'api',
+      //   logger : new $logger('API Router')
+      // }, $server.expressapp, function(err, msg){
+      //   callback(null, '');
+      // });
     });
-
   });
 };
 

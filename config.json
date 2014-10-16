@@ -29,5 +29,8 @@
 	},
 	"client_config": {
 		"installation_path" : "/flow_server/_client"
+	},
+	"image_config": {
+		"image_directory" : "/flow_server/_images"
 	}
 }

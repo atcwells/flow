@@ -1,6 +1,8 @@
 var asset_manager = require(shell.pwd() + '/flow_server/manager/asset_manager');
 var route_manager = require(shell.pwd() + '/flow_server/http/route_manager');
 var file = require(shell.pwd() + '/flow_server/file/file');
+var RDM = require('responsive-database-manager');
+var RCM = require('responsive-cache-manager');
 var _log = new $logger('Flow Controller');
 
 function flow_installer(cb) {
@@ -19,10 +21,13 @@ function flow_installer(cb) {
           instance.readConfig(callback);
         },
         installCacheManager : function(callback) {
-          $cache = require('responsive-cache-manager')({
+          $cache = RCM({
           	logger: new $logger('$cache'),
           	cacheStrategy : self.config.cache_config.strategy
-          });
+          }, function(err, cacheManager){});
+          callback();
+        },
+        setConfig : function(callback) {
           $cache.set(self.config);
           callback();
         },
@@ -35,12 +40,15 @@ function flow_installer(cb) {
           callback();
         },
         installDatabaseManager : function(callback) {
-          var RDM = require('responsive-database-manager');
+          self.mongoose = require('mongoose');
+          self.mongoose.connect($cache.get('database_config.uri'));
           $dbi = RDM({
             mongoUrl: $cache.get('database_config.uri'),
             schemaDirectory: $cache.get('database_config.schema_directory'),
             useMongooseFixes: true,
+            mongoose: self.mongoose,
             backupRecords: true,
+            wipeSchemas: false,
             backupDirectory: $cache.get('database_config.data_directory'),
             logger: new $logger('$dbi')
           }, callback);

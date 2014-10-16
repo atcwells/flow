@@ -3,13 +3,12 @@ async = require('async');
 shell = require('shelljs');
 var express = require('express');
 var events = require('events');
-
+  
 require(process.env.PWD + '/flow_server/util/$utils');
 
-$logger = require(process.env.PWD + '/flow_server/util/_log');
-$dir = require(process.env.PWD + '/flow_server/util/$dir');
-$cache = {};
+$logger = require(process.env.PWD + '/flow_server/util/$logger');
 $event = new events.EventEmitter();
+$cache = {};
 $server = {};
 $dbi = {};
 
@@ -19,7 +18,6 @@ var http_server = require(shell.pwd() + '/flow_server/http/http_server');
 
 $server.startup = function() {
     var self = this;
-    // $dir = new $dir(shell.pwd() + '/flow_server');
 
     async.series({
         preload : function(callback) {

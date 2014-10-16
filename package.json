@@ -15,7 +15,7 @@
     "strip-comments": "^0.1.6",
     "responsive-route-manager": "0.4.4",
     "responsive-database-manager": "0.7.0",
-    "responsive-cache-manager": "0.2.1",
+    "responsive-cache-manager": "0.2.4",
     "connect-mongostore": "^0.1.4"
   },
   "devDependencies": {},

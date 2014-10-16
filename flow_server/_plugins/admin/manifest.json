@@ -1,4 +1,7 @@
 {
 	"version": "0.0.1",
-	"name": "admin"
+	"name": "admin",
+	"settings" : {
+		"router_type" : "functional-api"
+	}
 }
