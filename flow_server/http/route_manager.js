@@ -20,19 +20,19 @@ route_manager.prototype.utilRoutes = function() {
           _id : data[0].role
         }, function(err, role) {
           if (!role || role.length == 0) {
-            var response = _.template($server.asset_manager.get('./flow_server/_client/plugins/system/views/index.html').contents);
+            var response = _.template($server.asset_manager.get('./flow_server/_plugins/system/views/index.html').contents);
             res.end(response());
           } else if (role[0].name === 'admin') {
-            var response = _.template($server.asset_manager.get('./flow_server/_client/plugins/admin/views/adminIndex.html').contents);
+            var response = _.template($server.asset_manager.get('./flow_server/_plugins/admin/views/adminIndex.html').contents);
             res.end(response());
           } else {
-            var response = _.template($server.asset_manager.get('./flow_server/_client/plugins/system/views/index.html').contents);
+            var response = _.template($server.asset_manager.get('./flow_server/_plugins/system/views/index.html').contents);
             res.end(response());
           }
         })
       });
     } else {
-      var response = _.template($server.asset_manager.get('./flow_server/_client/plugins/system/views/index.html').contents);
+      var response = _.template($server.asset_manager.get('./flow_server/_plugins/system/views/index.html').contents);
       res.end(response());
     }
   };

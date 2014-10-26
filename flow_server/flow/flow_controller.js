@@ -34,15 +34,18 @@ function _flow_controller() {
             $server.client_manager = new client_manager();
             async.series({
                 getBowerDependencies : function(callback) {
+                    _log.info('Instantiating Bower...');
                     $server.bower_manager.readBowerJson();
                     $server.bower_manager.getDependencyFiles();
                     callback();
                 },
                 getClientDependencies : function(callback) {
+                    _log.info('Instantiating Client...');
                     $server.client_manager.getClientFiles();
                     callback();
                 },
                 getAngularApplication : function(callback) {
+                    _log.info('Instantiating Angular...');
                     $server.angular_manager.searchForAngularModules($server.bower_manager.scriptDependencies);
                     $server.angular_manager.getAngularRoutes(function() {
                         $server.angular_manager.getAngularConstants(callback);

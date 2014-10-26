@@ -44,22 +44,28 @@ angular_manager.prototype.getAngularRoutes = function getAngularRoutes(callback)
 angular_manager.prototype.getAngularConstants = function getAngularConstants(callback) {
     var self = this;
     $dbi.schema('angular_constant').findDistinct('group', function(err, groups) {
-        var groupsToEvauate = groups.length;
+        var groupsToEvaluate = groups.length;
+        if(!groupsToEvaluate) {
+          callback(null, "Found no Angular Constant Groups to initiailze");
+        }
         _.each(groups, function(group) {
             $dbi.schema('angular_constant').find({
                 group : group
             }, function(err, constants) {
-                var constantGroup = {
-                    angular : {
-                        constants : {},
-                    }
-                };
-                constantGroup.angular.constants[group] = constants;
-                $cache.set(constantGroup);
-                groupsToEvauate--;
-                if (!groupsToEvauate) {
-                    callback();
+              if(err) {
+                callback(err, constants);
+              }
+              var constantGroup = {
+                angular : {
+                  constants : {},
                 }
+              };
+              constantGroup.angular.constants[group] = constants;
+              $cache.set(constantGroup);
+              groupsToEvaluate--;
+              if (!groupsToEvaluate) {
+                callback(null, "");
+              }
             });
         });
     });
